@@ -14,11 +14,11 @@ class EmailSender {
     private $usar_phpmailer;
 
     public function __construct() {
-        // Configurações SMTP (lidas preferencialmente do .env com fallback do config/database.php)
-        $this->smtp_host = $_ENV['SMTP_HOST'] ?? Config::SMTP_HOST;
-        $this->smtp_port = (int)($_ENV['SMTP_PORT'] ?? Config::SMTP_PORT);
-        $this->smtp_username = $_ENV['SMTP_USER'] ?? Config::SMTP_USERNAME;
-        $this->smtp_password = $_ENV['SMTP_PASS'] ?? Config::SMTP_PASSWORD;
+        // Configurações SMTP (lidas do ficheiro .env com fallbacks padrão)
+        $this->smtp_host = $_ENV['SMTP_HOST'] ?? 'smtp.gmail.com';
+        $this->smtp_port = (int)($_ENV['SMTP_PORT'] ?? 587);
+        $this->smtp_username = $_ENV['SMTP_USER'] ?? '';
+        $this->smtp_password = $_ENV['SMTP_PASS'] ?? '';
         $this->from_email = $_ENV['SMTP_FROM'] ?? Config::EMAIL_RESTAURANTE;
         $this->from_name = Config::NOME_RESTAURANTE;
 
