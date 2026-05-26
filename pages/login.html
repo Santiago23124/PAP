@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Área de Funcionários - Restaurante 100 Sabores</title>
+    <link rel="stylesheet" type="text/css" href="../css/pages/shared/global-pages.css">
+    <link rel="stylesheet" type="text/css" href="../css/pages/login/style.css">
+    <link rel="shortcut icon" href="./imagens/logo/logotipo.transparente.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Menu estilo Salotto Divino: esquerda | logo centro | direita -->
+    <nav class="main-navigation">
+        <button class="menu-toggle" aria-label="Abrir menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="index.html#sobre" class="nav-link">SOBRE NÓS</a>
+                <a href="menu.html" class="nav-link">EMENTA</a>
+                <a href="carta_vinhos.html" class="nav-link">VINHOS</a>
+            </div>
+            <a href="index.html" class="nav-logo-center">
+                <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="logo-img">
+                <span class="logo-text">100 SABORES</span>
+            </a>
+            <div class="nav-right">
+                <a href="Galeria.html" class="nav-link">GALERIA</a>
+                <a href="contacto.html" class="nav-link">CONTACTO</a>
+                <a href="Reservas.html" class="nav-link nav-reservas">RESERVAS</a>
+            </div>
+        </div>
+            <div class="nav-menu nav-menu-mobile">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="index.html#sobre" class="nav-link">SOBRE NÓS</a>
+                <a href="menu.html" class="nav-link">EMENTA</a>
+                <a href="carta_vinhos.html" class="nav-link">VINHOS</a>
+                <a href="Galeria.html" class="nav-link">GALERIA</a>
+                <a href="contacto.html" class="nav-link">CONTACTO</a>
+                <a href="Reservas.html" class="nav-link">RESERVAS</a>
+            </div>
+    </nav>
+
+    <!-- Hero Section do Login -->
+    <section class="menu-hero">
+        <div class="menu-hero-content">
+            <h1 class="menu-hero-title">ÁREA DE FUNCIONÁRIOS</h1>
+            <div class="menu-hero-subtitle">
+                <p class="menu-intro-text">Acesso restrito aos colaboradores do restaurante</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulário de Login -->
+    <section class="login-section">
+        <div class="login-container">
+            <div class="login-form-wrapper">
+                <div class="login-header">
+                    <div class="login-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h2 class="login-title">Acesso Funcionários</h2>
+                    <p class="login-subtitle">Identifique-se para aceder à área restrita</p>
+                </div>
+                <form id="loginForm" class="login-form">
+                    <div class="form-group input-icon">
+                        <i class="fas fa-user"></i>
+                        <label for="username" class="sr-only">Nome de Utilizador</label>
+                        <input type="text" id="username" name="username" required placeholder="Nome de utilizador">
+                    </div>
+
+                    <div class="form-group input-icon">
+                        <i class="fas fa-lock"></i>
+                        <label for="password" class="sr-only">Senha</label>
+                        <input type="password" id="password" name="password" required placeholder="Palavra-passe">
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="remember">
+                            <span class="checkmark"></span>
+                            <span class="checkbox-label">Lembrar-me</span>
+                        </label>
+                        <a href="esqueci_senha.html" class="forgot-password">Esqueceu a senha?</a>
+                    </div>
+
+                    <button type="submit" id="loginBtn" class="login-btn">
+                        <span class="btn-text">ENTRAR</span>
+                        <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                    </button>
+                </form>
+
+                <!-- Mensagem de erro -->
+                <div id="errorMessage" class="error-message" style="display: none;">
+                    <i class="fas fa-times-circle"></i>
+                    <p>Credenciais inválidas. Tente novamente.</p>
+                </div>
+
+                <div class="login-footer">
+                    <p class="security-notice">
+                        <i class="fas fa-shield-alt"></i>
+                        Área segura de acesso restrito
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="rodape">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="footer-logo-img">
+                    <span class="footer-logo-text">100 SABORES</span>
+                </div>
+                <p class="footer-description">
+                    Experiência culinária única com pratos tradicionais portugueses
+                    preparados com ingredientes frescos e técnicas modernas.
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Contactos</h3>
+                <div class="footer-contact">
+                    <p><i class="fas fa-map-marker-alt"></i> Rua dos Sabores, 123<br>Porto, Portugal</p>
+                    <p><i class="fas fa-phone"></i> +351 222 123 456</p>
+                    <p><i class="fas fa-envelope"></i> info@100sabores.pt</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Horário</h3>
+                <div class="footer-hours">
+                    <p>Segunda - Quinta: 12h - 22h</p>
+                    <p>Sexta - Sábado: 12h - 23h</p>
+                    <p>Domingo: 12h - 21h</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Siga-nos</h3>
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2025 Restaurante 100 Sabores. Todos os direitos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Política de Privacidade</a>
+                    <span class="separator">|</span>
+                    <a href="#">Termos de Uso</a>
+                    <span class="separator">|</span>
+                    <a href="#">Mapa do Site</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+     <script>
+         document.getElementById('loginForm').addEventListener('submit', function(e) {
+             e.preventDefault();
+
+             const submitBtn = document.getElementById('loginBtn');
+             const errorMessage = document.getElementById('errorMessage');
+
+             // Mostrar loading no botão
+             submitBtn.classList.add('loading');
+             submitBtn.querySelector('.btn-text').textContent = 'A entrar...';
+             submitBtn.disabled = true;
+
+             const username = document.getElementById('username').value;
+             const password = document.getElementById('password').value;
+
+             // Fazer requisição para a API de login
+             fetch('../api/login.php', {
+                 method: 'POST',
+                 headers: {
+                     'Content-Type': 'application/json'
+                 },
+                 body: JSON.stringify({
+                     nome_utilizador: username,
+                     senha: password
+                 })
+             })
+              .then(response => {
+                  console.log('Status:', response.status);
+                  console.log('Headers:', response.headers);
+                  return response.json();
+              })
+              .then(data => {
+                  console.log('Resposta completa:', data);
+                  if (data.sucesso) {
+                     // Login bem-sucedido - armazenar na sessionStorage
+                     sessionStorage.setItem('loggedInUser', JSON.stringify({
+                         id: data.dados.id,
+                         nome_utilizador: data.dados.nome_utilizador,
+                         nome_completo: data.dados.nome_completo,
+                         cargo: data.dados.cargo,
+                         email: data.dados.email
+                     }));
+                       // Redirecionar para o dashboard de funcionários
+                       console.log('Redirecionando para dashboard.html');
+                       window.location.href = 'dashboard.html';
+                 } else {
+                     // Login falhou
+                     errorMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i><p>' + data.erro + '</p>';
+                     errorMessage.style.display = 'block';
+                     submitBtn.classList.remove('loading');
+                     submitBtn.querySelector('.btn-text').textContent = 'ENTRAR';
+                     submitBtn.disabled = false;
+                     
+                     // Shake animation
+                     submitBtn.classList.add('shake');
+                     setTimeout(() => {
+                         submitBtn.classList.remove('shake');
+                     }, 500);
+                 }
+             })
+              .catch(error => {
+                  console.error('Erro completo:', error);
+                  errorMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i><p>Erro de conexão: ' + error.message + '</p>';
+                  errorMessage.style.display = 'block';
+                  submitBtn.classList.remove('loading');
+                  submitBtn.querySelector('.btn-text').textContent = 'ENTRAR';
+                  submitBtn.disabled = false;
+              });
+         });
+     </script>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>

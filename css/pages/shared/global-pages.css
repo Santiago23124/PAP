@@ -1,0 +1,319 @@
+@import "../../estilos.css";
+
+/* ==========================================================================
+   RESTAURANTE 100 SABORES - ESTILOS GLOBAIS DE PAGINA
+   Apenas estilos universais: tipografia, menu e hero base.
+   ========================================================================== */
+
+/* ============================================
+   MENU GLOBAL
+   ============================================ */
+
+.main-navigation {
+    background: transparent;
+    box-shadow: 0 10px 30px rgba(61, 47, 47, 0.18);
+}
+
+.main-navigation .nav-link,
+.main-navigation .nav-link.nav-reservas,
+.main-navigation .nav-link.nav-funcionarios {
+    color: var(--luxury-text-light) !important;
+}
+
+.main-navigation .nav-link:hover,
+.main-navigation .nav-link.active,
+.main-navigation .nav-link.nav-reservas:hover,
+.main-navigation .nav-link.nav-reservas.active,
+.main-navigation .nav-link.nav-funcionarios:hover,
+.main-navigation .nav-link.nav-funcionarios.active {
+    color: var(--luxury-gold) !important;
+}
+
+.main-navigation .nav-link::after {
+    background: var(--luxury-text-light) !important;
+}
+
+.main-navigation .logo-text {
+    color: var(--luxury-text-light) !important;
+    -webkit-text-fill-color: var(--luxury-text-light) !important;
+}
+
+.main-navigation .menu-toggle span {
+    background: var(--luxury-text-light) !important;
+}
+
+/* ============================================
+   HERO BASE
+   ============================================ */
+
+.menu-hero{
+    min-height: 100vh;
+    margin-top: 0;
+    background-image: url(../../../pages/imagens/gallery/3-7.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+.reservas-hero,
+.dashboard-hero,
+.contact-hero {
+    min-height: 100vh;
+    margin-top: 0;
+    background:var(--luxury-gold-gradient);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 100px;
+}
+
+.hero-section {
+    position: relative;
+    background-image:url(../../../pages/imagens/gallery/3-7.png);
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 1rem;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+}
+
+.hero-section::after,
+.menu-hero::after,
+.reservas-hero::after,
+.dashboard-hero::after,
+.contact-hero::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    animation: shimmer 6s infinite linear;
+    pointer-events: none;
+}
+
+.hero-overlay,
+.menu-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+    z-index: 1;
+}
+
+.hero-content,
+.menu-hero-content,
+.contact-hero-content,
+.dashboard-hero-content {
+    text-align: center;
+    color: var(--luxury-text-light);
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+    animation: heroTextReveal 1.2s ease-out;
+}
+
+.hero-label,
+.menu-hero-label {
+    font-size: 0.7em;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    opacity: 0.9;
+    color: var(--luxury-gold-light);
+}
+
+.hero-title,
+.menu-hero-title,
+.contact-title,
+.dashboard-hero-title {
+    font-size: 4.5em;
+    font-weight: 300;
+    letter-spacing: 8px;
+    margin-bottom: 15px;
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-tagline,
+.hero-subtitle,
+.menu-hero-subtitle,
+.contact-subtitle,
+.dashboard-hero-subtitle,
+.menu-intro-text {
+    font-size: 1.2em;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--luxury-gold-light);
+    margin-bottom: 10px;
+}
+
+.hero-address {
+    font-size: 0.85em;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(250, 250, 250, 0.8);
+}
+
+.hero-cta-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.hero-cta {
+    display: inline-block;
+    padding: 14px 35px;
+    background: var(--luxury-gold-gradient);
+    color: var(--luxury-chocolate-dark);
+    border: none;
+    text-decoration: none;
+    font-size: 0.75em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: var(--luxury-shadow-md);
+}
+
+.hero-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--luxury-shadow-lg);
+    background: linear-gradient(135deg, #C8B8A0 0%, #B8A082 100%);
+}
+
+.hero-cta-outline {
+    display: inline-block;
+    padding: 14px 35px;
+    background: transparent;
+    color: var(--luxury-text-light);
+    border: 1px solid rgba(250, 250, 250, 0.4);
+    text-decoration: none;
+    font-size: 0.75em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.hero-cta-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--luxury-text-light);
+}
+
+.hero-hours {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    font-size: 0.75em;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(250, 250, 250, 0.8);
+}
+
+/* ============================================
+   RESPONSIVO GLOBAL
+   ============================================ */
+
+@media (max-width: 768px) {
+    .main-navigation .nav-link,
+    .main-navigation .nav-link.nav-reservas,
+    .main-navigation .nav-link.nav-funcionarios {
+        color: var(--luxury-text-dark) !important;
+    }
+
+    .main-navigation .nav-link::after {
+        background: var(--luxury-gold) !important;
+    }
+
+    .main-navigation .logo-text {
+        color: var(--luxury-text-dark) !important;
+        -webkit-text-fill-color: var(--luxury-text-dark) !important;
+    }
+
+    .hero-title,
+    .menu-hero-title,
+    .contact-title,
+    .dashboard-hero-title {
+        font-size: 2.8em;
+        letter-spacing: 4px;
+    }
+
+    .hero-cta-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .hero-hours {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title,
+    .menu-hero-title,
+    .contact-title,
+    .dashboard-hero-title {
+        font-size: 2.2em;
+        letter-spacing: 2px;
+    }
+}
+
+.lang-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #555; /* Cor do ícone e do texto */
+    margin-left: 20px;
+  }
+  
+  .fa-globe {
+    font-size: 1.2rem;
+    color: #d4af37; /* Cor dourada para um toque de classe (Restaurante) */
+  }
+  
+  .lang-btn {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 2px 5px;
+    transition: 0.3s;
+  }
+  
+  .lang-btn:hover {
+    color: #000;
+    text-decoration: underline;
+  }
+  
+  .divider {
+    color: #ccc;
+    font-size: 0.8rem;
+  }

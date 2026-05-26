@@ -1,0 +1,99 @@
+@import "../../components/footer.css";
+@import "../../components/menu-login.css";
+
+/* Estilos especificos da pagina menu. */
+
+/* Usado em: menu.html (versão antiga), Reservas.html (tabela de preços) */
+
+/* Container do menu de pratos */
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Image placeholder for menu items */
+.menu-item-image {
+    width: 100%;
+    height: 200px;
+    background-color: #f0f0f0;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    color: #999;
+    font-size: 0.9em;
+}
+
+/* Image placeholder for menu items */
+.menu-item-image {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden; /* importante */
+  }
+  
+  .menu-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* faz a imagem ocupar tudo */
+    display: block;
+  }
+
+.cartao {
+    background-color: var(--luxury-white);
+    border: 1px solid rgba(184, 160, 130, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: var(--luxury-shadow-sm);
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.cartao:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--luxury-shadow-md);
+    border-color: var(--luxury-gold);
+}
+
+.cartao h3 {
+    margin-top: 0;
+    font-size: 1.3em;
+    color: var(--luxury-text-dark);
+    margin-bottom: 10px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.cartao p {
+    color: var(--luxury-text-gray);
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.preco {
+    text-align: right;
+    font-weight: bold;
+    color: var(--luxury-gold-dark);
+    font-size: 1.2em;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Scroll reveal animations */
+.reveal-hidden {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../css/pages/shared/global-pages.css">
+    <link rel="stylesheet" type="text/css" href="../css/pages/reservas/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante 100 Sabores - Reservas</title>
+    <link rel="shortcut icon" href="./imagens/logo/logotipo.transparente.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navegação -->
+    <nav class="main-navigation">
+        <button class="menu-toggle" aria-label="Abrir menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="index.html#sobre" class="nav-link">SOBRE NÓS</a>
+                <a href="menu.html" class="nav-link">EMENTA</a>
+                <a href="carta_vinhos.html" class="nav-link">VINHOS</a>
+            </div>
+            <a href="index.html" class="nav-logo-center">
+                <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="logo-img">
+                <span class="logo-text">100 SABORES</span>
+            </a>
+            <div class="nav-right">
+                <a href="Galeria.html" class="nav-link">GALERIA</a>
+                <a href="contacto.html" class="nav-link">CONTACTO</a>
+                <a href="Reservas.html" class="nav-link nav-reservas active">RESERVAS</a>
+            </div>
+        </div>
+        <div class="nav-menu nav-menu-mobile">
+            <a href="index.html" class="nav-link">HOME</a>
+            <a href="index.html#sobre" class="nav-link">SOBRE NÓS</a>
+            <a href="menu.html" class="nav-link">EMENTA</a>
+            <a href="carta_vinhos.html" class="nav-link">VINHOS</a>
+            <a href="Galeria.html" class="nav-link">GALERIA</a>
+            <a href="contacto.html" class="nav-link">CONTACTO</a>
+            <a href="Reservas.html" class="nav-link active">RESERVAS</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="parallax-bg"></div>
+        <div class="parallax-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-label">RESERVE A SUA EXPERIÊNCIA</span>
+            <h1 class="hero-title">Reservas</h1>
+            <p class="hero-tagline">Garanta o seu lugar no 100 Sabores</p>
+            <p class="hero-address">Largo da Trindade, Príncipe Real</p>
+            <div class="hero-cta-group">
+                <a href="#formulario-reserva" class="hero-cta">Fazer Reserva</a>
+                <a href="menu.html" class="hero-cta-outline">Ver Ementa</a>
+            </div>
+            <div class="hero-hours">
+                <span>Seg-Sáb: 12h-00h</span>
+                <span>Dom: 12h-16h</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção Principal: Formulário + Espaços -->
+    <section class="reserva-combined-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Faça a sua Reserva</h2>
+                <p class="section-subtitle">Escolha o seu espaço e garanta a sua experiência gastronómica</p>
+            </div>
+
+            <div class="reserva-layout">
+                <!-- Lado Esquerdo: Formulário -->
+                <div class="form-side">
+                    <div class="form-card-elevated">
+                        <div class="form-header">
+                            <div class="form-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <h3>Dados da Reserva</h3>
+                            <p class="form-subtitle">Preencha os detalhes da sua visita</p>
+                        </div>
+
+                        <form id="reservaForm" class="reserva-form-modern">
+                            <div class="form-group">
+                                <label for="nome">
+                                    <i class="fas fa-user"></i> Nome Completo *
+                                </label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="nome" name="nome" required placeholder="João Silva">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">
+                                        <i class="fas fa-envelope"></i> E-mail *
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <input type="email" id="email" name="email" required placeholder="joao@email.com">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="telefone">
+                                        <i class="fas fa-phone"></i> Telefone *
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <input type="tel" id="telefone" name="telefone" required placeholder="+351 912 345 678">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="data">
+                                        <i class="far fa-calendar"></i> Data *
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <input type="date" id="data" name="data" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hora">
+                                        <i class="far fa-clock"></i> Hora *
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <input type="time" id="hora" name="hora" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="num_pessoas">
+                                        <i class="fas fa-users"></i> Pessoas *
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <select id="num_pessoas" name="num_pessoas" required>
+                                            <option value="">Selecione</option>
+                                            <option value="1">1 Pessoa</option>
+                                            <option value="2">2 Pessoas</option>
+                                            <option value="3">3 Pessoas</option>
+                                            <option value="4">4 Pessoas</option>
+                                            <option value="5">5 Pessoas</option>
+                                            <option value="6">6 Pessoas</option>
+                                            <option value="8">8 Pessoas</option>
+                                            <option value="10">10 Pessoas</option>
+                                            <option value="12">12 Pessoas</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="observacoes">
+                                    <i class="fas fa-pen"></i> Observações Especiais
+                                </label>
+                                <div class="input-wrapper">
+                                    <textarea id="observacoes" name="observacoes" rows="3" placeholder="Alergias, preferências especiais, ocasião especial..."></textarea>
+                                </div>
+                            </div>
+
+                            <button type="submit" id="submitBtn" class="submit-btn-modern">
+                                <span class="btn-text">Confirmar Reserva</span>
+                                <i class="fas fa-arrow-right btn-icon"></i>
+                            </button>
+                        </form>
+
+                        <!-- Mensagem de sucesso -->
+                        <div id="successMessage" class="success-message-modern" style="display: none;">
+                            <div class="success-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h3>Reserva Confirmada!</h3>
+                            <p>Recebemos a sua reserva. Enviámos uma confirmação para o seu email.</p>
+                        </div>
+
+                        <!-- Debug -->
+                        <details class="debug-panel">
+                            <summary>Ver reservas guardadas (debug)</summary>
+                            <pre id="reservasDebug"></pre>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- Lado Direito: Espaços -->
+                <div class="spaces-side">
+                    <h3 class="spaces-title">
+                        <i class="fas fa-door-open"></i>
+                        Os Nossos Espaços
+                    </h3>
+                    <p class="spaces-subtitle">Ambientes elegantes para momentos inesquecíveis</p>
+
+                    <div class="spaces-gallery">
+                        <!-- Espaço Sala Principal -->
+                        <div class="space-card">
+                            <div class="space-image">
+                                <img src="../pages/imagens/gallery/3-7.png" alt="Sala Principal">
+                                <div class="space-overlay">
+                                    <span class="space-tag">Premium</span>
+                                </div>
+                            </div>
+                            <div class="space-content">
+                                <h4>Sala Principal</h4>
+                                <p class="space-desc">O coração do restaurante com capacidade para 60 lugares, ideal para jantares e celebrações.</p>
+                                <div class="space-meta">
+                                    <span><i class="fas fa-users"></i> 1-12 pessoas</span>
+                                    <span><i class="fas fa-door-open"></i> Clássico</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Espaço Sala Private -->
+                        <div class="space-card">
+                            <div class="space-image">
+                                <img src="../pages/imagens/gallery/imagem_22.jpg" alt="Sala Privada">
+                                <div class="space-overlay">
+                                    <span class="space-tag">Exclusivo</span>
+                                </div>
+                            </div>
+                            <div class="space-content">
+                                <h4>Sala Privada</h4>
+                                <p class="space-desc">Ambiente reservado e intimista, perfeito para jantares empresariais ou ocasiões especiais.</p>
+                                <div class="space-meta">
+                                    <span><i class="fas fa-users"></i> 2-20 pessoas</span>
+                                    <span><i class="fas fa-door-open"></i> Privado</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Espaço Esplanada -->
+                        <div class="space-card">
+                            <div class="space-image">
+                                <img src="../pages/imagens/gallery/sallotodivino.jpg" alt="Esplanada">
+                                <div class="space-overlay">
+                                    <span class="space-tag">Exterior</span>
+                                </div>
+                            </div>
+                            <div class="space-content">
+                                <h4>Esplanada Gourmet</h4>
+                                <p class="space-desc">Espaço exterior com jardim, ideal para almoços descontraídos e eventos ao ar livre.</p>
+                                <div class="space-meta">
+                                    <span><i class="fas fa-users"></i> 1-30 pessoas</span>
+                                    <span><i class="fas fa-door-open"></i> Aberto</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Espaço Bar/Wine -->
+                        <div class="space-card">
+                            <div class="space-image">
+                                <img src="../pages/imagens/gallery/100-maneiras-04-14-22.jpg" alt="Wine Bar">
+                                <div class="space-overlay">
+                                    <span class="space-tag">Trendy</span>
+                                </div>
+                            </div>
+                            <div class="space-content">
+                                <h4>Wine Bar</h4>
+                                <p class="space-desc">Bar de vinhos sofisticado com mais de 200 referências, ideal para degustações e petiscos.</p>
+                                <div class="space-meta">
+                                    <span><i class="fas fa-users"></i> 1-16 pessoas</span>
+                                    <span><i class="fas fa-door-open"></i> Casual</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="rodape">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="footer-logo-img">
+                    <span class="footer-logo-text">100 SABORES</span>
+                </div>
+                <p class="footer-description">
+                    Cozinha portuguesa contemporânea no coração de Lisboa.
+                </p>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">Contactos</h3>
+                <div class="footer-contact">
+                    <p><i class="fas fa-map-marker-alt"></i> Largo da Trindade, Príncipe Real</p>
+                    <p><i class="fas fa-phone"></i> +351 222 123 456</p>
+                    <p><i class="fas fa-envelope"></i> info@100sabores.pt</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">Horário</h3>
+                <div class="footer-hours">
+                    <p>Segunda - Quinta: 12h - 22h</p>
+                    <p>Sexta - Sábado: 12h - 00h</p>
+                    <p>Domingo: 12h - 16h</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3 class="footer-title">Siga-nos</h3>
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-tripadvisor"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 100 Sabores. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/reservas-form.js"></script>
+</body>
+</html>

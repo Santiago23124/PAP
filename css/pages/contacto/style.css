@@ -1,0 +1,715 @@
+@import "../../components/footer.css";
+
+/* Estilos especificos da pagina contacto. */
+
+/* Usado em: contacto.html */
+
+/* Contact Hero Section */
+.contact-hero {
+    margin-top: 80px;
+    min-height: 50vh;
+    background: linear-gradient(135deg, rgba(61, 47, 47, 0.85) 0%, rgba(90, 74, 74, 0.75) 100%),
+                url('../../imagens/gallery/imagem_17.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, transparent 0%, rgba(61, 47, 47, 0.5) 100%);
+    z-index: 1;
+}
+
+.contact-hero-content {
+    max-width: 1200px;
+    padding: 100px 60px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    text-align: center;
+    color: var(--luxury-text-light);
+    position: relative;
+}
+
+.contact-title {
+    font-size: 4.5em;
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin-bottom: 40px;
+    font-family: 'Playfair Display', 'Georgia', serif;
+    background: linear-gradient(135deg, var(--luxury-cream) 0%, var(--luxury-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(184, 160, 130, 0.5);
+}
+
+/* Interactive Map Styles */
+.map-section,
+.mobile-map-section {
+    padding: 80px 0;
+    background-color: var(--luxury-white);
+}
+
+.wrap_svl_center {
+    text-align: center;
+}
+
+.wrap_svl_center_box {
+    display: inline-block;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.wrap_svl {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.images_wrap img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    display: block;
+}
+
+.drag_element {
+    position: absolute;
+    cursor: pointer;
+}
+
+.point_style {
+    position: relative;
+}
+
+.pins_image {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.pins_image_hover {
+    display: none;
+}
+
+.drag_element:hover .pins_image_hover {
+    display: block;
+}
+
+.drag_element:hover .pins_image {
+    display: none;
+}
+
+.box_view_html {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    padding: 20px;
+    max-width: 300px;
+    width: 280px;
+    z-index: 1000;
+    text-align: center;
+}
+
+.box_view_html img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.close_ihp {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 24px;
+    color: var(--luxury-text-gray);
+    font-weight: bold;
+    line-height: 1;
+}
+
+.close_ihp:hover {
+    color: var(--luxury-text-dark);
+}
+
+.p-titulofooter {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--luxury-text-dark);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.p-footer {
+    font-size: 0.9em;
+    color: var(--luxury-text-gray);
+    line-height: 1.4;
+}
+
+.p-horarios {
+    font-size: 0.85em;
+    color: var(--luxury-text-gray);
+    font-style: italic;
+}
+
+.pin {
+    color: var(--luxury-gold-dark);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.pin:hover {
+    text-decoration: underline;
+}
+
+/* Voucher Sections */
+
+/*botao voucher*/
+
+.voucher-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 30px;
+    font-size: 0.9em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: white;
+    background-color: var(--luxury-gold);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+/* hover bonito */
+.voucher-btn:hover {
+    background-color: #000;
+    color: white;
+}
+.voucher-section {
+    background: linear-gradient(135deg, var(--luxury-dark) 0%, var(--luxury-brown) 100%);
+    padding: 100px 0;
+    color: var(--luxury-text-light);
+    top: 10%;
+    position: relative;
+    z-index: 1;
+ 
+}
+
+.voucher-section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../../../assets/img/voucher.jpg") no-repeat center center/cover;
+    opacity: 0.2;
+    z-index: -1;
+}
+
+.voucher-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: var(--luxury-text-light);
+}
+
+.voucher-section p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: var(--luxury-text-light);
+}
+
+.voucher-section .voucher-btn {
+    color: var(--luxury-text-light);
+    background-color: var(--luxury-gold);
+}
+
+.close_ihp:hover {
+    color: var(--luxury-text-dark);
+}
+
+.p-titulofooter {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--luxury-text-dark);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.p-footer {
+    font-size: 0.9em;
+    color: var(--luxury-text-gray);
+    line-height: 1.4;
+}
+
+.p-horarios {
+    font-size: 0.85em;
+    color: var(--luxury-text-gray);
+    font-style: italic;
+}
+
+.pin {
+    color: var(--luxury-gold-dark);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.pin:hover {
+    text-decoration: underline;
+}
+
+/* Voucher Sections */
+.voucher-section {
+    background: linear-gradient(135deg, var(--luxury-dark) 0%, var(--luxury-brown) 100%);
+    padding: 80px 0;
+    color: var(--luxury-text-light);
+}
+
+.restaurant-voucher {
+    background-position: right center !important;
+}
+
+.bistro-voucher {
+    background-position: right center !important;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.vc_row-o-content-middle {
+    align-items: center;
+}
+
+.vc_row-flex {
+    flex-wrap: wrap;
+}
+
+.voucher-content {
+    flex: 1;
+    min-width: 300px;
+}
+
+.voucher-sub {
+    font-size: 1.5em;
+    color: #d8d8d8;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.voucher-main {
+    font-size: 3em;
+    font-weight: 300;
+    color: #ffffff;
+    margin: 0;
+    font-family: 'Georgia', serif;
+}
+
+.voucher-image {
+    flex: 1;
+    text-align: center;
+    min-width: 300px;
+}
+
+.voucher-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+
+
+/* General Contact Information */
+.general-contact {
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.general-contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.general-contact-item {
+    text-align: center;
+    padding: 20px;
+}
+
+.general-contact-item i {
+    font-size: 2.2em;
+    color: var(--luxury-gold);
+    margin-bottom: 18px;
+    filter: drop-shadow(0 2px 5px rgba(184, 160, 130, 0.3));
+}
+
+.general-contact-item strong {
+    display: block;
+    color: #2c3e50;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.general-contact-item a {
+    color: var(--luxury-gold);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.general-contact-item a:hover {
+    color: var(--luxury-gold-light);
+    text-shadow: 0 0 5px rgba(184, 160, 130, 0.3);
+}
+
+.general-contact-item a:hover {
+    text-decoration: underline;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, var(--luxury-white) 0%, var(--luxury-cream) 100%);
+    color: var(--luxury-gold);
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid rgba(184, 160, 130, 0.4);
+    box-shadow: var(--luxury-shadow-sm);
+}
+
+.social-link:hover {
+    background: var(--luxury-gold-gradient);
+    color: var(--luxury-chocolate-dark);
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: var(--luxury-shadow-gold);
+    border-color: var(--luxury-gold);
+}
+
+/* Enhanced Contact Form Section */
+.contact-form-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--luxury-brown) 0%, var(--luxury-gray) 100%);
+    color: var(--luxury-cream);
+    position: relative;
+    overflow: hidden;
+    margin-top: 100px;
+}
+
+.contact-form-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(184, 160, 130, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.contact-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.contact-form-header {
+    background: var(--luxury-gold-gradient);
+    padding: 45px;
+    text-align: center;
+    color: var(--luxury-chocolate-dark);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-form-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+    animation: shimmer 4s infinite;
+}
+
+.contact-form-header h2 {
+    margin: 0 0 15px 0;
+    font-size: 2.5em;
+    font-weight: 300;
+}
+
+.contact-form-header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 1.1em;
+}
+
+.contact-form {
+    padding: 40px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #8b4513;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.submit-btn {
+    background: var(--luxury-gold-gradient);
+    color: var(--luxury-chocolate-dark);
+    border: none;
+    padding: 16px 45px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: var(--luxury-shadow-md);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--luxury-shadow-lg);
+    background: linear-gradient(135deg, #C8B8A0 0%, #B8A082 100%);
+}
+
+.submit-btn i {
+    font-size: 1em;
+}
+
+/* Responsive Design for Contact Sections */
+@media (max-width: 768px) {
+    .professional-contact {
+        padding: 60px 0;
+    }
+
+    .professional-contact .section-title {
+        font-size: 2.2em;
+        margin-bottom: 40px;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .contact-card {
+        margin: 0 20px;
+    }
+
+    .contact-header {
+        padding: 25px;
+    }
+
+    .contact-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .contact-header h3 {
+        font-size: 1.5em;
+    }
+
+    .contact-details {
+        padding: 25px;
+    }
+
+    .contact-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .contact-item i {
+        margin-top: 0;
+    }
+
+    .contact-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .general-contact {
+        margin: 0 20px;
+        padding: 30px 20px;
+    }
+
+    .general-contact-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .contact-form-section {
+        padding: 60px 0;
+    }
+
+    .contact-form-container {
+        margin: 0 20px;
+    }
+
+    .contact-form-header {
+        padding: 30px 20px;
+    }
+
+    .contact-form-header h2 {
+        font-size: 2em;
+    }
+
+    .contact-form {
+        padding: 30px 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
+
+/* Hide mobile map on desktop */
+@media (min-width: 769px) {
+    .mobile-map-section {
+        display: none;
+    }
+}
+
+/* Hide desktop map on mobile */
+@media (max-width: 768px) {
+    .map-section {
+        display: none;
+    }
+
+    .mobile-map-section {
+        padding: 40px 0;
+    }
+
+    .contact-title {
+        font-size: 3em;
+    }
+
+    .voucher-section {
+        padding: 60px 0;
+    }
+
+    .voucher-main {
+        font-size: 2.5em;
+    }
+
+    .voucher-sub {
+        font-size: 1.2em;
+    }
+
+    .row {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .box_view_html {
+        max-width: 250px;
+        width: 230px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+

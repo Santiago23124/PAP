@@ -1,0 +1,8 @@
+# Impedir o acesso direto a ficheiros .env e .env.example
+<FilesMatch "^\.env">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Impedir listagem de diretórios por segurança
+Options -Indexes

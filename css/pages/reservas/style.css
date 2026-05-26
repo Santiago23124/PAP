@@ -1,0 +1,1235 @@
+@import "../../components/footer.css";
+
+/* ============================================
+   RESERVAS - PÁGINA PÚBLICA
+   Formulário moderno com galeria de espaços
+   ============================================ */
+
+/* Usado em: pages/Reservas.html */
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.hero-section {
+    position: relative;
+    background-image: url(../../../pages/imagens/gallery/3-7.png);
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 70px 65px;
+    margin-top: 100px;
+}
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    animation: shimmer 6s infinite linear;
+    pointer-events: none;
+}
+
+.hero-overlay,
+.menu-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+    z-index: 1;
+}
+
+.hero-section .parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('') no-repeat center center;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    opacity: 1;
+}
+
+.hero-section .parallax-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+    z-index: 0;
+}
+
+.hero-content {
+    text-align: center;
+    color: var(--luxury-text-light);
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+    animation: heroTextReveal 1.2s ease-out;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+}
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    animation: shimmer 6s infinite linear;
+    pointer-events: none;
+}
+
+.hero-overlay,
+.menu-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    text-align: center;
+    color: var(--luxury-text-light);
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+    animation: heroTextReveal 1.2s ease-out;
+}
+
+.hero-label,
+.menu-hero-label {
+    font-size: 0.7em;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    opacity: 0.9;
+    color: var(--luxury-gold-light);
+}
+
+.hero-title {
+    font-size: 4.5em;
+    font-weight: 300;
+    letter-spacing: 8px;
+    margin-bottom: 15px;
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-tagline,
+.hero-subtitle,
+.menu-hero-subtitle,
+.contact-subtitle,
+.dashboard-hero-subtitle,
+.menu-intro-text {
+    font-size: 1.2em;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--luxury-gold-light);
+    margin-bottom: 10px;
+}
+
+
+.hero-address {
+    font-size: 0.85em;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(250, 250, 250, 0.8);
+}
+
+.hero-hours {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    font-size: 0.75em;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(250, 250, 250, 0.8);
+}
+
+/* ============================================
+   SEÇÃO PRINCIPAL COMBINADA
+   ============================================ */
+
+.reserva-combined-section {
+    padding: 80px 0;
+    background: var(--luxury-cream);
+    position: relative;
+}
+
+.reserva-combined-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--luxury-gold), transparent);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    color: var(--luxury-text-dark);
+    margin-bottom: 15px;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: var(--luxury-gold-gradient);
+    border-radius: 2px;
+}
+
+.section-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2em;
+    color: var(--luxury-text-muted);
+    font-style: italic;
+}
+
+/* Layout Principal */
+
+.reserva-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 60px;
+    align-items: start;
+}
+
+/* ============================================
+   LADO ESQUERDO - FORMULÁRIO
+   ============================================ */
+
+.form-side {
+    position: sticky;
+    top: 100px;
+}
+
+.form-card-elevated {
+    background: linear-gradient(135deg, var(--luxury-white) 0%, var(--luxury-cream) 100%);
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: var(--luxury-shadow-lg);
+    border: 1px solid rgba(184, 160, 130, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.form-card-elevated::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--luxury-gold-gradient);
+}
+
+.form-card-elevated::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(184, 160, 130, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.form-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--luxury-gold-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.8em;
+    color: var(--luxury-chocolate-dark);
+    box-shadow: var(--luxury-shadow-md);
+}
+
+.form-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8em;
+    color: var(--luxury-text-dark);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.form-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1em;
+    color: var(--luxury-text-muted);
+    font-style: italic;
+}
+
+/* Formulário Moderno */
+
+.reserva-form-modern {
+    position: relative;
+    z-index: 1;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85em;
+    font-weight: 600;
+    color: var(--luxury-text-dark);
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-group label i {
+    color: var(--luxury-gold);
+    width: 18px;
+    text-align: center;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--luxury-gold-gradient);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.input-wrapper:hover::before {
+    transform: scaleX(0.5);
+}
+
+.input-wrapper.focused::before {
+    transform: scaleX(1);
+}
+
+.reserva-form-modern input,
+.reserva-form-modern select,
+.reserva-form-modern textarea {
+    width: 100%;
+    padding: 16px 18px;
+    border: 2px solid rgba(184, 160, 130, 0.2);
+    border-radius: 12px;
+    font-size: 1em;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease;
+    background: var(--luxury-white);
+    color: var(--luxury-text-dark);
+    box-sizing: border-box;
+}
+
+.reserva-form-modern input::placeholder,
+.reserva-form-modern textarea::placeholder {
+    color: rgba(139, 119, 101, 0.5);
+}
+
+.reserva-form-modern input:focus,
+.reserva-form-modern select:focus,
+.reserva-form-modern textarea:focus {
+    outline: none;
+    border-color: var(--luxury-gold);
+    box-shadow: 0 0 0 4px rgba(184, 160, 130, 0.1);
+    transform: translateY(-2px);
+}
+
+.reserva-form-modern select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23B8A082' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 45px;
+    appearance: none;
+}
+
+.reserva-form-modern textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+}
+
+/* Botão de Submit Moderno */
+
+.submit-btn-modern {
+    width: 100%;
+    padding: 18px 30px;
+    background: var(--luxury-gold-gradient);
+    color: var(--luxury-chocolate-dark);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.05em;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: var(--luxury-shadow-md);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.submit-btn-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.submit-btn-modern:hover {
+    background: linear-gradient(135deg, #C8B8A0 0%, #B8A082 100%);
+    transform: translateY(-4px);
+    box-shadow: var(--luxury-shadow-lg);
+}
+
+.submit-btn-modern:hover::before {
+    left: 100%;
+}
+
+.submit-btn-modern:active {
+    transform: translateY(-2px);
+    transition: transform 0.1s ease;
+}
+
+.submit-btn-modern .btn-icon {
+    transition: transform 0.3s ease;
+}
+
+.submit-btn-modern:hover .btn-icon {
+    transform: translateX(4px);
+}
+
+/* Mensagem de Sucesso Moderna */
+
+.success-message-modern {
+    background: linear-gradient(135deg, rgba(184, 160, 130, 0.95) 0%, rgba(184, 160, 130, 0.9) 100%);
+    color: var(--luxury-chocolate-dark);
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 30px;
+    box-shadow: var(--luxury-shadow-lg);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    animation: successSlideIn 0.5s ease-out;
+}
+
+.success-message-modern::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+    animation: shimmer 4s infinite;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 2.5em;
+    color: var(--luxury-chocolate-dark);
+    position: relative;
+    z-index: 1;
+    animation: successIconBounce 0.5s ease-out;
+}
+
+.success-message-modern h3 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+    z-index: 1;
+    color: var(--luxury-chocolate-dark);
+}
+
+.success-message-modern p {
+    font-size: 1.05em;
+    line-height: 1.6;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    color: var(--luxury-chocolate-dark);
+    opacity: 0.9;
+}
+
+/* Painel Debug */
+
+.debug-panel {
+    margin-top: 25px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(184, 160, 130, 0.2);
+}
+
+.debug-panel summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 12px 18px;
+    background: rgba(184, 160, 130, 0.1);
+    color: var(--luxury-text-dark);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85em;
+    list-style: none;
+}
+
+.debug-panel summary::-webkit-details-marker {
+    display: none;
+}
+
+.debug-panel summary::after {
+    content: '▼';
+    float: right;
+    transition: transform 0.3s ease;
+}
+
+.debug-panel[open] summary::after {
+    transform: rotate(180deg);
+}
+
+#reservasDebug {
+    margin: 0;
+    padding: 15px;
+    background: var(--luxury-white);
+    font-size: 11px;
+    line-height: 1.5;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* ============================================
+   LADO DIREITO - GALERIA DE ESPAÇOS
+   ============================================ */
+
+.spaces-side {
+    position: relative;
+}
+
+.spaces-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    color: var(--luxury-text-dark);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.spaces-title i {
+    color: var(--luxury-gold);
+}
+
+.spaces-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1em;
+    color: var(--luxury-text-muted);
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+/* Galeria de Espaços */
+
+.spaces-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.space-card {
+    background: var(--luxury-white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--luxury-shadow-md);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(184, 160, 130, 0.15);
+}
+
+.space-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: var(--luxury-shadow-lg);
+}
+
+.space-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.space-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.space-card:hover .space-image img {
+    transform: scale(1.08);
+}
+
+.space-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.space-card:hover .space-overlay {
+    opacity: 1;
+}
+
+.space-tag {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--luxury-gold-gradient);
+    color: var(--luxury-chocolate-dark);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: var(--luxury-shadow-md);
+}
+
+.space-content {
+    padding: 24px;
+}
+
+.space-content h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3em;
+    color: var(--luxury-text-dark);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.space-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95em;
+    color: var(--luxury-text-muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    font-style: italic;
+}
+
+.space-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.space-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8em;
+    color: var(--luxury-gold);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    padding: 4px 10px;
+    background: rgba(184, 160, 130, 0.1);
+    border-radius: 20px;
+}
+
+.space-meta i {
+    font-size: 0.9em;
+}
+
+/* ============================================
+   RESPONSIVO
+   ============================================ */
+
+@media (max-width: 1100px) {
+    .reserva-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .form-side {
+        position: static;
+    }
+
+    .form-card-elevated {
+        padding: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 50px 20px;
+        margin-top: 80px;
+    }
+
+    .hero-title {
+        font-size: 2.5em;
+        letter-spacing: 4px;
+    }
+
+    .hero-hours {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .reserva-combined-section {
+        padding: 50px 0;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    .section-title {
+        font-size: 2em;
+    }
+
+    .form-card-elevated {
+        padding: 30px 25px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .reserva-form-modern input,
+    .reserva-form-modern select,
+    .reserva-form-modern textarea {
+        padding: 14px 16px;
+    }
+
+    .submit-btn-modern {
+        padding: 16px 25px;
+        font-size: 1em;
+    }
+
+    .space-image {
+        height: 160px;
+    }
+
+    .space-content {
+        padding: 20px;
+    }
+
+    .space-title {
+        font-size: 1.1em;
+    }
+
+    .space-meta {
+        gap: 10px;
+    }
+
+    .space-meta span {
+        font-size: 0.75em;
+        padding: 3px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2em;
+    }
+
+    .hero-tagline {
+        font-size: 1em;
+    }
+
+    .section-title {
+        font-size: 1.6em;
+    }
+
+    .form-group label {
+        font-size: 0.8em;
+    }
+
+    .reserva-form-modern input,
+    .reserva-form-modern select,
+    .reserva-form-modern textarea {
+        padding: 12px 14px;
+        font-size: 0.95em;
+    }
+
+    .space-image {
+        height: 140px;
+    }
+
+    .space-content h4 {
+        font-size: 1.1em;
+    }
+
+    .success-message-modern {
+        padding: 30px 20px;
+    }
+
+    .success-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2em;
+    }
+
+    .success-message-modern h3 {
+        font-size: 1.4em;
+    }
+}
+
+.reserva-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--luxury-gold-gradient);
+    border-radius: 20px 20px 0 0;
+}
+
+.reserva-form h2 {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2em;
+    color: var(--luxury-text-dark);
+    margin-bottom: 35px;
+    font-weight: 600;
+}
+
+.reserva-form label {
+    display: block;
+    font-size: 1em;
+    margin-bottom: 8px;
+    color: var(--luxury-text-dark);
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.reserva-form input,
+.reserva-form select,
+.reserva-form textarea {
+    width: 100%;
+    padding: 15px 18px;
+    margin-bottom: 22px;
+    border: 2px solid rgba(184, 160, 130, 0.3);
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 1em;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease;
+    background: var(--luxury-white);
+    color: var(--luxury-text-dark);
+}
+
+.reserva-form input:focus,
+.reserva-form select:focus,
+.reserva-form textarea:focus {
+    outline: none;
+    border-color: var(--luxury-gold);
+    box-shadow: 0 0 0 3px rgba(184, 160, 130, 0.15);
+    transform: translateY(-1px);
+}
+
+.reserva-form textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.reserva-form button {
+    width: 100%;
+    padding: 16px 30px;
+    background: var(--luxury-gold-gradient);
+    color: var(--luxury-chocolate-dark);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.4s ease;
+    box-shadow: var(--luxury-shadow-md);
+    margin-top: 5px;
+}
+
+.reserva-form button:hover {
+    background: linear-gradient(135deg, #C8B8A0 0%, #B8A082 100%);
+    transform: translateY(-3px);
+    box-shadow: var(--luxury-shadow-lg);
+}
+
+.reserva-form button:active {
+    transform: translateY(-1px);
+}
+
+/* ============================================
+   MENSAGEM DE SUCESSO
+   ============================================ */
+
+.success-message {
+    background: linear-gradient(135deg, rgba(184, 160, 130, 0.95) 0%, rgba(184, 160, 130, 0.9) 100%);
+    color: var(--luxury-chocolate-dark);
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 30px;
+    box-shadow: var(--luxury-shadow-lg);
+    border: 3px solid rgba(184, 160, 130, 0.6);
+    position: relative;
+    overflow: hidden;
+}
+
+.success-message::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    animation: shimmer 3s infinite;
+}
+
+.success-message h3 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+    z-index: 1;
+}
+
+.success-message p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   TABELA DE PREÇOS
+   ============================================ */
+
+.table-wrapper {
+    max-width: 800px;
+    margin: 0 auto 60px;
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: var(--luxury-shadow-md);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--luxury-white);
+    font-size: 1em;
+}
+
+table th,
+table td {
+    padding: 18px 20px;
+    text-align: left;
+    border-bottom: 1px solid rgba(184, 160, 130, 0.2);
+}
+
+table th {
+    background: var(--luxury-gold-gradient);
+    color: var(--luxury-chocolate-dark);
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    font-size: 1em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+table tr:hover {
+    background: rgba(184, 160, 130, 0.05);
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ============================================
+   RESPONSIVO
+   ============================================ */
+
+@media (max-width: 768px) {
+    .reserva-form {
+        margin: 0 20px 40px;
+        padding: 35px 25px;
+    }
+
+    .reserva-form h2 {
+        font-size: 1.6em;
+    }
+
+    .reserva-form input,
+    .reserva-form select,
+    .reserva-form textarea {
+        padding: 14px 16px;
+        margin-bottom: 18px;
+    }
+
+    .reserva-form button {
+        padding: 14px 25px;
+        font-size: 1em;
+    }
+
+    .success-message {
+        margin: 20px;
+        padding: 30px 20px;
+    }
+
+    .success-message h3 {
+        font-size: 1.6em;
+    }
+
+    table th,
+    table td {
+        padding: 12px 15px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    .reserva-form {
+        margin: 0 15px 30px;
+        padding: 30px 20px;
+    }
+
+    .reserva-form h2 {
+        font-size: 1.4em;
+        margin-bottom: 25px;
+    }
+
+    .reserva-form input,
+    .reserva-form select,
+    .reserva-form textarea {
+        padding: 12px 14px;
+        margin-bottom: 15px;
+        font-size: 0.95em;
+    }
+
+    table {
+        font-size: 0.9em;
+    }
+
+    table th,
+    table td {
+        padding: 10px 12px;
+    }
+}
+
+/* Hero section*/
+
+.hero-section {
+    position: relative;
+    background-image: url(../../../pages/imagens/gallery/3-7.png);
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 70px 65px;
+    margin-top: 100px;
+}
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    animation: shimmer 6s infinite linear;
+    pointer-events: none;
+}
+
+.hero-section .parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('') no-repeat center center;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    opacity: 1;
+}
+
+.hero-content {
+    text-align: center;
+    color: var(--luxury-text-light);
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+    animation: heroTextReveal 1.2s ease-out;
+}
+
+.hero-content>* {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.hero-content>*:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.hero-content>*:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.hero-content>*:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    font-weight: 300;
+    letter-spacing: 8px;
+    margin-bottom: 15px;
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-label,
+.menu-hero-label {
+    font-size: 0.7em;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    opacity: 0.9;
+    color: var(--luxury-gold-light);
+}
+
+.hero-tagline,
+.hero-subtitle,
+.menu-hero-subtitle,
+.contact-subtitle,
+.dashboard-hero-subtitle,
+.menu-intro-text {
+    font-size: 1.3em;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--luxury-gold-light);
+    margin-bottom: 10px;
+}
+
+.hero-address {
+    font-size: 0.9em;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(250, 250, 250, 0.8);
+}
+
+.hero-hours {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(250, 250, 250, 0.8);
+}

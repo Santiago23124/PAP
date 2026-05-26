@@ -1,0 +1,7 @@
+# .htaccess desativado temporariamente para evitar erros de caminho absoluto no XAMPP
+# <Files "reset_senhas.php">
+# AuthType Basic
+# AuthName "Area Restrita - Administradores"
+# AuthUserFile ".htpasswd"
+# Require valid-user
+# </Files>

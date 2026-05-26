@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Configuração de Emails - Sistema de Reservas</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            line-height: 1.6;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .method {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #007bff;
+        }
+        .method.gmail {
+            border-left-color: #ea4335;
+        }
+        .method.outlook {
+            border-left-color: #0078d4;
+        }
+        .method.local {
+            border-left-color: #28a745;
+        }
+        .code {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            border: 1px solid #dee2e6;
+            overflow-x: auto;
+        }
+        .step {
+            background: #e8f4f8;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #17a2b8;
+        }
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #28a745;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .test-link {
+            background: #17a2b8;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+        .test-link:hover {
+            background: #138496;
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu de navegação elegante inspirado no 100 Maneiras -->
+    <nav class="main-navigation">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="./imagens/Logotipo_restaurante.png" alt="100 Sabores" class="logo-img">
+                <span class="logo-text">100 SABORES</span>
+            </div>
+
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Início</a>
+                <div class="dropdown">
+                    <a href="menu.html" class="nav-link dropdown-toggle">Menu</a>
+                    <div class="dropdown-menu">
+                        <a href="menu.html" class="dropdown-item">Carta de Comidas</a>
+                        <a href="carta_vinhos.html" class="dropdown-item">Carta de Vinhos</a>
+                    </div>
+                </div>
+                <a href="Reservas.html" class="nav-link">Reservas</a>
+                <a href="contacto.html" class="nav-link">Contacto</a>
+                <a href="Galeria.html" class="nav-link">Galeria</a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="Reservas.html" class="reserve-btn">RESERVAR</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 100px;">
+        <h1>📧 Configuração de Emails - Sistema de Reservas</h1>
+        
+        <div class="success">
+            <h3>✅ Sistema de Emails Implementado!</h3>
+            <p>O sistema de emails está ativo e funcionando. Quando uma reserva é criada:</p>
+            <ul>
+                <li>📧 <strong>Email de confirmação</strong> é enviado para o cliente</li>
+                <li>🔔 <strong>Email de notificação</strong> é enviado para o restaurante</li>
+                <li>📋 <strong>Templates HTML</strong> profissionais são usados</li>
+            </ul>
+        </div>
+        
+        <h2>🔧 Métodos de Configuração</h2>
+        
+        <div class="method local">
+            <h3>1. XAMPP Local (Atual - Mais Simples)</h3>
+            <p><strong>Vantagens:</strong> Configuração simples, funciona offline</p>
+            <p><strong>Desvantagens:</strong> Emails podem ir para spam, limitado</p>
+            
+            <div class="step">
+                <h4>Como Configurar:</h4>
+                <ol>
+                    <li>Instale o <strong>Mercury Mail Server</strong> (incluído no XAMPP)</li>
+                    <li>Inicie o Mercury no painel de controlo do XAMPP</li>
+                    <li>Configure o seu cliente de email (Outlook, Thunderbird) para receber emails locais</li>
+                </ol>
+            </div>
+            
+            <div class="code">
+# Configuração atual em config/database.php:
+const SMTP_HOST = 'localhost';
+const SMTP_PORT = 25;
+const SMTP_USERNAME = '';
+const SMTP_PASSWORD = '';
+            </div>
+        </div>
+        
+        <div class="method gmail">
+            <h3>2. Gmail SMTP (Recomendado para Produção)</h3>
+            <p><strong>Vantagens:</strong> Emails entregues corretamente, não vão para spam</p>
+            <p><strong>Desvantagens:</strong> Precisa de conta Gmail e password de app</p>
+            
+            <div class="step">
+                <h4>Passo 1: Criar Password de App no Gmail</h4>
+                <ol>
+                    <li>Aceda à sua conta Google</li>
+                    <li>Vá a "Segurança" → "Verificação em 2 passos"</li>
+                    <li>Clique em "Senhas de app"</li>
+                    <li>Crie uma nova password de app para "Mail"</li>
+                    <li>Copie a password gerada (16 caracteres)</li>
+                </ol>
+            </div>
+            
+            <div class="step">
+                <h4>Passo 2: Alterar Configurações</h4>
+                <p>Edite o ficheiro <code>config/database.php</code> e altere:</p>
+            </div>
+            
+            <div class="code">
+// Descomente estas linhas e configure:
+const SMTP_HOST = 'smtp.gmail.com';
+const SMTP_PORT = 587;
+const SMTP_USERNAME = 'seu-email@gmail.com';
+const SMTP_PASSWORD = 'sua-password-de-app-16-chars';
+            </div>
+        </div>
+        
+        <div class="method outlook">
+            <h3>3. Outlook/Hotmail SMTP</h3>
+            <p><strong>Vantagens:</strong> Funciona bem, emails entregues</p>
+            
+            <div class="code">
+const SMTP_HOST = 'smtp-mail.outlook.com';
+const SMTP_PORT = 587;
+const SMTP_USERNAME = 'seu-email@outlook.com';
+const SMTP_PASSWORD = 'sua-password';
+            </div>
+        </div>
+        
+        <div class="method">
+            <h3>4. Outros Provedores</h3>
+            <ul>
+                <li><strong>Yahoo:</strong> smtp.mail.yahoo.com:587</li>
+                <li><strong>IOL:</strong> smtp.iol.pt:587</li>
+                <li><strong>Sapo:</strong> smtp.sapo.pt:587</li>
+                <li><strong>Provedor personalizado:</strong> Contacte o seu provedor</li>
+            </ul>
+        </div>
+        
+        <div class="warning">
+            <h3>⚠️ Importante</h3>
+            <ul>
+                <li>Para Gmail/Outlook, precisa ativar a verificação em 2 passos</li>
+                <li>Use sempre passwords de app, não a password normal</li>
+                <li>Teste sempre após alterar configurações</li>
+                <li>Emails podem demorar alguns minutos a chegar</li>
+            </ul>
+        </div>
+        
+        <h2>🧪 Testar Sistema de Emails</h2>
+        
+        <div class="step">
+            <h3>Testes Disponíveis:</h3>
+            <a href="test_email.php" class="test-link" target="_blank">📧 Teste de Emails</a>
+            <a href="test_reserva_com_email.html" class="test-link" target="_blank">🧪 Teste Completo</a>
+            <a href="Reservas.html" class="test-link" target="_blank">🌐 Página de Reservas</a>
+        </div>
+        
+        <div class="step">
+            <h3>Como Testar:</h3>
+            <ol>
+                <li><strong>Configure o método escolhido</strong> em <code>config/database.php</code></li>
+                <li><strong>Teste o sistema</strong> com um dos links acima</li>
+                <li><strong>Verifique a caixa de entrada</strong> do email que inserir</li>
+                <li><strong>Verifique o spam</strong> se não receber</li>
+            </ol>
+        </div>
+        
+        <h2>📋 Checklist de Configuração</h2>
+        
+        <div class="method">
+            <h3>✅ Verificações:</h3>
+            <ul>
+                <li>□ Configurações SMTP definidas corretamente</li>
+                <li>□ Password de app criada (se Gmail/Outlook)</li>
+                <li>□ Verificação em 2 passos ativada</li>
+                <li>□ Sistema testado com email real</li>
+                <li>□ Emails chegam à caixa de entrada</li>
+                <li>□ Templates HTML são exibidos corretamente</li>
+            </ul>
+        </div>
+        
+        <h2>🔍 Resolução de Problemas</h2>
+        
+        <div class="warning">
+            <h3>❌ Emails não são enviados:</h3>
+            <ul>
+                <li>Verifique as configurações SMTP</li>
+                <li>Confirme que a password de app está correta</li>
+                <li>Verifique se a verificação em 2 passos está ativada</li>
+                <li>Teste com um email diferente</li>
+            </ul>
+        </div>
+        
+        <div class="warning">
+            <h3>📧 Emails vão para spam:</h3>
+            <ul>
+                <li>Use um provedor SMTP confiável (Gmail, Outlook)</li>
+                <li>Configure SPF e DKIM no seu domínio</li>
+                <li>Use um email profissional para o restaurante</li>
+            </ul>
+        </div>
+        
+        <div class="success">
+            <h3>🎉 Sistema Pronto!</h3>
+            <p>Após configurar corretamente, o sistema irá:</p>
+            <ul>
+                <li>Enviar confirmação automática para cada reserva</li>
+                <li>Notificar o restaurante sobre novas reservas</li>
+                <li>Usar templates HTML profissionais</li>
+                <li>Incluir todos os detalhes da reserva</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+    <footer class="rodape">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="./imagens/Logotipo_restaurante.png" alt="100 Sabores" class="footer-logo-img">
+                    <span class="footer-logo-text">100 SABORES</span>
+                </div>
+                <p class="footer-description">
+                    Experiência culinária única com pratos tradicionais portugueses
+                    preparados com ingredientes frescos e técnicas modernas.
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Contactos</h3>
+                <div class="footer-contact">
+                    <p><i class="fas fa-map-marker-alt"></i> Rua dos Sabores, 123<br>Porto, Portugal</p>
+                    <p><i class="fas fa-phone"></i> +351 222 123 456</p>
+                    <p><i class="fas fa-envelope"></i> info@100sabores.pt</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Horário</h3>
+                <div class="footer-hours">
+                    <p>Segunda - Quinta: 12h - 22h</p>
+                    <p>Sexta - Sábado: 12h - 23h</p>
+                    <p>Domingo: 12h - 21h</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Siga-nos</h3>
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2025 Restaurante 100 Sabores. Todos os direitos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Política de Privacidade</a>
+                    <span class="separator">|</span>
+                    <a href="#">Termos de Uso</a>
+                    <span class="separator">|</span>
+                    <a href="#">Mapa do Site</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

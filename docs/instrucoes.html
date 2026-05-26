@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Instruções para Testar Reservas</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            line-height: 1.6;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .step {
+            background: #e8f4f8;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #007bff;
+            border-radius: 5px;
+        }
+        .error {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+            color: #856404;
+        }
+        .success {
+            background: #d4edda;
+            border-left-color: #28a745;
+            color: #155724;
+        }
+        .url {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu de navegação elegante inspirado no 100 Maneiras -->
+    <nav class="main-navigation">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="./imagens/Logotipo_restaurante.png" alt="100 Sabores" class="logo-img">
+                <span class="logo-text">100 SABORES</span>
+            </div>
+
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Início</a>
+                <div class="dropdown">
+                    <a href="menu.html" class="nav-link dropdown-toggle">Menu</a>
+                    <div class="dropdown-menu">
+                        <a href="menu.html" class="dropdown-item">Carta de Comidas</a>
+                        <a href="carta_vinhos.html" class="dropdown-item">Carta de Vinhos</a>
+                    </div>
+                </div>
+                <a href="Reservas.html" class="nav-link">Reservas</a>
+                <a href="contacto.html" class="nav-link">Contacto</a>
+                <a href="Galeria.html" class="nav-link">Galeria</a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="Reservas.html" class="reserve-btn">RESERVAR</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 100px;">
+        <h1>🔧 Instruções para Resolver o Problema de Reservas</h1>
+        
+        <div class="step">
+            <h3>1. Verificar XAMPP</h3>
+            <p>Certifique-se que o XAMPP está a correr:</p>
+            <ul>
+                <li>Apache (porta 80) ✅</li>
+                <li>MySQL (porta 3306) ✅</li>
+            </ul>
+        </div>
+        
+        <div class="step">
+            <h3>2. URL Correta para Aceder ao Site</h3>
+            <p>Use esta URL exata no seu browser:</p>
+            <div class="url">
+                http://localhost/TP1_RC_WEB_Santiago_22453/TP1_RC_WEB_Santiago_22453/Reservas.html
+            </div>
+            <p><strong>⚠️ IMPORTANTE:</strong> Note que há duas pastas com o mesmo nome!</p>
+        </div>
+        
+        <div class="step">
+            <h3>3. Testar a API Diretamente</h3>
+            <p>Primeiro, teste se a API está acessível:</p>
+            <div class="url">
+                http://localhost/TP1_RC_WEB_Santiago_22453/TP1_RC_WEB_Santiago_22453/api/reservas.php
+            </div>
+            <p>Se abrir uma página em branco, a API está funcionando. Se der erro 404, há problema no caminho.</p>
+        </div>
+        
+        <div class="step">
+            <h3>4. Teste Rápido</h3>
+            <button onclick="testarAPI()">Testar API Agora</button>
+            <button onclick="window.open('./test_simple.html', '_blank')">Abrir Teste Simples</button>
+            <div id="resultado" style="margin-top: 15px;"></div>
+        </div>
+        
+        <div class="step error">
+            <h3>❌ Se Continuar a Dar Erro</h3>
+            <p>Possíveis soluções:</p>
+            <ol>
+                <li><strong>Reiniciar XAMPP:</strong> Pare e inicie novamente Apache e MySQL</li>
+                <li><strong>Verificar porta:</strong> Se a porta 80 estiver ocupada, use porta 8080</li>
+                <li><strong>URL alternativa:</strong> http://localhost:8080/TP1_RC_WEB_Santiago_22453/TP1_RC_WEB_Santiago_22453/Reservas.html</li>
+                <li><strong>Verificar firewall:</strong> Pode estar a bloquear ligações locais</li>
+            </ol>
+        </div>
+        
+        <div class="step success">
+            <h3>✅ Correções Já Feitas</h3>
+            <ul>
+                <li>Caminhos PHP corrigidos</li>
+                <li>Base de dados testada e funcionando</li>
+                <li>API testada e funcionando</li>
+                <li>Classe Reserva corrigida</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+    async function testarAPI() {
+        const resultado = document.getElementById('resultado');
+        resultado.innerHTML = '<p>🔄 A testar...</p>';
+        
+        try {
+            const response = await fetch('./api/reservas.php', {
+                method: 'GET'
+            });
+            
+            if (response.ok) {
+                resultado.innerHTML = '<div class="success">✅ API está acessível!</div>';
+            } else {
+                resultado.innerHTML = `<div class="error">❌ Erro HTTP: ${response.status}</div>`;
+            }
+        } catch (error) {
+            resultado.innerHTML = `<div class="error">❌ Erro de ligação: ${error.message}</div>`;
+        }
+    }
+    
+    // Mostrar URL atual
+    window.onload = function() {
+        const urlInfo = document.createElement('div');
+        urlInfo.className = 'step';
+        urlInfo.innerHTML = `
+            <h3>📍 URL Atual</h3>
+            <div class="url">${window.location.href}</div>
+        `;
+        document.querySelector('.container').appendChild(urlInfo);
+    };
+    </script>
+</body>
+</html>
+
+
+
+    <footer class="rodape">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="./imagens/Logotipo_restaurante.png" alt="100 Sabores" class="footer-logo-img">
+                    <span class="footer-logo-text">100 SABORES</span>
+                </div>
+                <p class="footer-description">
+                    Experiência culinária única com pratos tradicionais portugueses
+                    preparados com ingredientes frescos e técnicas modernas.
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Contactos</h3>
+                <div class="footer-contact">
+                    <p><i class="fas fa-map-marker-alt"></i> Rua dos Sabores, 123<br>Porto, Portugal</p>
+                    <p><i class="fas fa-phone"></i> +351 222 123 456</p>
+                    <p><i class="fas fa-envelope"></i> info@100sabores.pt</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Horário</h3>
+                <div class="footer-hours">
+                    <p>Segunda - Quinta: 12h - 22h</p>
+                    <p>Sexta - Sábado: 12h - 23h</p>
+                    <p>Domingo: 12h - 21h</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Siga-nos</h3>
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2025 Restaurante 100 Sabores. Todos os direitos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Política de Privacidade</a>
+                    <span class="separator">|</span>
+                    <a href="#">Termos de Uso</a>
+                    <span class="separator">|</span>
+                    <a href="#">Mapa do Site</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
