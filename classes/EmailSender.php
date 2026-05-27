@@ -337,3 +337,25 @@ class EmailSender {
         return date('H:i', strtotime($hora)) . 'h';
     }
 }
+
+
+/**
+     * Enviar notificação de novo contacto recebido
+     */
+    public function enviarNotificacaoContacto($dados) {
+        $subject = "Novo contacto recebido: " . $dados['assunto'];
+        $corpo = "
+            <h2>Novo Pedido de Contacto</h2>
+            <p><strong>Nome:</strong> {$dados['nome']}</p>
+            <p><strong>Email:</strong> {$dados['email']}</p>
+            <p><strong>Telefone:</strong> {$dados['telefone']}</p>
+            <p><strong>Assunto:</strong> {$dados['assunto']}</p>
+            <p><strong>Mensagem:</strong><br>{$dados['mensagem']}</p>
+        ";
+
+        // Usamos o método de envio (que já deves ter implementado na tua classe)
+        // Se usares PHPMailer, a lógica será interna dentro deste método
+        return $this->enviarEmail(Config::EMAIL_RESTAURANTE, $subject, $corpo);
+    }
+
+    ?>
