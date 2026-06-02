@@ -4,10 +4,10 @@ require_once __DIR__ . '/../config/database.php';
 /**
  * Classe para gestão de mesas do restaurante
  */
+// private-so pode ser acessado pela classe que a declarou
 class Mesa {
     private $conn;
     private $table_name = "mesas";
-
     public $id;
     public $numero;
     public $capacidade;
@@ -15,18 +15,20 @@ class Mesa {
     public $ativa;
     public $observacoes;
 
-    public function __construct($db) {
+     //conexao com a base de dados
+     public function __construct($db) {
         $this->conn = $db;
-    }
+     }
 
-    /**
+    
+     /**
      * Obter todas as mesas ativas
      */
-    public function listarTodas($apenas_ativas = true) {
+     public function listarTodas($apenas_ativas = true) {
         $query = "SELECT * FROM " . $this->table_name;
 
         if ($apenas_ativas) {
-            $query .= " WHERE ativa = 1";
+            $query .= " WHERE ativa = 1"; //$query- variavel busca por ativa ou não 
         }
 
         $query .= " ORDER BY CAST(numero AS UNSIGNED), numero ASC";

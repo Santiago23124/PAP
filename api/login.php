@@ -12,8 +12,18 @@
  /*  json_encode(): O contrário do JavaScript JSON.parse. Pega num array ou objeto do PHP 
      e transforma-o numa string JSON para enviar ao frontend.*/
  
-  // Inicia ou recupera a sessão do utilizador
+  // Inicia ou recupera a sessão do utilizador~
+
+  session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '100sabores.pt', // O seu domínio
+    'secure' => false,      // Apenas HTTPS
+    'httponly' => true,    // Protege contra XSS
+    'samesite' => 'Strict' // Protege contra CSRF
+]);
 session_start();
+
 
 // Permite que qualquer origem (frontend) aceda à API (CORS)
 header("Access-Control-Allow-Origin: *");
@@ -83,6 +93,8 @@ $resultado = $funcionario->autenticar($data->nome_utilizador, $data->senha);
 
 // Verifica se o login foi bem-sucedido
 if ($resultado['sucesso']) {
+    // Previne roubo de sessão
+    session_regenerate_id(true);
     
     // Código HTTP 200 (OK)
     http_response_code(200);

@@ -4,10 +4,13 @@
 // de edição/detalhes de reservas
 // ============================================
 
-document.addEventListener('DOMContentLoaded', function () {
-    configurarTabs();
-    configurarModalReserva();
-    configurarFechoModalEsc();
+// Código Single page Application (SPA),sem recarregamento de página, ele manipula o DOM(estrutura HTML)
+// E faz pedidos AJAX/Fetch para a API PHP
+
+document.addEventListener('DOMContentLoaded', function () { // garante que o DOM está carregado antes de executar o código
+    configurarTabs(); // configura as tabs
+    configurarModalReserva(); // configura o modal de reservas
+    configurarFechoModalEsc(); // configura o fecho do modal com a tecla ESC
 });
 
 // ============================================

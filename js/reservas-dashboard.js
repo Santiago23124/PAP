@@ -17,6 +17,10 @@ let mesasDisponiveis = [];
 let turnosAtivos = [];
 let primeiraAnimacao = true;
 
+// Estado da paginação
+let paginaAtualReservas = 1;
+const reservasPorPagina = 10;
+
 // ============================================
 // INICIALIZACAO
 // ============================================
@@ -87,6 +91,7 @@ async function carregarReservas() {
     }
 
     reservasFiltradas = [...todasReservas];
+    paginaAtualReservas = 1; // Reset para página 1 ao recarregar
     gerarHorariosDisponiveis();
     renderizarTabela();
     atualizarEstatisticas();
@@ -272,11 +277,12 @@ function filtrarReservas() {
         return matchSearch && matchStatus && matchData;
     });
 
+    paginaAtualReservas = 1; // Reiniciar para a página 1 sempre que os filtros mudam
     renderizarTabela();
 }
 
 // ============================================
-// RENDERIZACAO DA TABELA
+// RENDERIZACAO DA TABELA E PAGINAÇÃO
 // ============================================
 
 function renderizarTabela() {
@@ -296,60 +302,140 @@ function renderizarTabela() {
                 </td>
             </tr>
         `;
+        const pagContainer = document.getElementById('pagination');
+        if (pagContainer) pagContainer.innerHTML = '';
         return;
     }
 
-    reservasFiltradas
+    // Ordenar as reservas
+    const reservasOrdenadas = reservasFiltradas
         .slice()
-        .sort((a, b) => new Date(a.data + 'T' + a.hora) - new Date(b.data + 'T' + b.hora))
-        .forEach(reserva => {
-            const tr = document.createElement('tr');
+        .sort((a, b) => new Date(a.data + 'T' + a.hora) - new Date(b.data + 'T' + b.hora));
 
-            const mesaDisplay = reserva.mesa_numero
-                ? `<span title="${escapeHtml(reserva.mesa_localizacao || '')} (cap. ${reserva.mesa_capacidade})">Mesa ${escapeHtml(String(reserva.mesa_numero))}</span>`
-                : '<span style="color:#999; font-style:italic;">Nao atribuida</span>';
+    const totalReservas = reservasOrdenadas.length;
+    const totalPaginas = Math.ceil(totalReservas / reservasPorPagina);
 
-            const turnoDisplay = reserva.turno_nome
-                ? `<small>${escapeHtml(reserva.turno_nome)}</small>`
-                : '';
+    // Garantir que a página atual está nos limites
+    if (paginaAtualReservas > totalPaginas) {
+        paginaAtualReservas = Math.max(1, totalPaginas);
+    }
 
-            tr.innerHTML = `
-                <td>
-                    <strong>${escapeHtml(reserva.nome)}</strong><br>
-                    <small style="color:#888;">${escapeHtml(reserva.email)}</small>
-                </td>
-                <td>${formatData(reserva.data)}</td>
-                <td>${escapeHtml(reserva.hora)}</td>
-                <td>${reserva.num_pessoas} ${reserva.num_pessoas === 1 ? 'pessoa' : 'pessoas'}</td>
-                <td>${mesaDisplay}</td>
-                <td>${turnoDisplay}</td>
-                <td>
-                    <span class="status-badge status-${escapeHtml(reserva.status)}">${escapeHtml(reserva.status)}</span>
-                </td>
-                <td>
-                    <div class="action-buttons">
-                        <button class="btn-action" title="Ver detalhes" onclick="abrirModalDetalhesReserva(${reserva.id})" style="color:#3498db; border-color:#3498db;">
-                            <i class="far fa-eye"></i>
-                        </button>
-                        <button class="btn-action btn-confirm" title="Confirmar reserva" onclick="alterarStatus(${reserva.id}, 'confirmada')" ${reserva.status === 'confirmada' ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''}>
-                            <i class="far fa-check"></i>
-                        </button>
-                        <button class="btn-action btn-cancel" title="Cancelar reserva" onclick="alterarStatus(${reserva.id}, 'cancelada')" ${reserva.status === 'cancelada' ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''}>
-                            <i class="far fa-times"></i>
-                        </button>
-                        <button class="btn-action btn-edit" title="Editar reserva" onclick="editarReserva(${reserva.id})">
-                            <i class="far fa-edit"></i>
-                        </button>
-                        <button class="btn-action btn-delete" title="Eliminar reserva" onclick="eliminarReserva(${reserva.id})">
-                            <i class="far fa-trash-alt"></i>
-                        </button>
-                    </div>
-                </td>
-            `;
+    // Fatiar os dados para exibir na página ativa
+    const inicio = (paginaAtualReservas - 1) * reservasPorPagina;
+    const fim = inicio + reservasPorPagina;
+    const reservasPagina = reservasOrdenadas.slice(inicio, fim);
 
-            tbody.appendChild(tr);
-        });
+    reservasPagina.forEach(reserva => {
+        const tr = document.createElement('tr');
+
+        const mesaDisplay = reserva.mesa_numero
+            ? `<span title="${escapeHtml(reserva.mesa_localizacao || '')} (cap. ${reserva.mesa_capacidade})">Mesa ${escapeHtml(String(reserva.mesa_numero))}</span>`
+            : '<span style="color:#999; font-style:italic;">Não atribuída</span>';
+
+        const turnoDisplay = reserva.turno_nome
+            ? `<small>${escapeHtml(reserva.turno_nome)}</small>`
+            : '';
+
+        tr.innerHTML = `
+            <td>
+                <strong>${escapeHtml(reserva.nome)}</strong><br>
+                <small style="color:#888;">${escapeHtml(reserva.email)}</small>
+            </td>
+            <td>${formatData(reserva.data)}</td>
+            <td>${escapeHtml(reserva.hora)}</td>
+            <td>${reserva.num_pessoas} ${reserva.num_pessoas === 1 ? 'pessoa' : 'pessoas'}</td>
+            <td>${mesaDisplay}</td>
+            <td>${turnoDisplay}</td>
+            <td>
+                <span class="status-badge status-${escapeHtml(reserva.status)}">${escapeHtml(reserva.status)}</span>
+            </td>
+            <td>
+                <div class="action-buttons">
+                    <button class="btn-action" title="Ver detalhes" onclick="abrirModalDetalhesReserva(${reserva.id})" style="color:#3498db; border-color:#3498db;">
+                        <i class="far fa-eye"></i>
+                    </button>
+                    <button class="btn-action btn-confirm" title="Confirmar reserva" onclick="alterarStatus(${reserva.id}, 'confirmada')" ${reserva.status === 'confirmada' ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''}>
+                        <i class="far fa-check"></i>
+                    </button>
+                    <button class="btn-action btn-cancel" title="Cancelar reserva" onclick="alterarStatus(${reserva.id}, 'cancelada')" ${reserva.status === 'cancelada' ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''}>
+                        <i class="far fa-times"></i>
+                    </button>
+                    <button class="btn-action btn-edit" title="Editar reserva" onclick="editarReserva(${reserva.id})">
+                        <i class="far fa-edit"></i>
+                    </button>
+                    <button class="btn-action btn-delete" title="Eliminar reserva" onclick="eliminarReserva(${reserva.id})">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </div>
+            </td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+
+    renderizarPaginacao(totalPaginas);
 }
+
+function renderizarPaginacao(totalPaginas) {
+    const pagContainer = document.getElementById('pagination');
+    if (!pagContainer) return;
+
+    if (totalPaginas <= 1) {
+        pagContainer.innerHTML = '';
+        return;
+    }
+
+    let html = '';
+
+    // Botão Anterior
+    html += `<button class="page-btn prev-btn" ${paginaAtualReservas === 1 ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''} onclick="mudarPaginaReservas(${paginaAtualReservas - 1})">
+        <i class="fas fa-chevron-left"></i> Anterior
+    </button>`;
+
+    // Números das Páginas (Máximo 5 botões visíveis de forma inteligente)
+    const maxBotoesVisiveis = 5;
+    let inicioBotao = Math.max(1, paginaAtualReservas - Math.floor(maxBotoesVisiveis / 2));
+    let fimBotao = Math.min(totalPaginas, inicioBotao + maxBotoesVisiveis - 1);
+
+    if (fimBotao - inicioBotao + 1 < maxBotoesVisiveis) {
+        inicioBotao = Math.max(1, fimBotao - maxBotoesVisiveis + 1);
+    }
+
+    if (inicioBotao > 1) {
+        html += `<button class="page-btn" onclick="mudarPaginaReservas(1)">1</button>`;
+        if (inicioBotao > 2) {
+            html += `<span class="page-dots">...</span>`;
+        }
+    }
+
+    for (let i = inicioBotao; i <= fimBotao; i++) {
+        html += `<button class="page-btn ${paginaAtualReservas === i ? 'active' : ''}" onclick="mudarPaginaReservas(${i})">${i}</button>`;
+    }
+
+    if (fimBotao < totalPaginas) {
+        if (fimBotao < totalPaginas - 1) {
+            html += `<span class="page-dots">...</span>`;
+        }
+        html += `<button class="page-btn" onclick="mudarPaginaReservas(${totalPaginas})">${totalPaginas}</button>`;
+    }
+
+    // Botão Seguinte
+    html += `<button class="page-btn next-btn" ${paginaAtualReservas === totalPaginas ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''} onclick="mudarPaginaReservas(${paginaAtualReservas + 1})">
+        Seguinte <i class="fas fa-chevron-right"></i>
+    </button>`;
+
+    pagContainer.innerHTML = html;
+}
+
+window.mudarPaginaReservas = function(pagina) {
+    paginaAtualReservas = pagina;
+    renderizarTabela();
+    // Scroll suave para o topo do painel das reservas
+    const rightPanel = document.querySelector('.table-card');
+    if (rightPanel) {
+        rightPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+};
 
 // ============================================
 // ACOES DE RESERVA

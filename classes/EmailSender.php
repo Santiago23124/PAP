@@ -59,79 +59,212 @@ class EmailSender {
         <html>
         <head>
             <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
             <style>
-                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                .header { background: #2c3e50; color: white; padding: 20px; text-align: center; }
-                .content { padding: 20px; background: #f9f9f9; }
-                .reserva-details { background: white; padding: 20px; border-radius: 5px; margin: 20px 0; }
-                .detail-row { display: flex; justify-content: space-between; margin: 10px 0; padding: 10px; background: #f0f0f0; border-radius: 3px; }
-                .detail-label { font-weight: bold; }
-                .footer { text-align: center; padding: 20px; color: #666; font-size: 14px; }
-                .button { background: #3498db; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 0; }
+                body { 
+                    font-family: 'Outfit', 'Inter', 'Helvetica Neue', Arial, sans-serif; 
+                    line-height: 1.6; 
+                    color: #333333; 
+                    background-color: #f7f7f7;
+                    margin: 0;
+                    padding: 0;
+                }
+                .container { 
+                    max-width: 600px; 
+                    margin: 40px auto; 
+                    background-color: #ffffff; 
+                    border-radius: 12px; 
+                    overflow: hidden;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+                }
+                .header { 
+                    background-color: #1a1a1a; 
+                    color: #ffffff; 
+                    padding: 40px 20px; 
+                    text-align: center; 
+                    border-bottom: 3px solid #c5a880; 
+                }
+                .header h1 { 
+                    margin: 0; 
+                    font-size: 26px; 
+                    letter-spacing: 2px;
+                    font-weight: 600;
+                    color: #c5a880;
+                }
+                .header p {
+                    margin: 10px 0 0 0;
+                    color: #b3b3b3;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }
+                .content { 
+                    padding: 40px 30px; 
+                }
+                .greeting {
+                    font-size: 20px;
+                    color: #1a1a1a;
+                    margin-bottom: 20px;
+                    font-weight: 600;
+                }
+                .message {
+                    font-size: 16px;
+                    color: #555555;
+                    margin-bottom: 30px;
+                }
+                .reserva-card { 
+                    background-color: #faf6f0; 
+                    padding: 25px; 
+                    border-radius: 8px; 
+                    border-left: 4px solid #c5a880;
+                    margin: 30px 0; 
+                }
+                .reserva-title {
+                    font-size: 15px;
+                    font-weight: bold;
+                    color: #1a1a1a;
+                    margin-bottom: 15px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+                .detail-row { 
+                    margin: 12px 0; 
+                    font-size: 14px; 
+                    display: flex;
+                    justify-content: space-between;
+                    border-bottom: 1px solid #f0eade;
+                    padding-bottom: 8px;
+                }
+                .detail-row:last-child {
+                    border-bottom: none;
+                    padding-bottom: 0;
+                }
+                .detail-label { 
+                    font-weight: bold; 
+                    color: #888888;
+                }
+                .detail-value {
+                    color: #1a1a1a;
+                    font-weight: 500;
+                }
+                .observacoes-box {
+                    margin-top: 15px;
+                    padding-top: 15px;
+                    border-top: 1px solid #e6dec9;
+                    font-style: italic;
+                    color: #555555;
+                }
+                .info-section {
+                    margin: 30px 0;
+                }
+                .info-title {
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: #1a1a1a;
+                    margin-bottom: 15px;
+                }
+                .info-list {
+                    padding-left: 20px;
+                    margin: 0;
+                    color: #555555;
+                    font-size: 14px;
+                }
+                .info-list li {
+                    margin-bottom: 8px;
+                }
+                .footer { 
+                    text-align: center; 
+                    padding: 30px 20px; 
+                    background-color: #1a1a1a;
+                    color: #888888; 
+                    font-size: 12px; 
+                }
+                .footer a {
+                    color: #c5a880;
+                    text-decoration: none;
+                }
+                .button-container {
+                    text-align: center;
+                    margin: 35px 0 15px 0;
+                }
+                .button { 
+                    background-color: #c5a880; 
+                    color: #1a1a1a !important; 
+                    padding: 14px 28px; 
+                    text-decoration: none; 
+                    border-radius: 30px; 
+                    display: inline-block; 
+                    font-weight: bold;
+                    font-size: 15px;
+                    letter-spacing: 1px;
+                }
             </style>
         </head>
         <body>
             <div class='container'>
                 <div class='header'>
-                    <h1>🍽️ " . Config::NOME_RESTAURANTE . "</h1>
+                    <h1>" . Config::NOME_RESTAURANTE . "</h1>
                     <p>Confirmação de Reserva</p>
                 </div>
                 
                 <div class='content'>
-                    <h2>Olá {$reserva->nome}!</h2>
-                    <p>Recebemos a sua reserva e estamos ansiosos para recebê-lo no nosso restaurante.</p>
+                    <div class='greeting'>Olá {$reserva->nome},</div>
+                    <div class='message'>
+                        Recebemos com muito agrado o seu pedido de reserva. Estamos ansiosos por recebê-lo no nosso espaço para lhe proporcionar uma experiência gastronómica inesquecível.
+                    </div>
                     
-                    <div class='reserva-details'>
-                        <h3>📋 Detalhes da Sua Reserva</h3>
+                    <div class='reserva-card'>
+                        <div class='reserva-title'>Detalhes da sua reserva</div>
                         <div class='detail-row'>
-                            <span class='detail-label'>Número da Reserva:</span>
-                            <span><strong>#{$reserva->id}</strong></span>
+                            <span class='detail-label'>Número:</span>
+                            <span class='detail-value'>#{$reserva->id}</span>
                         </div>
                         <div class='detail-row'>
                             <span class='detail-label'>Nome:</span>
-                            <span>{$reserva->nome}</span>
+                            <span class='detail-value'>{$reserva->nome}</span>
                         </div>
                         <div class='detail-row'>
                             <span class='detail-label'>Data:</span>
-                            <span>{$data_formatada}</span>
+                            <span class='detail-value'>{$data_formatada}</span>
                         </div>
                         <div class='detail-row'>
                             <span class='detail-label'>Hora:</span>
-                            <span>{$hora_formatada}</span>
+                            <span class='detail-value'>{$hora_formatada}</span>
                         </div>
                         <div class='detail-row'>
-                            <span class='detail-label'>Número de Pessoas:</span>
-                            <span>{$reserva->num_pessoas}</span>
+                            <span class='detail-label'>Pessoas:</span>
+                            <span class='detail-value'>{$reserva->num_pessoas} pessoas</span>
                         </div>";
         
         if(!empty($reserva->observacoes)) {
             $html .= "
-                        <div class='detail-row'>
-                            <span class='detail-label'>Observações:</span>
-                            <span>{$reserva->observacoes}</span>
+                        <div class='observacoes-box'>
+                            <strong>Observações:</strong><br>
+                            \"" . nl2br(htmlspecialchars($reserva->observacoes)) . "\"
                         </div>";
         }
         
         $html .= "
                     </div>
                     
-                    <h3>📍 Informações Importantes</h3>
-                    <ul>
-                        <li>Por favor, chegue 5-10 minutos antes da hora marcada</li>
-                        <li>Se precisar de alterar ou cancelar, contacte-nos com pelo menos 2 horas de antecedência</li>
-                        <li>Para grupos maiores, poderemos contactá-lo para confirmação</li>
-                    </ul>
+                    <div class='info-section'>
+                        <div class='info-title'>📍 Informações Importantes</div>
+                        <ul class='info-list'>
+                            <li>Agradecemos que chegue 5 a 10 minutos antes da hora marcada.</li>
+                            <li>Caso necessite de alterar ou cancelar a sua reserva, pedimos que nos contacte com pelo menos 2 horas de antecedência.</li>
+                            <li>Para mesas com tolerância de atraso superior a 15 minutos, por favor avise-nos previamente.</li>
+                        </ul>
+                    </div>
                     
-                    <h3>📞 Contactos</h3>
-                    <p><strong>Telefone:</strong> " . Config::TELEFONE_RESTAURANTE . "</p>
-                    <p><strong>Email:</strong> " . Config::EMAIL_RESTAURANTE . "</p>
-                    <p><strong>Endereço:</strong> " . Config::ENDERECO_RESTAURANTE . "</p>
+                    <div class='button-container'>
+                        <a href='http://localhost/PAP-100_Sabores/pages/index.html' class='button'>VISITAR WEBSITE</a>
+                    </div>
                 </div>
                 
                 <div class='footer'>
-                    <p>Obrigado por escolher o " . Config::NOME_RESTAURANTE . "!</p>
-                    <p>Este é um email automático, por favor não responda a este email.</p>
+                    <p><strong>" . Config::NOME_RESTAURANTE . "</strong></p>
+                    <p>" . Config::ENDERECO_RESTAURANTE . " | Tel: " . Config::TELEFONE_RESTAURANTE . "</p>
+                    <p>Este é um e-mail automático, por favor não responda a esta mensagem.</p>
                 </div>
             </div>
         </body>
@@ -336,26 +469,211 @@ class EmailSender {
     private function formatarHora($hora) {
         return date('H:i', strtotime($hora)) . 'h';
     }
-}
 
-
-/**
-     * Enviar notificação de novo contacto recebido
-     */
     public function enviarNotificacaoContacto($dados) {
-        $subject = "Novo contacto recebido: " . $dados['assunto'];
+        $subject = "Novo contacto recebido: " . ($dados['assunto'] ?? 'General');
         $corpo = "
             <h2>Novo Pedido de Contacto</h2>
             <p><strong>Nome:</strong> {$dados['nome']}</p>
             <p><strong>Email:</strong> {$dados['email']}</p>
-            <p><strong>Telefone:</strong> {$dados['telefone']}</p>
-            <p><strong>Assunto:</strong> {$dados['assunto']}</p>
             <p><strong>Mensagem:</strong><br>{$dados['mensagem']}</p>
         ";
-
-        // Usamos o método de envio (que já deves ter implementado na tua classe)
-        // Se usares PHPMailer, a lógica será interna dentro deste método
         return $this->enviarEmail(Config::EMAIL_RESTAURANTE, $subject, $corpo);
     }
+
+    /**
+     * Enviar email de agradecimento ao cliente pelo contacto/opinião
+     */
+    public function enviarAgradecimentoContacto($dados) {
+        $subject = "Agradecemos a sua opinião - " . Config::NOME_RESTAURANTE;
+        $body = $this->gerarTemplateAgradecimentoContacto($dados);
+        
+        return $this->enviarEmail($dados['email'], $subject, $body);
+    }
+
+    /**
+     * Gerar template de agradecimento ao cliente pelo contacto
+     */
+    private function gerarTemplateAgradecimentoContacto($dados) {
+        $assuntos_pt = [
+            'reservation' => 'Reserva',
+            'complaint' => 'Reclamação/Sugestão',
+            'feedback' => 'Feedback',
+            'general' => 'Opinião geral'
+        ];
+        $assunto_traduzido = $assuntos_pt[$dados['assunto'] ?? 'general'] ?? 'Contacto';
+
+        $html = "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <style>
+                body { 
+                    font-family: 'Outfit', 'Inter', 'Helvetica Neue', Arial, sans-serif; 
+                    line-height: 1.6; 
+                    color: #333333; 
+                    background-color: #f7f7f7;
+                    margin: 0;
+                    padding: 0;
+                }
+                .container { 
+                    max-width: 600px; 
+                    margin: 40px auto; 
+                    background-color: #ffffff; 
+                    border-radius: 12px; 
+                    overflow: hidden;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+                }
+                .header { 
+                    background-color: #1a1a1a; 
+                    color: #ffffff; 
+                    padding: 40px 20px; 
+                    text-align: center; 
+                    border-bottom: 3px solid #c5a880; 
+                }
+                .header h1 { 
+                    margin: 0; 
+                    font-size: 26px; 
+                    letter-spacing: 2px;
+                    font-weight: 600;
+                    color: #c5a880;
+                }
+                .header p {
+                    margin: 10px 0 0 0;
+                    color: #b3b3b3;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }
+                .content { 
+                    padding: 40px 30px; 
+                }
+                .greeting {
+                    font-size: 20px;
+                    color: #1a1a1a;
+                    margin-bottom: 20px;
+                    font-weight: 600;
+                }
+                .thank-message {
+                    font-size: 16px;
+                    color: #555555;
+                    margin-bottom: 30px;
+                }
+                .resumo-card { 
+                    background-color: #faf6f0; 
+                    padding: 25px; 
+                    border-radius: 8px; 
+                    border-left: 4px solid #c5a880;
+                    margin: 30px 0; 
+                }
+                .resumo-title {
+                    font-size: 15px;
+                    font-weight: bold;
+                    color: #1a1a1a;
+                    margin-bottom: 15px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+                .detail-row { 
+                    margin: 8px 0; 
+                    font-size: 14px; 
+                }
+                .detail-label { 
+                    font-weight: bold; 
+                    color: #888888;
+                    display: inline-block;
+                    width: 90px;
+                }
+                .detail-value {
+                    color: #333333;
+                }
+                .mensagem-box {
+                    margin-top: 15px;
+                    padding-top: 15px;
+                    border-top: 1px solid #e6dec9;
+                    font-style: italic;
+                    color: #555555;
+                }
+                .footer { 
+                    text-align: center; 
+                    padding: 30px 20px; 
+                    background-color: #1a1a1a;
+                    color: #888888; 
+                    font-size: 12px; 
+                }
+                .footer a {
+                    color: #c5a880;
+                    text-decoration: none;
+                }
+                .button-container {
+                    text-align: center;
+                    margin: 35px 0 15px 0;
+                }
+                .button { 
+                    background-color: #c5a880; 
+                    color: #1a1a1a !important; 
+                    padding: 14px 28px; 
+                    text-decoration: none; 
+                    border-radius: 30px; 
+                    display: inline-block; 
+                    font-weight: bold;
+                    font-size: 15px;
+                    letter-spacing: 1px;
+                    transition: background-color 0.3s ease;
+                }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h1>" . Config::NOME_RESTAURANTE . "</h1>
+                    <p>Agradecemos a sua opinião</p>
+                </div>
+                
+                <div class='content'>
+                    <div class='greeting'>Olá {$dados['nome']},</div>
+                    <div class='thank-message'>
+                        Muito obrigado por entrar em contacto connosco e partilhar a sua opinião. A sua opinião e feedback são fundamentais para mantermos a excelência do nosso serviço e proporcionar-lhe sempre a melhor experiência gastronómica.
+                        <br><br>
+                        A nossa equipa já recebeu a sua mensagem e irá analisá-la com toda a atenção. Caso seja necessário, responderemos com a maior brevidade possível.
+                    </div>
+                    
+                    <div class='resumo-card'>
+                        <div class='resumo-title'>Resumo do seu contacto</div>
+                        <div class='detail-row'>
+                            <span class='detail-label'>Assunto:</span>
+                            <span class='detail-value'>{$assunto_traduzido}</span>
+                        </div>
+                        <div class='detail-row'>
+                            <span class='detail-label'>Data:</span>
+                            <span class='detail-value'>" . date('d/m/Y H:i') . "</span>
+                        </div>
+                        <div class='mensagem-box'>
+                            \"" . nl2br(htmlspecialchars($dados['mensagem'])) . "\"
+                        </div>
+                    </div>
+                    
+                    <div class='button-container'>
+                        <a href='http://localhost/PAP-100_Sabores/pages/index.html' class='button'>VISITAR WEBSITE</a>
+                    </div>
+                </div>
+                
+                <div class='footer'>
+                    <p><strong>" . Config::NOME_RESTAURANTE . "</strong></p>
+                    <p>" . Config::ENDERECO_RESTAURANTE . " | Tel: " . Config::TELEFONE_RESTAURANTE . "</p>
+                    <p>Este é um e-mail automático, por favor não responda a esta mensagem.</p>
+                </div>
+            </div>
+        </body>
+        </html>";
+        
+        return $html;
+    }
+}
+
+
+
 
     ?>

@@ -36,3 +36,4 @@ Este ficheiro é um excelente ponto de defesa na tua apresentação. Podes desta
 "Escalabilidade": A classe Config permite ajustar parâmetros do negócio sem risco de quebrar o sistema.
 
 Dica de profissional: O teu carregarEnv é excelente, mas garante que o teu ficheiro .env está realmente fora do Git (usando o ficheiro .gitignore que criámos anteriormente). Se o .env estiver no GitHub, todo este esforço de segurança perde o sentido!
+

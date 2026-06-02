@@ -33,14 +33,18 @@ async function carregarItensMenu() {
     if (loadingEl) loadingEl.style.display = 'inline';
 
     try {
-        const response = await fetch(MENU_API, {//await- espera a resposta da api, so pode ser usado dentro de uma funcao async
-            //fetch - metodo para fazer requisicoes na api(GET, POST, PUT, DELETE),pedido HTTP
+        const response = await fetch(MENU_API, {
             headers: { 'Authorization': 'Bearer dashboard' }
         });
         const data = await response.json();
 
         if (data.sucesso !== false && (data.dados || Array.isArray(data))) {
             todosItensMenu = data.dados || data || [];
+            try {
+                localStorage.setItem('menuItems_100sabores', JSON.stringify(todosItensMenu));
+            } catch (e) {
+                console.error('Erro ao guardar menu no localStorage:', e);
+            }
         } else if (data.erro) {
             console.error('Erro API menu:', data.erro);
             todosItensMenu = [];

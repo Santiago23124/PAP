@@ -301,65 +301,76 @@
     <script src="../js/script.js"></script>
     <script>
     
-    // Carregar itens do menu do localStorage (adicionados pelo dashboard)
-    const MENU_STORAGE_KEY = 'menuItems_100sabores';
-    
-    function loadMenuItemsFromStorage() {
-        const saved = localStorage.getItem(MENU_STORAGE_KEY);
-        if (saved) {
-            try {
-                return JSON.parse(saved);
-            } catch (e) {
-                return null;
+    function renderMenuFromData(items) {
+        const sections = document.querySelectorAll('.menu-section');
+        const categories = {
+            entradas: sections[0] ? sections[0].querySelector('.menu-items-grid') : null,
+            principais: sections[1] ? sections[1].querySelector('.menu-items-grid') : null,
+            sobremesas: sections[2] ? sections[2].querySelector('.menu-items-grid') : null,
+            bebidas: sections[3] ? sections[3].querySelector('.menu-items-grid') : null
+        };
+        Object.values(categories).forEach(c => { if (c) c.innerHTML = ''; });
+        if (!items || items.length === 0) return;
+        items.forEach(item => {
+            if (parseInt(item.disponivel) === 0) return;
+            const container = categories[item.categoria];
+            if (!container) return;
+            const div = document.createElement('div');
+            div.className = 'menu-item';
+            if (item.tipo === 'especial') {
+                div.classList.add('featured');
+                const badge = document.createElement('div');
+                badge.className = 'menu-item-badge';
+                badge.textContent = 'Especial da Casa';
+                div.appendChild(badge);
             }
-        }
-        return null;
+            const img = document.createElement('div');
+            img.className = 'menu-item-image';
+            img.innerHTML = '<!-- Placeholder -->';
+            div.appendChild(img);
+            const content = document.createElement('div');
+            content.className = 'menu-item-content';
+            content.innerHTML = `
+                <h3 class="menu-item-title">${escapeHtml(item.nome)}</h3>
+                <p class="menu-item-description">${escapeHtml(item.descricao)}</p>
+                <div class="menu-item-price">€${parseFloat(item.preco).toFixed(2).replace('.', ',')}</div>
+            `;
+            div.appendChild(content);
+            container.appendChild(div);
+        });
     }
     
-function renderDynamicMenuItems() {
-         const items = loadMenuItemsFromStorage();
-         if (!items || items.length === 0) return;
-         
-         // Group by category - use the correct selectors
-         const sections = document.querySelectorAll('.menu-section');
-         const categories = {
-             entradas: sections[0] ? sections[0].querySelector('.menu-items-grid') : null,
-             principais: sections[1] ? sections[1].querySelector('.menu-items-grid') : null,
-             sobremesas: sections[2] ? sections[2].querySelector('.menu-items-grid') : null,
-             bebidas: sections[3] ? sections[3].querySelector('.menu-items-grid') : null
-         };
-         
-         items.forEach(item => {
-             if (!item.disponivel) return; // Skip unavailable items
-             
-             const container = categories[item.categoria];
-             if (!container) return;
-             
-             const itemDiv = document.createElement('div');
-             itemDiv.className = 'menu-item';
-             
-             if (item.tipo === 'especial') {
-                 itemDiv.classList.add('featured');
-                 itemDiv.innerHTML = '<div class="menu-item-badge">Especial da Casa</div>';
-             }
-             
-             itemDiv.innerHTML += `
-                 <div class="menu-item-image">
-                     <!-- Placeholder for menu item image -->
-                 </div>
-                 <div class="menu-item-content">
-                     <h3 class="menu-item-title">${item.nome}</h3>
-                     <p class="menu-item-description">${item.descricao}</p>
-                     <div class="menu-item-price">€${parseFloat(item.preco).toFixed(2).replace('.', ',')}</div>
-                 </div>
-             `;
-             
-             container.appendChild(itemDiv);
-         });
-     }
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text ?? '';
+        return div.innerHTML;
+    }
     
-    // Load when page is ready
-    document.addEventListener('DOMContentLoaded', renderDynamicMenuItems);
+    async function loadPublicMenu() {
+        try {
+            const response = await fetch('../api/menu.php?public=true');
+            const data = await response.json();
+            if (data.sucesso && data.dados) {
+                renderMenuFromData(data.dados);
+                try { localStorage.setItem('menuItems_100sabores', JSON.stringify(data.dados)); } catch (e) {}
+            }
+        } catch (err) {
+            console.error('Erro ao carregar ementa pública:', err);
+            const saved = localStorage.getItem('menuItems_100sabores');
+            if (saved) {
+                try { renderMenuFromData(JSON.parse(saved)); } catch (e) {}
+            }
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        loadPublicMenu();
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'menuItems_100sabores' && e.newValue) {
+                try { renderMenuFromData(JSON.parse(e.newValue)); } catch (err) {}
+            }
+        });
+    });
     </script>
 </body>
 </html>

@@ -1,100 +1,67 @@
 <?php
-// Incluir configuração da base de dados e autoload
-require_once __DIR__ . '/../config/database.php'; //comando que força o carregamento de um ficheiro php, isto evita falhas críticas
+// 1. Impedir qualquer HTML ou aviso de ser enviado antes do JSON
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
 
-// Cabeçalhos para CORS e JSON, permite que o front-end se comunique com o back-end(api), mesmo que estejam em domínios diferentes
-header('Content-Type: application/json'); //tipo de conteúdo que estamos a enviar
-header('Access-Control-Allow-Origin: *'); //permite que o front-end se comunique com o back-end
-header('Access-Control-Allow-Methods: POST, OPTIONS'); 
-header('Access-Control-Allow-Headers: Content-Type'); //permite que o front-end se comunique com o back-end
+// 2. Proteção para capturar erros críticos e devolver JSON
+register_shutdown_function(function() {
+    $error = error_get_last();
+    if ($error !== null && ($error['type'] === E_ERROR || $error['type'] === E_PARSE)) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'error' => 'Erro crítico: ' . $error['message']]);
+        exit;
+    }
+});
 
-// Responder a pedidos OPTIONS (preflight)
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    exit(0); //OPTIONS é gerido para permitir que o navegador valide a comunicação antes de enviar o POST
-}
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../classes/EmailSender.php';
 
-// Verificar se é POST
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit(0);
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    echo json_encode(['success' => false, 'error' => 'Método não permitido']);
+    echo json_encode(['success' => false, 'error' => 'Método inválido']);
     exit;
 }
 
-// Obter dados do formulário
-$input = json_decode(file_get_contents('php://input'), true); // permite em via JSON como pelo metodo $_POST
+$input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
 
-if (!$input) {
-    // Se não for JSON, tentar com POST normal
-    $input = $_POST;
-}
-
-// Validar campos obrigatórios
-$required = ['nome', 'email', 'mensagem']; // verifica antes de enviar se há campos obrigatórios vazios
-foreach ($required as $field) {
-    if (empty($input[$field])) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'error' => "Campo '$field' é obrigatório"]);
-        exit;
-    }
+if (empty($input['nome']) || empty($input['email']) || empty($input['mensagem'])) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'error' => 'Campos obrigatórios em falta']);
+    exit;
 }
 
 try {
-    // Conectar à base de dados de forma segura e centralizada
     $pdo = getDB();
+    $stmt = $pdo->prepare("INSERT INTO contactos (nome, email, telefone, assunto, mensagem, data_envio, ip) VALUES (:nome, :email, :telefone, :assunto, :mensagem, NOW(), :ip)");
 
-    // Preparar query de inserção
-    $stmt = $pdo->prepare("
-        INSERT INTO contactos (nome, email, telefone, assunto, mensagem, data_envio, ip) 
-        VALUES (:nome, :email, :telefone, :assunto, :mensagem, NOW(), :ip)
-    ");
-
-    // Executar query
     $stmt->execute([
-        ':nome' => $input['nome'],
-        ':email' => $input['email'],
+        ':nome'     => $input['nome'],
+        ':email'    => $input['email'],
         ':telefone' => $input['telefone'] ?? '',
-        ':assunto' => $input['assunto'] ?? 'general',
+        ':assunto'  => $input['assunto'] ?? 'general',
         ':mensagem' => $input['mensagem'],
-        ':ip' => $_SERVER['REMOTE_ADDR'] ?? ''
+        ':ip'       => $_SERVER['REMOTE_ADDR'] ?? ''
     ]);
 
-    // Resposta de sucesso
-    echo json_encode([
-        'success' => true, 
-        'message' => 'Mensagem enviada com sucesso! Entraremos em contacto em breve.',
-        'id' => $pdo->lastInsertId()
-    ]);
-
-} catch (PDOException $e) {
-    error_log("Erro de BD: " . $e->getMessage());
-    http_response_code(500);
-    echo json_encode([
-        'success' => false, 
-        'error' => 'Erro ao guardar mensagem. Tente novamente.'
-    ]);
-} catch (Exception $e) {
-    error_log("Erro geral: " . $e->getMessage());
-    http_response_code(500);
-    echo json_encode([
-        'success' => false, 
-        'error' => 'Ocorreu um erro. Tente novamente.'
-    ]);
-}
-
-// ... (depois de $stmt->execute([...]))
-
-    // Enviar email de notificação
+    // Enviar E-mails (Notificação ao restaurante e agradecimento ao cliente)
     try {
         $emailSender = new EmailSender();
         $emailSender->enviarNotificacaoContacto($input);
+        $emailSender->enviarAgradecimentoContacto($input);
     } catch (Exception $e) {
-        // Não queremos que o erro de email impeça o utilizador de ver o sucesso
-        error_log("Erro ao enviar email de contacto: " . $e->getMessage());
+        error_log("Erro no envio de email: " . $e->getMessage());
     }
 
-    // Resposta de sucesso (o utilizador recebe isto rapidamente)
-    echo json_encode([
-        'success' => true, 
-        'message' => 'Mensagem enviada com sucesso! Entraremos em contacto em breve.'
-    ]);
-?>
+    echo json_encode(['success' => true, 'message' => 'Enviado com sucesso!']);
+
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['success' => false, 'error' => 'Erro ao processar: ' . $e->getMessage()]);
+}
