@@ -5,12 +5,11 @@ Estrutura do projeto:
 js/
 ├── script.js                 # Efeitos visuais e animações gerais do site
 ├── i18n.js                   # Sistema de tradução PT/EN
+├── menu-public.js            # Carregamento dinâmico da ementa pública (menu.html)
 ├── reservas-dashboard.js     # Dashboard de reservas (admin)
 ├── dashboard-tabs.js         # Navegação por abas e modais do dashboard
-├── dashboard.js              # Dashboard legado/alternativo
-├── menu-dashboard.js         # Gestão do menu no dashboard (CRUD pratos)
-├── reservas-form.js          # Formulário de reservas na página pública
-└── firebase-config.js        # Configuração Firebase (não utilizada)
+├── dashboard.js              # Dashboard legado/alternativo (não usado)
+└── reservas-form.js          # Formulário de reservas na página pública
 ```
 
 ---

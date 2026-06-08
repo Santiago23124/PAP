@@ -1,6 +1,224 @@
 @import "../../components/footer.css";
 @import "../../components/menu-login.css";
 
-/* Estilos especificos da pagina carta de vinhos. */
+/* ============================================
+   BOTÃO VER MAIS - CARTA DE VINHOS
+   ============================================ */
+
+.btn-ver-mais {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 8px 18px;
+    background: transparent;
+    border: 1px solid #c5a880;
+    color: #c5a880;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn-ver-mais:hover {
+    background: #c5a880;
+    color: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(197, 168, 128, 0.4);
+}
+
+.btn-ver-mais i {
+    font-size: 0.9em;
+}
+
+/* ============================================
+   MODAL DE DETALHES DO VINHO
+   ============================================ */
+
+.wine-modal-content {
+    max-width: 700px;
+    width: 90%;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.95) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.wine-modal-content .modal-header {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #c5a880;
+}
+
+.wine-modal-content .modal-header h2 {
+    color: #c5a880;
+    font-size: 1.3em;
+    margin: 0;
+    font-family: 'Outfit', sans-serif;
+}
+
+.wine-modal-content .modal-header .modal-close {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.8em;
+    cursor: pointer;
+    transition: color 0.3s;
+    padding: 0;
+    line-height: 1;
+}
+
+.wine-modal-content .modal-header .modal-close:hover {
+    color: #fff;
+}
+
+.wine-modal-body {
+    display: flex;
+    gap: 25px;
+    padding: 25px;
+}
+
+.wine-modal-image {
+    flex: 0 0 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wine-bottle-placeholder {
+    width: 120px;
+    height: 200px;
+    background: linear-gradient(180deg, #2d1f1f 0%, #1a0f0f 100%);
+    border-radius: 60px 60px 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c5a880;
+    font-size: 2.5em;
+    border: 2px solid #c5a880;
+}
+
+.wine-modal-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.wine-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0eade;
+}
+
+.wine-info-row:last-child {
+    border-bottom: none;
+}
+
+.wine-info-label {
+    font-weight: 600;
+    color: #888;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.wine-info-label i {
+    color: #c5a880;
+    width: 14px;
+    text-align: center;
+}
+
+.wine-info-value {
+    color: #1a1a1a;
+    font-weight: 500;
+    text-align: right;
+    font-size: 0.95em;
+}
+
+.wine-info-value.wine-price {
+    color: #c5a880;
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.wine-modal-notes {
+    padding: 0 25px 20px;
+    color: #555;
+    font-size: 0.9em;
+    line-height: 1.6;
+    font-style: italic;
+    border-top: 1px solid #f0eade;
+    margin: 0 25px;
+    padding-top: 15px;
+}
+
+.wine-modal-actions {
+    padding: 15px 25px;
+    background: #faf6f0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn-wine-close {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 24px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn-wine-close:hover {
+    background: #c5a880;
+    color: #1a1a1a;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+    .wine-modal-content {
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    .wine-modal-body {
+        flex-direction: column;
+        align-items: center;
+    }
+    .wine-modal-image {
+        flex: none;
+    }
+    .wine-info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    .wine-info-value {
+        text-align: left;
+    }
+}
+
 
 

@@ -1,0 +1,641 @@
+@import "../estilos.css";
+
+/* ============================================
+   PÁGINA DE EVENTOS - 100 SABORES
+   Estilos limpos, organizados e responsivos
+   ============================================ */
+
+/* Animações Suaves */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+    0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+    50% { transform: translate(-50%, -50%) rotate(180deg); }
+}
+
+
+
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.eventos-hero {
+    min-height: 80vh;
+    background-image: url('../../pages/imagens/gallery/img-pagina-eventos.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-top: 0;
+}
+
+.eventos-hero::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    animation: shimmer 10s infinite linear;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.eventos-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(61, 47, 47, 0.85) 0%, rgba(90, 74, 74, 0.65) 100%);
+    z-index: 1;
+}
+
+.eventos-hero-content {
+    text-align: center;
+    color: var(--luxury-text-light);
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+    animation: fadeInUp 1.2s ease-out;
+}
+
+.eventos-hero-label {
+    font-size: 0.8em;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    opacity: 0.9;
+    color: var(--luxury-gold-light);
+}
+
+.eventos-hero-title {
+    font-size: 4.5em;
+    font-weight: 300;
+    letter-spacing: 8px;
+    margin-bottom: 15px;
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.eventos-hero-tagline {
+    font-size: 1.3em;
+    font-style: italic;
+    margin-bottom: 35px;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--luxury-gold-light);
+}
+
+.eventos-hero-cta-group {
+    display: flex;
+    justify-content: center;
+}
+
+.eventos-cta {
+    display: inline-block;
+    padding: 15px 40px;
+    background: var(--luxury-wine);
+    color: var(--luxury-text-light);
+    border: none;
+    text-decoration: none;
+    font-size: 0.8em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: var(--luxury-shadow-md);
+}
+
+.eventos-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--luxury-shadow-lg);
+    background: var(--luxury-wine-light);
+}
+
+/* ============================================
+   SECÇÃO DE INTRODUÇÃO (Layout Duas Colunas)
+   ============================================ */
+
+.eventos-intro-section {
+    padding: 100px 40px;
+    background: var(--luxury-white);
+}
+
+.eventos-intro-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.eventos-subtitle {
+    font-size: 0.85em;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--luxury-wine);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.eventos-title {
+    font-size: 2.8em;
+    font-weight: 400;
+    margin-bottom: 25px;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--luxury-text-dark);
+    line-height: 1.2;
+}
+
+.eventos-description {
+    font-size: 1.05em;
+    line-height: 1.8;
+    color: var(--luxury-text-gray);
+    margin-bottom: 30px;
+}
+
+.eventos-ideal-para {
+    background: var(--luxury-cream);
+    padding: 30px;
+    border-radius: 12px;
+    border-left: 4px solid var(--luxury-wine);
+}
+
+.eventos-ideal-para h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25em;
+    color: var(--luxury-text-dark);
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.eventos-ideal-para ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+}
+
+.eventos-ideal-para li {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9em;
+    color: var(--luxury-text-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.eventos-ideal-para li i {
+    color: var(--luxury-wine);
+    font-size: 0.85em;
+}
+
+.eventos-intro-image {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--luxury-shadow-lg);
+    line-height: 0;
+}
+
+.img-eventos-sala {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.eventos-intro-image:hover .img-eventos-sala {
+    transform: scale(1.05);
+}
+
+.eventos-intro-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(61, 47, 47, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* ============================================
+   SECÇÃO DE CARACTERÍSTICAS (Três Colunas)
+   ============================================ */
+
+.eventos-features-section {
+    padding: 100px 40px;
+    background: var(--luxury-dark);
+    text-align: center;
+}
+
+.eventos-features-header {
+    margin-bottom: 60px;
+}
+
+.eventos-features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.eventos-feature-card {
+    background: var(--luxury-white);
+    padding: 50px 30px;
+    border-radius: 16px;
+    box-shadow: var(--luxury-shadow-sm);
+    border: 1px solid rgba(114, 40, 49, 0.05);
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.eventos-feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--luxury-shadow-md);
+    border-color: rgba(114, 40, 49, 0.15);
+}
+
+.feature-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    background: var(--luxury-wine);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--luxury-text-light);
+    font-size: 1.6em;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(114, 40, 49, 0.2);
+}
+
+.eventos-feature-card h3 {
+    font-size: 1.4em;
+    font-weight: 500;
+    margin-bottom: 15px;
+    font-family: 'Playfair Display', serif;
+    color: var(--luxury-text-dark);
+}
+
+.eventos-feature-card p {
+    font-size: 0.95em;
+    color: var(--luxury-text-gray);
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* ============================================
+   FORMULÁRIO DE CONTACTO
+   ============================================ */
+
+.eventos-form-section {
+    padding: 100px 40px;
+    background: var(--luxury-white);
+}
+
+.eventos-form-container {
+    max-width: 850px;
+    margin: 0 auto;
+    background: var(--luxury-ivory);
+    padding: 60px;
+    border-radius: 20px;
+    box-shadow: var(--luxury-shadow-md);
+    border: 1px solid rgba(114, 40, 49, 0.08);
+}
+
+.eventos-form-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.eventos-form-header p {
+    color: var(--luxury-text-gray);
+    font-size: 1.05em;
+    max-width: 600px;
+    margin: 15px auto 0;
+}
+
+.eventos-contacto-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.form-group label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--luxury-text-dark);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+    padding: 14px 18px;
+    border: 1px solid rgba(114, 40, 49, 0.2);
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95em;
+    color: var(--luxury-text-dark);
+    background: var(--luxury-white);
+    transition: all 0.3s ease;
+    outline: none;
+    width: 100%;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--luxury-wine);
+    box-shadow: 0 0 0 3px rgba(114, 40, 49, 0.1);
+    background: #fff;
+}
+
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23722831%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 16px;
+    cursor: pointer;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.consent-checkbox {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 5px;
+}
+
+.consent-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+    cursor: pointer;
+    accent-color: var(--luxury-wine);
+}
+
+.consent-checkbox label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85em;
+    color: var(--luxury-text-gray);
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.privacy-link {
+    color: var(--luxury-wine);
+    text-decoration: underline;
+    transition: color 0.2s;
+    font-weight: 600;
+}
+
+.privacy-link:hover {
+    color: var(--luxury-wine-light);
+}
+
+.form-submit-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.eventos-btn-submit {
+    padding: 16px 50px;
+    background: var(--luxury-wine);
+    color: var(--luxury-text-light);
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--luxury-shadow-md);
+}
+
+.eventos-btn-submit:hover {
+    background: var(--luxury-wine-light);
+    transform: translateY(-2px);
+    box-shadow: var(--luxury-shadow-lg);
+}
+
+/* ============================================
+   SECÇÃO DE TESTEMUNHOS
+   ============================================ */
+
+.eventos-testimonials-section {
+    padding: 100px 40px;
+    background: linear-gradient(135deg, var(--luxury-dark) 0%, var(--luxury-brown) 100%);
+    text-align: center;
+    color: var(--luxury-text-light);
+    position: relative;
+    overflow: hidden;
+}
+
+.eventos-testimonials-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.testimonial-label {
+    font-size: 0.8em;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--luxury-gold-light);
+    margin-bottom: 25px;
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.testimonial-quote {
+    position: relative;
+    z-index: 1;
+}
+
+.quote-icon {
+    font-size: 3em;
+    color: rgba(114, 40, 49, 0.4);
+    margin-bottom: 20px;
+}
+
+.testimonial-quote blockquote {
+    margin: 0 auto 30px;
+    padding: 0;
+    border: none;
+}
+
+.testimonial-quote blockquote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8em;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--luxury-white);
+}
+
+.testimonial-author {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--luxury-gold-light);
+    font-weight: 600;
+    display: block;
+    font-style: normal;
+}
+
+/* ============================================
+   RESPONSIVIDADE (MEDIA QUERIES)
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .eventos-hero-title {
+        font-size: 3.5em;
+        letter-spacing: 6px;
+    }
+
+    .eventos-intro-container {
+        gap: 40px;
+    }
+
+    .img-eventos-sala {
+        height: 440px;
+    }
+
+    .eventos-features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .eventos-features-grid > :last-child {
+        grid-column: span 2;
+        max-width: 50%;
+        margin: 0 auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .eventos-hero {
+        min-height: 60vh;
+        background-attachment: scroll !important;
+    }
+
+    .eventos-hero-title {
+        font-size: 2.8em;
+        letter-spacing: 4px;
+    }
+
+    .eventos-hero-tagline {
+        font-size: 1.1em;
+    }
+
+    .eventos-intro-section,
+    .eventos-features-section,
+    .eventos-form-section,
+    .eventos-testimonials-section {
+        padding: 60px 20px;
+    }
+
+    .eventos-intro-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .img-eventos-sala {
+        height: 350px;
+    }
+
+    .eventos-ideal-para ul {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .eventos-features-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .eventos-features-grid > :last-child {
+        grid-column: span 1;
+        max-width: 100%;
+    }
+
+    .eventos-form-container {
+        padding: 30px 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .form-group.full-width {
+        grid-column: span 1;
+    }
+
+    .testimonial-quote blockquote p {
+        font-size: 1.4em;
+    }
+}
+
+@media (max-width: 480px) {
+    .eventos-hero-title {
+        font-size: 2.2em;
+        letter-spacing: 2px;
+    }
+
+    .eventos-title {
+        font-size: 2em;
+    }
+}

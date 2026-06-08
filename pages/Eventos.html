@@ -1,0 +1,282 @@
+﻿<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="eventos-hero-title">Eventos no 100 Sabores</title>
+    <!-- CSS Estilos e Fontes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="../imagens/logo/Logotipo_restaurante.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../css/pages/shared/global-pages.css">
+    <link rel="stylesheet" type="text/css" href="../css/pages/eventos.css">
+    <link rel="stylesheet" type="text/css" href="../css/estilos.css">
+    <link rel="stylesheet" type="text/css" href="../css/backups/estilos.before-full-split.css">
+
+   
+</head>
+<body>
+    <!-- Menu de Navegação Global -->
+    <nav class="main-navigation">
+        <button class="menu-toggle" aria-label="Abrir menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav>
+            <ul>
+                <!-- Seletor de Idioma com Bandeiras -->
+                <li class="lang-container">
+                    <i class="fas fa-globe"></i>
+                    <button onclick="mudarIdioma('pt')" class="lang-btn" data-lang-btn="pt">
+                        <img src="https://flagcdn.com/w20/pt.png" alt="Portugal" class="flag-icon">
+                    </button>
+                    <span class="divider">|</span>
+                    <button onclick="mudarIdioma('en')" class="lang-btn" data-lang-btn="en">
+                        <img src="https://flagcdn.com/w20/gb.png" alt="Reino Unido" class="flag-icon">
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="nav-link" data-i18n="nav-home">HOME</a>
+                <a href="index.html#sobre" class="nav-link" data-i18n="nav-sobre">SOBRE NÓS</a>
+                <a href="menu.html" class="nav-link" data-i18n="nav-menu">EMENTA</a>
+                <a href="carta_vinhos.html" class="nav-link" data-i18n="nav-vinhos">VINHOS</a>
+            </div>
+            <a href="index.html" class="nav-logo-center">
+                <img src="../pages/imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="footer-logo-img">
+            </a>
+            <div class="nav-right">
+                <a href="Galeria.html" class="nav-link" data-i18n="nav-galeria">GALERIA</a>
+                <a href="Bar.html" class="nav-link" data-i18n="nav-bar">Bar</a>
+                <a href="contacto.html" class="nav-link" data-i18n="nav-contacto">CONTACTO</a>
+                <a href="Reservas.html" class="nav-link nav-reservas" data-i18n="nav-reservas">RESERVAS</a>
+            </div>
+        </div>
+        <div class="nav-menu nav-menu-mobile">
+            <a href="index.html" class="nav-link" data-i18n="nav-home">HOME</a>
+            <a href="index.html#sobre" class="nav-link" data-i18n="nav-sobre">SOBRE NÓS</a>
+            <a href="menu.html" class="nav-link" data-i18n="nav-menu">EMENTA</a>
+            <a href="carta_vinhos.html" class="nav-link" data-i18n="nav-vinhos">VINHOS</a>
+            <a href="Galeria.html" class="nav-link" data-i18n="nav-galeria">GALERIA</a>
+            <a href="contacto.html" class="nav-link" data-i18n="nav-contacto">CONTACTO</a>
+            <a href="Reservas.html" class="nav-link" data-i18n="nav-reservas">RESERVAS</a>
+        </div>
+    </nav>
+
+    <!-- Secção Hero -->
+    <section class="eventos-hero">
+        <div class="eventos-hero-overlay"></div>
+        <div class="eventos-hero-content">
+            <span class="eventos-hero-label" data-i18n="eventos-hero-label">Exclusividade e Requinte</span>
+            <h1 class="eventos-hero-title" data-i18n="eventos-hero-title">Eventos no 100 Sabores</h1>
+            <p class="eventos-hero-tagline" data-i18n="eventos-hero-tagline">Celebre momentos únicos no coração de Lisboa</p>
+            <div class="eventos-hero-cta-group">
+                <a href="#eventos-contacto" class="eventos-cta" data-i18n="eventos-hero-cta">Solicitar Proposta</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Secção de Introdução (Dois Lados) -->
+    <section class="eventos-intro-section">
+        <div class="eventos-intro-container">
+            <div class="eventos-intro-text">
+                <span class="eventos-subtitle" data-i18n="eventos-intro-subtitle">O Espaço Ideal para o Seu Grupo</span>
+                <h2 class="eventos-title" data-i18n="eventos-intro-title">Uma Celebração de Sabores e Momentos</h2>
+                <p class="eventos-description" data-i18n="eventos-intro-description">
+                    Deseja um espaço amplo, sofisticado e elegante para um evento especial? O 100 Sabores oferece a atmosfera perfeita. A nossa sala principal e áreas reservadas foram concebidas com um design contemporâneo de luxo, ideal para acolher os seus convidados com total conforto e exclusividade.
+                </p>
+                <div class="eventos-ideal-para">
+                    <h3 data-i18n="eventos-ideal-title">Ideal para:</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> <span data-i18n="eventos-ideal-1">Jantares de Grupo</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="eventos-ideal-2">Eventos Corporativos</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="eventos-ideal-3">Celebrações de Casamentos</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="eventos-ideal-4">Festas de Aniversário</span></li>
+                        <li><i class="fas fa-check"></i> <span data-i18n="eventos-ideal-5">Cocktails e Lançamentos</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="eventos-intro-image">
+                <img src="../pages/imagens/gallery/43.jpg" alt="Sala de Eventos 100 Sabores" class="img-eventos-sala">
+            </div>
+        </div>
+    </section>
+
+    <!-- Secção de Características (Três Colunas) -->
+    <section class="eventos-features-section">
+        <div class="eventos-features-header">
+            <span class="eventos-subtitle" data-i18n="eventos-features-subtitle">Porquê Escolher-nos</span>
+            <h2 class="eventos-title" data-i18n="eventos-features-title">Uma Experiência Completa</h2>
+        </div>
+        <div class="eventos-features-grid">
+            <div class="eventos-feature-card">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-hotel"></i>
+                </div>
+                <h3 data-i18n="eventos-feat-1-title">Espaço & Capacidade</h3>
+                <p data-i18n="eventos-feat-1-desc">O nosso restaurante conta com dois andares elegantemente decorados, oferecendo flexibilidade para acomodar até 80 convidados com total privacidade e conforto climatizado.</p>
+            </div>
+            <div class="eventos-feature-card">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h3 data-i18n="eventos-feat-2-title">Alta Gastronomia</h3>
+                <p data-i18n="eventos-feat-2-desc">Ementas personalizadas criadas pelo nosso Chef, combinando a tradição gastronómica com técnicas inovadoras e ingredientes premium selecionados.</p>
+            </div>
+            <div class="eventos-feature-card">
+                <div class="feature-icon-wrapper">
+                    <i class="fas fa-concierge-bell"></i>
+                </div>
+                <h3 data-i18n="eventos-feat-3-title">Serviço de Excelência</h3>
+                <p data-i18n="eventos-feat-3-desc">Uma equipa dedicada e experiente para planear e executar o seu evento com atenção a cada detalhe, garantindo que o seu dia seja perfeito.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Secção de Formulário de Contacto -->
+    <section id="eventos-contacto" class="eventos-form-section">
+        <div class="eventos-form-container">
+            <div class="eventos-form-header">
+                <span class="eventos-subtitle" data-i18n="eventos-form-subtitle">Contacto para Eventos</span>
+                <h2 class="eventos-title" data-i18n="eventos-form-title">Solicitar Orçamento</h2>
+                <p data-i18n="eventos-form-desc">Preencha o formulário abaixo com os detalhes do seu evento. A nossa equipa entrará em contacto num prazo de 24 horas.</p>
+            </div>
+            <form class="eventos-contacto-form" action="" method="POST" id="eventosForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nome" data-i18n="form-nome-label">Nome Completo *</label>
+                        <input type="text" id="nome" name="nome" placeholder="Introduza o seu nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-i18n="form-email-label">E-mail *</label>
+                        <input type="email" id="email" name="email" placeholder="Introduza o seu e-mail" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="telefone" data-i18n="form-telefone-label">Telefone / Telemóvel *</label>
+                        <input type="tel" id="telefone" name="telefone" placeholder="Introduza o seu contacto telefónico" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo_evento" data-i18n="form-tipo-label">Tipo de Evento *</label>
+                        <select id="tipo_evento" name="tipo_evento" required>
+                            <option value="" disabled selected data-i18n="form-tipo-placeholder">Selecione o tipo de evento</option>
+                            <option value="corporativo" data-i18n="form-tipo-corp">Evento Corporativo</option>
+                            <option value="aniversario" data-i18n="form-tipo-aniv">Festa de Aniversário</option>
+                            <option value="casamento" data-i18n="form-tipo-casa">Casamento / Mini Wedding</option>
+                            <option value="grupo" data-i18n="form-tipo-grup">Jantar de Grupo</option>
+                            <option value="outro" data-i18n="form-tipo-outr">Outro Evento Privado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pessoas" data-i18n="form-pessoas-label">Nº de Pessoas *</label>
+                        <input type="number" id="pessoas" name="pessoas" min="10" max="80" placeholder="Mínimo 10 pessoas" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="data" data-i18n="form-data-label">Data do Evento *</label>
+                        <input type="date" id="data" name="data" required>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="mensagem" data-i18n="form-mensagem-label">Mensagem / Pedidos Especiais</label>
+                    <textarea id="mensagem" name="mensagem" rows="5" placeholder="Descreva os pormenores do seu evento (horário, restrições alimentares, ementas especiais...)"></textarea>
+                </div>
+
+                <div class="form-group consent-checkbox">
+                    <input type="checkbox" id="consentimento" name="consentimento" required>
+                    <label for="consentimento">
+                        <span data-i18n="form-consent-text">Declaro que li e concordo com a</span> 
+                        <a href="politica-privacidade.html" class="privacy-link" data-i18n="form-privacy-link">Política de Privacidade</a>.
+                    </label>
+                </div>
+
+                <div class="form-submit-container">
+                    <button type="submit" class="eventos-btn-submit" data-i18n="form-submit-btn">Enviar Mensagem</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Secção de Testemunhos -->
+    <section class="eventos-testimonials-section">
+        <div class="eventos-testimonials-container">
+            <span class="testimonial-label" data-i18n="testimonial-section-label">Opinião do Cliente</span>
+            <div class="testimonial-quote">
+                <i class="fas fa-quote-left quote-icon"></i>
+                <blockquote class="story-paragraph">
+                    <p data-i18n="testimonial-quote-text">"Celebrámos o aniversário de casamento dos meus pais no 100 Sabores e a experiência foi memorável. A equipa foi fantástica na organização da ementa personalizada, a comida estava requintada e o serviço impecável. Todos os convidados adoraram a elegância do espaço."</p>
+                </blockquote>
+                <cite class="testimonial-author">&mdash; Leonor Pereira, Evento Familiar</cite>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé Padrão Unificado -->
+      <footer class="rodape">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="footer-logo-img">
+                    <span class="footer-logo-text">100 SABORES</span>
+                </div>
+                <p class="footer-description">
+                    Experiência culinária única com pratos tradicionais portugueses
+                    preparados com ingredientes frescos e técnicas modernas.
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Contactos</h3>
+                <div class="footer-contact">
+                    <p><i class="fas fa-map-marker-alt"></i> Rua dos Sabores, 123<br>Porto, Portugal</p>
+                    <p><i class="fas fa-phone"></i> +351 222 123 456</p>
+                    <p><i class="fas fa-envelope"></i> info@100sabores.pt</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Horário</h3>
+                <div class="footer-hours">
+                    <p>Segunda - Quinta: 12h - 22h</p>
+                    <p>Sexta - Sábado: 12h - 23h</p>
+                    <p>Domingo: 12h - 21h</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Siga-nos</h3>
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2025 Restaurante 100 Sabores. Todos os direitos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Política de Privacidade</a>
+                    <span class="separator">|</span>
+                    <a href="#">Termos de Uso</a>
+                    <span class="separator">|</span>
+                    <a href="#">Mapa do Site</a>
+                </div>
+            </div>
+        </div>
+
+    <!-- Scripts Globais -->
+    <script src="../js/script.js"></script>
+    <script src="../js/i18n.js"></script>
+</body>
+</html>

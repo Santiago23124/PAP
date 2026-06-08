@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     const heroSection = document.querySelector('.hero-section');
     const menuHero = document.querySelector('.menu-hero');
@@ -127,5 +128,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// script.js - Funcionalidades gerais do site (sem tradução)
-// A tradução foi movida para traducao.js

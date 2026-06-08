@@ -2,10 +2,9 @@
 
 /* Hero Section do Menu */
 .menu-hero {
-    margin-top: 80px;
-    padding: 80px 0;
-    background: linear-gradient(135deg, rgba(66, 4, 4, 0.9) 20%, rgba(49, 1, 1, 0.85) 30%, rgba(70, 4, 12, 0.8) 50%),
-            url('../imagens/gallery/ambientes_salotto_pic1.webp');
+    margin-top: 100px;
+    padding: 100px ;
+    background-image: url(../../pages/imagens/gallery/30.jpg);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -13,6 +12,7 @@
     text-align: center;
     position: relative;
     overflow: hidden;
+    min-height: 100vh;
 }
 
 .menu-hero .parallax-bg {
