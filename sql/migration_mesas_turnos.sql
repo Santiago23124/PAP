@@ -122,7 +122,7 @@ FROM reservas r
 LEFT JOIN mesas m ON r.mesa_id = m.id
 LEFT JOIN turnos t ON r.turno_id = t.id;
 
--- Trigger: Impedir reservas duplicadas na mesma mesa/horário
+--Trigger: Impedir reservas duplicadas na mesma mesa/horário
 -- Criar manualmente no MySQL se necessário, pois requer mudança de delimiter
 -- DELIMITER $$
 -- CREATE TRIGGER before_reserva_insert BEFORE INSERT ON reservas

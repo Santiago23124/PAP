@@ -1,0 +1,98 @@
+.privacy-hero {
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../../../pages/imagens/gallery/hero-bg.jpg') center/cover no-repeat;
+    padding: 100px 20px;
+    text-align: center;
+    color: white;
+}
+.privacy-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.privacy-hero .hero-label {
+    display: inline-block;
+    color: #c9a96e;
+    font-size: 0.85rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+.privacy-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+.privacy-hero .privacy-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.privacy-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.privacy-content h2 {
+    color: #c9a96e;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    margin-top: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid rgba(201,169,110,0.3);
+    padding-bottom: 10px;
+}
+
+.privacy-content h2:first-child {
+    margin-top: 0;
+}
+
+.privacy-content p {
+    color: #0a0a0a;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+}
+
+.privacy-content ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+
+.privacy-content ul li {
+    padding: 8px 0 8px 25px;
+    position: relative;
+    color: #000000;
+    line-height: 1.6;
+}
+
+.privacy-content ul li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: #c9a96e;
+}
+
+.privacy-content a {
+    color: #c9a96e;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.privacy-content a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+.privacy-meta {
+    text-align: center;
+    padding: 30px;
+    color: #888;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 50px;
+}

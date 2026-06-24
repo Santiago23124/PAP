@@ -2,6 +2,21 @@
 @import "../../components/menu-login.css";
 
 /* ============================================
+   HERO OVERRIDE — CARTA DE VINHOS
+   ============================================ */
+.menu-hero {
+    background-image: url(../../../pages/imagens/gallery/29.jpg);
+    background-position: center 30%;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+    min-height: 80vh;
+}
+
+
+
+/* ============================================
    BOTÃO VER MAIS - CARTA DE VINHOS
    ============================================ */
 
@@ -36,10 +51,39 @@
 /* ============================================
    MODAL DE DETALHES DO VINHO
    ============================================ */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10000;
+    
+    /* CORREÇÃO 1: Mude de display: flex para display: none por padrão */
+    display: none; 
+    
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    
+    /* CORREÇÃO 2: Remova o backdrop-filter se o site continuar a travar */
+    /* backdrop-filter: blur(3px); */ 
+}
+
+/* Criamos uma classe de estado para o JavaScript */
+.modal-overlay.show {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
 .wine-modal-content {
-    max-width: 700px;
-    width: 90%;
+    max-width: 1000px;
+    width: 92%;
     background: #fff;
     border-radius: 16px;
     overflow: hidden;
@@ -63,7 +107,7 @@
 
 .wine-modal-content .modal-header h2 {
     color: #c5a880;
-    font-size: 1.3em;
+    font-size: 1.6em;
     margin: 0;
     font-family: 'Outfit', sans-serif;
 }
@@ -90,7 +134,7 @@
 }
 
 .wine-modal-image {
-    flex: 0 0 150px;
+    flex: 0 0 280px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -131,7 +175,7 @@
 .wine-info-label {
     font-weight: 600;
     color: #888;
-    font-size: 0.9em;
+    font-size: 1.05em;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -147,19 +191,19 @@
     color: #1a1a1a;
     font-weight: 500;
     text-align: right;
-    font-size: 0.95em;
+    font-size: 1.1em;
 }
 
 .wine-info-value.wine-price {
     color: #c5a880;
     font-weight: 700;
-    font-size: 1.1em;
+    font-size: 1.3em;
 }
 
 .wine-modal-notes {
     padding: 0 25px 20px;
     color: #555;
-    font-size: 0.9em;
+    font-size: 1.05em;
     line-height: 1.6;
     font-style: italic;
     border-top: 1px solid #f0eade;

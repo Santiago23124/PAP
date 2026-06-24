@@ -42,10 +42,10 @@
             </div>
             <a href="index.html" class="nav-logo-center">
                 <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="logo-img">
-                <span class="logo-text">100 SABORES</span>
             </a>
             <div class="nav-right">
                 <a href="Galeria.html" class="nav-link">GALERIA</a>
+                <a href="Eventos.html" class="nav-link">EVENTOS</a> 
                 <a href="contacto.html" class="nav-link">CONTACTO</a>
                 <a href="Reservas.html" class="nav-link nav-reservas active">RESERVAS</a>
             </div>
@@ -56,22 +56,23 @@
             <a href="menu.html" class="nav-link">EMENTA</a>
             <a href="carta_vinhos.html" class="nav-link">VINHOS</a>
             <a href="Galeria.html" class="nav-link">GALERIA</a>
+            <a href="Eventos.html" class="nav-link">EVENTOS</a>
             <a href="contacto.html" class="nav-link">CONTACTO</a>
             <a href="Reservas.html" class="nav-link active">RESERVAS</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <div class="hero-section">
+    <div class="reservas-hero">
         <div class="parallax-bg"></div>
         <div class="parallax-overlay"></div>
-        <div class="hero-content">
-            <span class="hero-label">RESERVE A SUA EXPERIÊNCIA</span>
-            <h1 class="hero-title">Reservas</h1>
-            <p class="hero-tagline">Garanta o seu lugar no 100 Sabores</p>
-            <p class="hero-address">Largo da Trindade, Príncipe Real</p>
+        <div class="reservas-hero-content">
+            <span class="reservas-label">RESERVE A SUA EXPERIÊNCIA</span>
+            <h1 class="reservas-title">Reservas</h1>
+            <p class="reservas-tagline">Garanta o seu lugar no 100 Sabores</p>
+            <p class="reservas-address">Largo da Trindade, Príncipe Real</p>
         
-            <div class="hero-hours">
+            <div class="reservas-hours">
                 <span>Seg-Sáb: 12h-00h</span>
                 <span>Dom: 12h-16h</span>
             </div>
@@ -136,14 +137,16 @@
                                         <input type="date" id="data" name="data" required>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="hora">
-                                        <i class="far fa-clock"></i> Hora *
-                                    </label>
-                                    <div class="input-wrapper">
-                                        <input type="time" id="hora" name="hora" required>
+<div class="form-group">
+                                        <label for="hora">
+                                            <i class="far fa-clock"></i> Hora *
+                                        </label>
+                                        <div class="input-wrapper">
+                                            <select id="hora" name="hora" required>
+                                                <option value="">Carregando horários...</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
                                 <div class="form-group">
                                     <label for="num_pessoas">
                                         <i class="fas fa-users"></i> Pessoas *
@@ -227,7 +230,7 @@
                         <!-- Espaço Sala Private -->
                         <div class="space-card">
                             <div class="space-image">
-                                <img src="../pages/imagens/gallery/imagem_22.jpg" alt="Sala Privada">
+                                <img src="../pages/imagens/gallery/29.jpg" alt="Sala Privada">
                                 <div class="space-overlay">
                                     <span class="space-tag">Exclusivo</span>
                                 </div>
@@ -263,7 +266,7 @@
                         <!-- Espaço Bar/Wine -->
                         <div class="space-card">
                             <div class="space-image">
-                                <img src="../pages/imagens/gallery/100-maneiras-04-14-22.jpg" alt="Wine Bar">
+                                <img src="../pages/imagens/gallery/30.jpg" alt="Wine Bar">
                                 <div class="space-overlay">
                                     <span class="space-tag">Trendy</span>
                                 </div>

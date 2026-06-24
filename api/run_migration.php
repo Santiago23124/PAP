@@ -1,6 +1,6 @@
 <?php
 /**
- * Migration script to add mesas and turnos tables
+ * Migration script to setup simplified database schema
  */
 require_once '../config/database.php';
 
@@ -10,7 +10,8 @@ try {
 
     echo "Starting migration...\n";
 
-    $sql = file_get_contents('../sql/migration_mesas_turnos.sql');
+    $sql = file_get_contents('../sql/database_completo.sql');
+    $sql = preg_replace('/^(#|--).*$/m', '', $sql);
     $statements = array_filter(array_map('trim', explode(';', $sql)));
 
     foreach ($statements as $stmt) {

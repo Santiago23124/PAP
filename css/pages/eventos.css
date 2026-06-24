@@ -24,8 +24,8 @@
    ============================================ */
 
 .eventos-hero {
-    min-height: 80vh;
-    background-image: url('../../pages/imagens/gallery/img-pagina-eventos.jpg');
+    min-height: 100vh;
+    background-image: url('../../pages/imagens/gallery/');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -239,7 +239,7 @@
 
 .eventos-features-section {
     padding: 100px 40px;
-    background: var(--luxury-dark);
+    background: var( --luxury-text-light);
     text-align: center;
 }
 
@@ -260,7 +260,7 @@
     padding: 50px 30px;
     border-radius: 16px;
     box-shadow: var(--luxury-shadow-sm);
-    border: 1px solid rgba(114, 40, 49, 0.05);
+    border: 1px solid rgba(189, 179, 180, 0.05);
     transition: all 0.4s ease;
     display: flex;
     flex-direction: column;
@@ -276,7 +276,7 @@
 .feature-icon-wrapper {
     width: 70px;
     height: 70px;
-    background: var(--luxury-wine);
+    background: var(--luxury-dark);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -450,7 +450,7 @@
 
 .eventos-btn-submit {
     padding: 16px 50px;
-    background: var(--luxury-wine);
+    background: var(--luxury-wine-dark);
     color: var(--luxury-text-light);
     border: none;
     font-family: 'Montserrat', sans-serif;
@@ -476,7 +476,9 @@
 
 .eventos-testimonials-section {
     padding: 100px 40px;
-    background: linear-gradient(135deg, var(--luxury-dark) 0%, var(--luxury-brown) 100%);
+    background-image: url('../../pages/imagens/gallery/ambientes_salotto_pic1.webp');
+    background-size: cover;
+    background-position: center;
     text-align: center;
     color: var(--luxury-text-light);
     position: relative;
@@ -505,7 +507,7 @@
 
 .quote-icon {
     font-size: 3em;
-    color: rgba(114, 40, 49, 0.4);
+    color: rgb(250, 249, 249);
     margin-bottom: 20px;
 }
 

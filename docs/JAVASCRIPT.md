@@ -47,7 +47,7 @@ js/
 **Função principal:** Painel administrativo de gestão de reservas.
 
 **Responsabilidades:**
-- Carregar reservas, mesas e turnos via API (`../api/reservas.php`)
+- Carregar reservas e mesas via API (`../api/reservas.php`)
 - Renderizar tabela de reservas com paginação (10 por página)
 - Filtros: pesquisa por nome/email/telefone, estado, data (hoje/semana/mês)
 - Formulário de nova reserva com validação
@@ -57,7 +57,7 @@ js/
 - Estatísticas animadas: total, hoje, semana, ocupação %
 - Utilitários: formatação de datas, escape HTML
 
-**Estado global:** `todasReservas`, `reservasFiltradas`, `mesasDisponiveis`, `turnosAtivos`
+**Estado global:** `todasReservas`, `reservasFiltradas`, `mesasDisponiveis`
 
 ---
 

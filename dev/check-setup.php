@@ -16,7 +16,7 @@ try {
     echo "<p class='ok'>✓ Conexão MySQL: OK</p>";
     
     // Verificar tabelas
-    $tables = ['reservas', 'mesas', 'turnos', 'funcionarios', 'menu_itens'];
+    $tables = ['reservas', 'mesas', 'funcionarios', 'menu_itens'];
     foreach ($tables as $table) {
         $result = $db->query("SHOW TABLES LIKE '$table'");
         if ($result->rowCount() > 0) {
@@ -28,11 +28,10 @@ try {
     
     // Verificar dados nas tabelas
     $mesas = $db->query("SELECT COUNT(*) FROM mesas")->fetchColumn();
-    $turnos = $db->query("SELECT COUNT(*) FROM turnos")->fetchColumn();
     $funcionarios = $db->query("SELECT COUNT(*) FROM funcionarios")->fetchColumn();
     
     echo "<h2>Dados nas Tabelas</h2>";
-    echo "<p>Mesas: $mesas | Turnos: $turnos | Funcionários: $funcionarios</p>";
+    echo "<p>Mesas: $mesas | Funcionários: $funcionarios</p>";
     
     echo "<h2>Credenciais de Teste</h2>";
     echo "<p>Utilizador: <strong>admin</strong> | Senha: <strong>password</strong></p>";
@@ -40,7 +39,6 @@ try {
     echo "<h2>API Endpoints</h2>";
     echo "<ul>";
     echo "<li><a href='api/reservas.php?action=mesas' target='_blank'>/api/reservas.php?action=mesas</a></li>";
-    echo "<li><a href='api/reservas.php?action=turnos' target='_blank'>/api/reservas.php?action=turnos</a></li>";
     echo "<li><a href='api/reservas.php' target='_blank'>/api/reservas.php</a></li>";
     echo "<li><a href='api/menu.php' target='_blank'>/api/menu.php</a> (requer Authorization header)</li>";
     echo "</ul>";

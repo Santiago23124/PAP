@@ -13,14 +13,14 @@
 Opção A - Via phpMyAdmin:
 1. Aceder a `http://localhost/phpmyadmin`
 2. Criar base de dados `restaurante_100_sabores`
-3. Importar o ficheiro `database/schema.sql`
+ 3. Importar o ficheiro `sql/database_simplificado.sql`
 
 Opção B - Via linha de comandos:
 ```bash
-mysql -u root -p < database/schema.sql
+mysql -u root -p < sql/database_simplificado.sql
 ```
 
-### 3. Executar Migration (Mesas e Turnos)
+### 3. Executar Setup
 ```bash
 cd PAP-100_Sabores
 php setup-database.php
@@ -34,7 +34,6 @@ http://localhost/PAP-100_Sabores/api/reservas.php?install=true
 ### 4. Verificar APIs
 Testar as APIs no browser:
 - `http://localhost/PAP-100_Sabores/api/reservas.php?action=mesas`
-- `http://localhost/PAP-100_Sabores/api/reservas.php?action=turnos`
 - `http://localhost/PAP-100_Sabores/api/menu.php`
 
 ### 5. Aceder ao Dashboard
@@ -64,7 +63,6 @@ PAP-100_Sabores/
 - `PUT /api/reservas.php` - Atualizar reserva
 - `DELETE /api/reservas.php?id=X` - Eliminar reserva
 - `GET /api/reservas.php?action=mesas` - Listar mesas
-- `GET /api/reservas.php?action=turnos` - Listar turnos
 
 ### Menu
 - `GET /api/menu.php` - Listar itens do menu

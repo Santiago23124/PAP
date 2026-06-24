@@ -12,6 +12,7 @@
         }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/pages/admin/dashboard-hero.css">
     <link rel="stylesheet" type="text/css" href="../css/pages/admin/dashboard.css">
     <link rel="stylesheet" type="text/css" href="../css/pages/admin/dashboard-extra.css">
 </head>
@@ -27,7 +28,6 @@
             </div>
             <a href="index.html" class="nav-logo-center">
                 <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="logo-img">
-                <span class="logo-text">100 SABORES</span>
             </a>
             <div class="nav-right">
                 <a href="Reservas.html" class="nav-link" target="_blank">VER PÁGINA PÚBLICA</a>
@@ -37,13 +37,13 @@
     </nav>
 
     <!-- Hero Section -->
-    <div class="hero-section">
+    <div class="dashboard-hero">
         <div class="parallax-bg"></div>
         <div class="parallax-overlay"></div>
-        <div class="hero-content">
+        <div class="dashboard-hero-content">
             <span class="hero-label">ÁREA DE GESTÃO</span>
-            <h1 class="hero-title">Dashboard</h1>
-            <p class="hero-tagline">Controlo total do restaurante em tempo real</p>
+            <h1 class="dashboard-hero-title">Dashboard</h1>
+            <p class="dashboard-hero-subtitle">Controlo total do restaurante em tempo real</p>
         </div>
     </div>
 
@@ -209,7 +209,6 @@
                                             <th>Hora</th>
                                             <th>Pessoas</th>
                                             <th>Mesa</th>
-                                            <th>Turno</th>
                                             <th>Estado</th>
                                             <th>Ações</th>
                                         </tr>
@@ -296,10 +295,33 @@
                                     <label for="menuItemPrice">Preço (€) *</label>
                                     <input type="number" id="menuItemPrice" required placeholder="0.00" step="0.01" min="0">
                                 </div>
-                                <div class="form-group">
-                                    <label for="menuItemDescription">Descrição *</label>
-                                    <textarea id="menuItemDescription" rows="3" required placeholder="Descrição do prato..."></textarea>
-                                </div>
+<div class="form-group">
+                    <label for="menuItemDescription">Descrição *</label>
+                    <textarea id="menuItemDescription" rows="3" required placeholder="Descrição do prato..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Imagem do Prato</label>
+                    <div class="image-upload-wrapper" style="border: 2px dashed rgba(184, 160, 130, 0.4); padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 10px; background: #fafafa;">
+                        <input type="file" id="menuItemImageFile" accept="image/png, image/jpeg, image/jpg, image/webp" style="display: none;" onchange="previewImageMenu(this)">
+                        <button type="button" onclick="document.getElementById('menuItemImageFile').click()" style="background: transparent; border: 1px solid var(--luxury-gold); padding: 8px 15px; border-radius: 4px; color: var(--luxury-text-dark); cursor: pointer; margin-bottom: 10px; font-family: 'Montserrat', sans-serif;">
+                            <i class="fas fa-upload"></i> Escolher Imagem do PC
+                        </button>
+                        <p style="font-size: 0.8em; color: #888; margin: 0;" id="menuItemFileName">Nenhuma imagem selecionada</p>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <span style="flex: 1; height: 1px; background: #eee;"></span>
+                        <span style="padding: 0 10px; font-size: 0.85em; color: #888;">OU</span>
+                        <span style="flex: 1; height: 1px; background: #eee;"></span>
+                    </div>
+
+                    <label for="menuItemImage" style="font-size: 0.85em;">URL da Imagem Existente</label>
+                    <input type="text" id="menuItemImage" placeholder="https://exemplo.com/imagem.jpg">
+                    
+                    <div id="menuItemImagePreview" style="margin-top: 15px; text-align: center; display: none;">
+                        <img id="previewMenuImg" src="" alt="Preview" style="max-width: 100%; max-height: 150px; border-radius: 8px; box-shadow: var(--luxury-shadow-sm);">
+                    </div>
+                </div>
                                 <div class="form-group" id="menuDisponivel" style="display:none;">
                                     <label class="checkbox-label-inline">
                                         <input type="checkbox" id="menuItemDisponivel" checked>
@@ -379,7 +401,7 @@
         <i class="far fa-check-circle"></i>
         <span>Operação realizada com sucesso!</span>
     </div>
-
+  
     <!-- ============================================================
          MODAL DE EDIÇÃO DE RESERVA
          ============================================================ -->
@@ -518,7 +540,7 @@
 
     <script src="../js/script.js?v=2"></script>
     <script src="../js/reservas-dashboard.js?v=2"></script>
-    <script src="../js/menu-dashboard.js?v=2"></script>
+    <script src="../js/menu-dashboard.js?v=3"></script>
     <script src="../js/dashboard-tabs.js?v=2"></script>
     <script>
         // Função de logout

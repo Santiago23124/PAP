@@ -1,16 +1,56 @@
-// ============================================
-// RESERVAS FORM - PÁGINA PÚBLICA
-// Handler simples para formulário de reserva
-// ============================================
-// Função principal que ouve o navegador, esta garante que o codigo js so comece a ser carregado depois do HTML
+function carregarHorariosDisponiveis(data) {
+    const horaSelect = document.getElementById('hora');
+    if (!horaSelect) return;
+
+    horaSelect.innerHTML = '<option value="">A carregar...</option>';
+    horaSelect.disabled = true;
+
+    fetch('../api/reservas.php?action=horarios&data=' + data)
+        .then(res => {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+        })
+        .then(response => {
+            if (response.sucesso && response.horarios.length > 0) {
+                horaSelect.innerHTML = '<option value="">Selecione um horário</option>';
+                response.horarios.forEach(h => {
+                    const opt = document.createElement('option');
+                    opt.value = h.hora;
+                    opt.textContent = h.hora + ' (' + h.vagas + ' vagas)';
+                    horaSelect.appendChild(opt);
+                });
+            } else {
+                carregarHorariosFallback();
+            }
+            horaSelect.disabled = false;
+        })
+        .catch(err => {
+            console.error('Erro carregar horários:', err);
+            carregarHorariosFallback();
+            horaSelect.disabled = false;
+        });
+}
+
+function carregarHorariosFallback() {
+    const horaSelect = document.getElementById('hora');
+    if (!horaSelect) return;
+
+    const horarios = ['12:00', '12:30', '13:00', '13:30', '14:00', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'];
+    horaSelect.innerHTML = '<option value="">Selecione um horário</option>';
+    horarios.forEach(h => {
+        const opt = document.createElement('option');
+        opt.value = h;
+        opt.textContent = h;
+        horaSelect.appendChild(opt);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('reservaForm');
     const debugEl = document.getElementById('reservasDebug');
 
-    // Carregar reservas salvas (localStorage fallback)
     let reservas = JSON.parse(localStorage.getItem('reservas_publico')) || [];
 
-    // Função de utilidade para atualizar o debug
     function atualizarDebug() {
         if (debugEl) {
             debugEl.textContent = JSON.stringify(reservas, null, 2);
@@ -18,51 +58,47 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     atualizarDebug();
 
-    // Submissão do formulário
-    form.addEventListener('submit', async function(e) { // anync- Function assincrona (espera a resposta do servidor)
-        e.preventDefault(); // Previne o comportamento padrão do HTML (Refresh) assim nao existe perda de dados
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
 
         const submitBtn = document.getElementById('submitBtn');
         const formData = new FormData(form);
 
         submitBtn.innerHTML = 'A enviar...';
-        submitBtn.disabled = true; // Desabilita o botão de submit para evitar multiplas submissões
-        // criar um objeto chamado reserva
+        submitBtn.disabled = true;
+
         const reserva = {
-            nome: formData.get('nome'), //FormData() - objeto que vai buscar o que foi escrito no input do formulario
+            nome: formData.get('nome'),
             email: formData.get('email'),
             telefone: formData.get('telefone'),
             data: formData.get('data'),
             hora: formData.get('hora'),
-            num_pessoas: parseInt(formData.get('num_pessoas')), //Converte a string em um numero inteiro
+            num_pessoas: parseInt(formData.get('num_pessoas')),
             observacoes: formData.get('observacoes') || '',
             status: 'pendente',
-            criado_em: new Date().toISOString() //Gera uma marca para saber exatamente quando foi criada a reserva
+            criado_em: new Date().toISOString()
         };
-           // fetch() -Função que faz o pedido HTTP ao servidor PHP (API)
+
         try {
-            //await -espera a resposta do servidor PHP (API)
             const response = await fetch('../api/reservas.php', {
-                method: 'POST', //Metodo usado para enviar dados e nao para obter dados
-                headers: { 'Content-Type': 'application/json' }, // O envio dos dados é em JSON
-                body: JSON.stringify(reserva) // Converte o objeto reserva em uma string JSON
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(reserva)
             });
 
-            const result = await response.json(); // Converte a resposta do servidor PHP (API) em um objeto JSON
+            const result = await response.json();
 
             if (result.sucesso) {
-                // Mostrar sucesso
-                form.style.display = 'none'; //Se correr tudo bem, esconde o formulario
+                form.style.display = 'none';
                 const successDiv = document.getElementById('successMessage');
-                successDiv.style.display = 'block'; //Mostra a div de sucesso
-                successDiv.innerHTML = ` 
+                successDiv.style.display = 'block';
+                successDiv.innerHTML = `
                     <h3>Reserva Confirmada!</h3>
                     <p>Obrigado ${reserva.nome}!</p>
                     <p>Nº da reserva: <strong>#${result.id}</strong></p>
                     ${result.mesa ? '<p>Mesa: <strong>' + result.mesa.numero + '</strong></p>' : ''}
                 `;
             } else {
-                // Se der erro, mostra uma mensagem de erro
                 alert('Erro: ' + (result.erro || result.erros?.join(', ') || 'Falha na reserva'));
                 submitBtn.innerHTML = 'Confirmar Reserva';
                 submitBtn.disabled = false;
@@ -75,11 +111,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Data mínima: hoje
     const dataInput = document.getElementById('data');
-    const hoje = new Date().toISOString().split('T')[0]; //toISOString() - Converte a data e hora em uma string ISO (formato: YYYY-MM-DDTHH:MM:SS.SSSZ)
+    const hoje = new Date().toISOString().split('T')[0];
     dataInput.min = hoje;
     if (!dataInput.value) {
         dataInput.value = hoje;
     }
+    carregarHorariosDisponiveis(hoje);
+
+    dataInput.addEventListener('change', function() {
+        carregarHorariosDisponiveis(this.value);
+    });
 });

@@ -16,6 +16,7 @@ class MenuItem {
     public $tipo;
     public $disponivel;
     public $ordem_exibicao;
+    public $imagem;
     public $criado_por;
     public $data_criacao;
     public $data_atualizacao;
@@ -29,8 +30,8 @@ class MenuItem {
      */
     public function criar($dados) {
         $query = "INSERT INTO " . $this->table_name . "
-                  (nome, descricao, preco, categoria, tipo, criado_por)
-                  VALUES (:nome, :descricao, :preco, :categoria, :tipo, :criado_por)";
+                  (nome, descricao, preco, categoria, tipo, imagem, criado_por)
+                  VALUES (:nome, :descricao, :preco, :categoria, :tipo, :imagem, :criado_por)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -39,6 +40,7 @@ class MenuItem {
         $stmt->bindParam(":preco", $dados['preco']);
         $stmt->bindParam(":categoria", $dados['categoria']);
         $stmt->bindParam(":tipo", $dados['tipo']);
+        $stmt->bindParam(":imagem", $dados['imagem']);
         $stmt->bindParam(":criado_por", $dados['criado_por']);
 
         if ($stmt->execute()) {
@@ -126,6 +128,7 @@ class MenuItem {
                       preco = :preco,
                       categoria = :categoria,
                       tipo = :tipo,
+                      imagem = :imagem,
                       disponivel = :disponivel";
 
         $params = array(
@@ -134,6 +137,7 @@ class MenuItem {
             ":preco" => $dados['preco'],
             ":categoria" => $dados['categoria'],
             ":tipo" => $dados['tipo'],
+            ":imagem" => $dados['imagem'] ?? null,
             ":disponivel" => isset($dados['disponivel']) ? $dados['disponivel'] : true,
             ":id" => $id
         );

@@ -177,22 +177,6 @@ function configurarFormularioMenu() {
         const id = document.getElementById('menuItemId').value;
         const isEdicao = id && id !== '';
 
-        const payload = {
-            nome: document.getElementById('menuItemName').value.trim(),
-            preco: parseFloat(document.getElementById('menuItemPrice').value),
-            descricao: document.getElementById('menuItemDescription').value.trim(),
-            categoria: document.getElementById('menuItemCategory').value,
-            tipo: document.getElementById('menuItemType').value,
-            disponivel: isEdicao
-                ? (document.getElementById('menuItemDisponivel').checked ? 1 : 0)
-                : 1
-        };
-
-        if (!payload.nome || !payload.categoria || isNaN(payload.preco) || !payload.descricao) {
-            mostrarToast('Preenche todos os campos obrigatórios.', 'error');
-            return;
-        }
-
         const submitBtn = document.getElementById('menuSubmitBtn');
         const submitText = document.getElementById('menuSubmitText');
         const submitIcon = document.getElementById('menuSubmitIcon');
@@ -200,10 +184,66 @@ function configurarFormularioMenu() {
         if (submitBtn) {
             submitBtn.disabled = true;
             if (submitIcon) submitIcon.className = 'fas fa-spinner fa-spin';
-            if (submitText) submitText.textContent = 'A guardar...';
+            if (submitText) submitText.textContent = 'A processar...';
         }
 
         try {
+            // 1. Processar Upload da Imagem se existir ficheiro selecionado
+            const fileInput = document.getElementById('menuItemImageFile');
+            let finalImageUrl = document.getElementById('menuItemImage').value.trim() || null;
+            
+            if (fileInput && fileInput.files && fileInput.files.length > 0) {
+                const formData = new FormData();
+                formData.append('imagem', fileInput.files[0]);
+                
+                try {
+                    const uploadResp = await fetch('../api/upload_imagem.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const uploadResult = await uploadResp.json();
+                    
+                    if (uploadResult.sucesso) {
+                        finalImageUrl = uploadResult.url;
+                        document.getElementById('menuItemImage').value = finalImageUrl;
+                    } else {
+                        mostrarToast('Erro no upload: ' + uploadResult.erro, 'error');
+                        throw new Error('Upload failed');
+                    }
+                } catch (uploadErr) {
+                    console.error('Erro no upload da imagem:', uploadErr);
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        if (submitIcon) submitIcon.className = isEdicao ? 'fas fa-save' : 'fas fa-plus';
+                        if (submitText) submitText.textContent = isEdicao ? 'Guardar Alterações' : 'Adicionar Prato';
+                    }
+                    return;
+                }
+            }
+
+            // 2. Construir Payload
+            const payload = {
+                nome: document.getElementById('menuItemName').value.trim(),
+                preco: parseFloat(document.getElementById('menuItemPrice').value),
+                descricao: document.getElementById('menuItemDescription').value.trim(),
+                categoria: document.getElementById('menuItemCategory').value,
+                tipo: document.getElementById('menuItemType').value,
+                imagem: finalImageUrl,
+                disponivel: isEdicao
+                    ? (document.getElementById('menuItemDisponivel').checked ? 1 : 0)
+                    : 1
+            };
+
+            if (!payload.nome || !payload.categoria || isNaN(payload.preco) || !payload.descricao) {
+                mostrarToast('Preenche todos os campos obrigatórios.', 'error');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    if (submitIcon) submitIcon.className = isEdicao ? 'fas fa-save' : 'fas fa-plus';
+                    if (submitText) submitText.textContent = isEdicao ? 'Guardar Alterações' : 'Adicionar Prato';
+                }
+                return;
+            }
+
             let url = MENU_API;
             let method = 'POST';
 
@@ -260,12 +300,13 @@ window.iniciarEdicaoMenu = function (id) {
     modoEdicaoMenu = true;
 
     document.getElementById('menuItemId').value = item.id;
-    document.getElementById('menuItemName').value = item.nome || '';
-    document.getElementById('menuItemCategory').value = item.categoria || '';
-    document.getElementById('menuItemType').value = item.tipo || 'normal';
-    document.getElementById('menuItemPrice').value = item.preco || '';
-    document.getElementById('menuItemDescription').value = item.descricao || '';
-    document.getElementById('menuItemDisponivel').checked = item.disponivel != 0;
+document.getElementById('menuItemName').value = item.nome || '';
+        document.getElementById('menuItemCategory').value = item.categoria || '';
+        document.getElementById('menuItemType').value = item.tipo || 'normal';
+        document.getElementById('menuItemPrice').value = item.preco || '';
+        document.getElementById('menuItemDescription').value = item.descricao || '';
+        document.getElementById('menuItemImage').value = item.imagem || '';
+        document.getElementById('menuItemDisponivel').checked = item.disponivel != 0;
 
     // Mostrar campo disponível
     const dispField = document.getElementById('menuDisponivel');
@@ -306,6 +347,17 @@ window.cancelarEdicaoMenu = function () {
     if (form) form.reset();
 
     document.getElementById('menuItemId').value = '';
+    
+    // Clear image input
+    const fileInput = document.getElementById('menuItemImageFile');
+    const fileLabel = document.getElementById('menuItemFileName');
+    const previewContainer = document.getElementById('menuItemImagePreview');
+    const previewImg = document.getElementById('previewMenuImg');
+    
+    if (fileInput) fileInput.value = '';
+    if (fileLabel) fileLabel.textContent = 'Nenhuma imagem selecionada';
+    if (previewContainer) previewContainer.style.display = 'none';
+    if (previewImg) previewImg.src = '';
 
     const dispField = document.getElementById('menuDisponivel');
     if (dispField) dispField.style.display = 'none';
@@ -343,6 +395,7 @@ window.alternarDisponibilidadeMenu = async function (id) {
             descricao: item.descricao,
             categoria: item.categoria,
             tipo: item.tipo,
+            imagem: item.imagem || null,
             disponivel: novaDisp
         };
 
@@ -478,3 +531,28 @@ if (typeof mostrarToast === 'undefined') {
         }, 3500);
     };
 }
+
+// ============================================
+// PREVIEW DA IMAGEM
+// ============================================
+
+window.previewImageMenu = function(input) {
+    const fileLabel = document.getElementById('menuItemFileName');
+    const previewContainer = document.getElementById('menuItemImagePreview');
+    const previewImg = document.getElementById('previewMenuImg');
+    
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+        if (fileLabel) fileLabel.textContent = file.name;
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            if (previewImg) previewImg.src = e.target.result;
+            if (previewContainer) previewContainer.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    } else {
+        if (fileLabel) fileLabel.textContent = 'Nenhuma imagem selecionada';
+        if (previewContainer) previewContainer.style.display = 'none';
+    }
+};

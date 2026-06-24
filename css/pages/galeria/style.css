@@ -1,5 +1,28 @@
 @import "../../components/footer.css";
 
+.menu-hero {
+    margin-top: 0;
+    padding: 100px 0;
+    background-image: url(../../../pages/imagens/gallery/ambientes_salotto_pic1.webp);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--luxury-cream);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.menu-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.65) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
 .galeria-inicial2 {
     margin-top: 80px;
     padding: 60px 0;

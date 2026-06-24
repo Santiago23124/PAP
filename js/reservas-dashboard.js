@@ -14,12 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
 let todasReservas = [];
 let reservasFiltradas = [];
 let mesasDisponiveis = [];
-let turnosAtivos = [];
 let primeiraAnimacao = true;
 
 // Estado da paginação
 let paginaAtualReservas = 1;
-const reservasPorPagina = 10;
+const reservasPorPagina = 8;
 
 // ============================================
 // INICIALIZACAO
@@ -46,16 +45,6 @@ async function carregarDadosIniciais() {
         console.error('Erro carregar mesas:', e);
     }
 
-        try {
-            const resTurnos = await fetch('../api/reservas.php?action=turnos');
-            const dataTurnos = await resTurnos.json();
-            if (dataTurnos.sucesso) {
-                turnosAtivos = dataTurnos.turnos;
-            }
-    } catch (e) {
-        console.error('Erro carregar turnos:', e);
-    }
-
     await carregarReservas();
 }
 
@@ -78,9 +67,7 @@ async function carregarReservas() {
                 mesa_id: r.mesa_id,
                 mesa_numero: r.mesa_numero || null,
                 mesa_capacidade: r.mesa_capacidade,
-                mesa_localizacao: r.mesa_localizacao,
-                turno_id: r.turno_id,
-                turno_nome: r.turno_nome
+                mesa_localizacao: r.mesa_localizacao
             }));
         } else {
             todasReservas = [];
@@ -296,7 +283,7 @@ function renderizarTabela() {
     if (reservasFiltradas.length === 0) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="8" style="text-align:center; padding:40px; color:#888;">
+                <td colspan="7" style="text-align:center; padding:40px; color:#888;">
                     <i class="far fa-calendar-times" style="font-size:2em; margin-bottom:10px; display:block;"></i>
                     Nenhuma reserva encontrada
                 </td>
@@ -332,9 +319,7 @@ function renderizarTabela() {
             ? `<span title="${escapeHtml(reserva.mesa_localizacao || '')} (cap. ${reserva.mesa_capacidade})">Mesa ${escapeHtml(String(reserva.mesa_numero))}</span>`
             : '<span style="color:#999; font-style:italic;">Não atribuída</span>';
 
-        const turnoDisplay = reserva.turno_nome
-            ? `<small>${escapeHtml(reserva.turno_nome)}</small>`
-            : '';
+        const statusDisplay = `<span class="status-badge status-${escapeHtml(reserva.status)}">${escapeHtml(reserva.status)}</span>`;
 
         tr.innerHTML = `
             <td>
@@ -345,12 +330,8 @@ function renderizarTabela() {
             <td>${escapeHtml(reserva.hora)}</td>
             <td>${reserva.num_pessoas} ${reserva.num_pessoas === 1 ? 'pessoa' : 'pessoas'}</td>
             <td>${mesaDisplay}</td>
-            <td>${turnoDisplay}</td>
+            <td>${statusDisplay}</td>
             <td>
-                <span class="status-badge status-${escapeHtml(reserva.status)}">${escapeHtml(reserva.status)}</span>
-            </td>
-            <td>
-                <div class="action-buttons">
                     <button class="btn-action" title="Ver detalhes" onclick="abrirModalDetalhesReserva(${reserva.id})" style="color:#3498db; border-color:#3498db;">
                         <i class="far fa-eye"></i>
                     </button>
@@ -387,10 +368,13 @@ function renderizarPaginacao(totalPaginas) {
 
     let html = '';
 
-    // Botão Anterior
-    html += `<button class="page-btn prev-btn" ${paginaAtualReservas === 1 ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''} onclick="mudarPaginaReservas(${paginaAtualReservas - 1})">
+
+        // Botão Anterior
+        html += `<button class="page-btn prev-btn" ${paginaAtualReservas === 1 ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''} onclick="mudarPaginaReservas(${paginaAtualReservas - 1})">
         <i class="fas fa-chevron-left"></i> Anterior
     </button>`;
+
+
 
     // Números das Páginas (Máximo 5 botões visíveis de forma inteligente)
     const maxBotoesVisiveis = 5;
@@ -462,7 +446,7 @@ window.alterarStatus = async function(id, novoStatus) {
     const labelStatus = { confirmada: 'confirmar', cancelada: 'cancelar' };
     const label = labelStatus[novoStatus] || 'alterar o estado de';
 
-    if (!confirm(`Tens a certeza que queres ${label} a reserva de ${reserva.nome}?`)) return;
+    // if (!confirm(`Tens a certeza que queres ${label} a reserva de ${reserva.nome}?`)) return;
 
     try {
         const response = await fetch('../api/reservas.php', {
@@ -499,6 +483,8 @@ window.alterarStatus = async function(id, novoStatus) {
 window.editarReserva = function(id) {
     if (typeof abrirModalEditarReserva === 'function') {
         abrirModalEditarReserva(id);
+    } else {
+        console.error('abrirModalEditarReserva não está definida.');
     }
 };
 
@@ -511,9 +497,9 @@ window.eliminarReserva = async function(id) {
         return;
     }
 
-    if (!confirm(`Eliminar reserva de ${reserva.nome}?`)) {
-        return;
-    }
+    // if (!confirm(`Eliminar reserva de ${reserva.nome}?`)) {
+    //     return;
+    // }
 
     try {
         const response = await fetch('../api/reservas.php?id=' + id, {
@@ -790,7 +776,6 @@ function atualizarDebug() {
         outputEl.textContent = `Reservas totais: ${todasReservas.length}
 Filtradas: ${reservasFiltradas.length}
 Mesas carregadas: ${mesasDisponiveis.length}
-Turnos carregados: ${turnosAtivos.length}
 
 Detalhes das reservas:
 ${JSON.stringify(todasReservas, null, 2)}`;

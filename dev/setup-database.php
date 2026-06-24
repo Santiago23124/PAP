@@ -16,8 +16,13 @@ try {
     
     echo "✓ Conexão à base de dados estabelecida\n";
     
-    // Ler o arquivo de migration
-    $sql = file_get_contents(__DIR__ . '/sql/migration_mesas_turnos.sql');
+    // Ler o arquivo SQL
+    $sql = file_get_contents(__DIR__ . '/sql/database_completo.sql');
+    
+    // Remover comentários SQL (linhas que começam com -- ou #, e blocos /* */)
+    $sql = preg_replace('/--.*$/m', '', $sql);
+    $sql = preg_replace('/#.*$/m', '', $sql);
+    $sql = preg_replace('/\/\*.*?\*\//s', '', $sql);
     
     // Dividir em statements
     $statements = array_filter(array_map('trim', explode(';', $sql)));
@@ -57,15 +62,10 @@ try {
     $mesasCount = $db->query("SELECT COUNT(*) FROM mesas")->fetchColumn();
     echo "✓ Mesas criadas: $mesasCount\n";
     
-    // Contar turnos
-    $turnosCount = $db->query("SELECT COUNT(*) FROM turnos")->fetchColumn();
-    echo "✓ Turnos criados: $turnosCount\n";
-    
     echo "\n=== Setup concluído com sucesso! ===\n";
     echo "\nPara testar a API, aceda a:\n";
     echo "  http://localhost/PAP-100_Sabores/api/reservas.php\n";
     echo "  http://localhost/PAP-100_Sabores/api/reservas.php?action=mesas\n";
-    echo "  http://localhost/PAP-100_Sabores/api/reservas.php?action=turnos\n";
     
 } catch (Exception $e) {
     echo "✗ Erro: " . $e->getMessage() . "\n";

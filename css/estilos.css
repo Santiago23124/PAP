@@ -165,8 +165,33 @@ body {
     width: 100%;
     z-index: 1000;
     background: transparent;
+    box-shadow: none;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Seletor de idioma: posicionado no canto, fora do fluxo,
+   para NÃO criar uma linha extra que engorda a barra */
+.main-navigation > nav {
+    position: absolute;
+    top: 50%;
+    left: 25px;
+    transform: translateY(-50%);
+    margin: 0;
+    z-index: 2;
+}
+
+.main-navigation > nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+.main-navigation.scrolled {
+    background: rgba(61, 47, 47, 0.7); /* Castanho com 70% de opacidade */
+    backdrop-filter: blur(8px); /* Efeito de vidro fosco lindo! */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
 .nav-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -174,9 +199,15 @@ body {
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     justify-items: center;
-    padding: 18px 40px;
+    padding: 8px 40px;
     gap: 20px;
+    transition: padding 0.3s ease;
 }
+
+.main-navigation.scrolled .nav-container {
+    padding: 0px 40px;
+}
+
 
 .nav-left,
 .nav-right {
@@ -217,8 +248,13 @@ body {
 }
 
 .logo-img {
-    height: 56px !important;
+    height: 120px !important;
     width: auto;
+    transition: height 0.3s ease;
+}
+
+.main-navigation.scrolled .logo-img {
+    height: 105px !important;
 }
 
 .main-navigation .logo-text {
@@ -274,7 +310,7 @@ body {
 }
 
 .main-navigation .nav-link {
-    color: rgba(77, 6, 6, 0.95);
+    color: var(--luxury-text-light) !important;
     text-decoration: none;
     font-weight: 500;
     font-size: 0.8em;
@@ -508,7 +544,7 @@ body {
     }
     
     .main-navigation .logo-img {
-        height: 42px !important;
+        height: 45px !important;
     }
     
     /* Hero section mobile */

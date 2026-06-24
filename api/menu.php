@@ -76,7 +76,7 @@ if (!$isPublic && empty($auth_token)) {
 // Obter método da requisição
 $method = $_SERVER['REQUEST_METHOD'];
 
-switch ($method) {
+switch ($method) { // switch para controlar o tipo de metodo.
     case 'GET': // Ler
         $public = isset($_GET['public']) && $_GET['public'] == 'true';
         
@@ -119,6 +119,7 @@ switch ($method) {
             'descricao' => $input['descricao'] ?? '',
             'categoria' => $input['categoria'] ?? '',
             'tipo' => $input['tipo'] ?? 'normal',
+            'imagem' => $input['imagem'] ?? null,
             'criado_por' => $criado_por
         );
 
@@ -161,6 +162,7 @@ switch ($method) {
             'tipo' => $input['tipo'] ?? $item['tipo'],
             'preco' => isset($input['preco']) ? floatval($input['preco']) : floatval($item['preco']),
             'descricao' => $input['descricao'] ?? $item['descricao'],
+            'imagem' => isset($input['imagem']) ? $input['imagem'] : $item['imagem'],
             'disponivel' => isset($input['disponivel']) ? intval($input['disponivel']) : intval($item['disponivel'])
         );
         

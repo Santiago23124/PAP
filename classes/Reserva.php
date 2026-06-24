@@ -1,10 +1,9 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/Mesa.php';
-require_once __DIR__ . '/Turno.php';
 
 /**
- * Classe para gestão de reservas (atualizada com mesas e turnos)
+ * Classe para gestão de reservas
  */
 class Reserva {
     private $conn;
@@ -20,61 +19,40 @@ class Reserva {
     public $observacoes;
     public $status;
     public $mesa_id;
-    public $turno_id;
     public $duracao_minutos;
     public $data_criacao;
     public $atualizada_em;
 
-    // Propriedades derivadas (não persistidas)
-    public $mesa_numero;
-    public $mesa_capacidade;
-    public $mesa_localizacao;
-    public $turno_nome;
-
     public function __construct($db) {
         $this->conn = $db;
-        $this->duracao_minutos = 120; // 2 horas padrão
+        $this->duracao_minutos = 120;
     }
 
     /**
-     * Criar nova reserva com associação automática de mesa e turno
+     * Criar nova reserva com associação automática de mesa
      */
     public function criar() {
-        // 1. Identificar turno baseado na hora
-        $turno = Turno::obterTurnoPorHora($this->conn, $this->hora_reserva);
-        if ($turno) {
-            $this->turno_id = $turno['id'];
-        }
-
-        // 2. Tentar associar mesa automaticamente ANTES de inserir
+        // Associar mesa automaticamente
         $mesa_associada = null;
-        if ($this->turno_id) {
-            $mesa_associada = Mesa::associarMesaAutomatica(
-                $this->conn,
-                $this->id ?? null, // ainda não temos ID
-                $this->num_pessoas,
-                $this->data_reserva,
-                $this->hora_reserva
-            );
-            if ($mesa_associada) {
-                $this->mesa_id = $mesa_associada['id'];
-            }
+        $mesas_disponiveis = Mesa::obterMesasDisponiveis($this->conn, $this->data_reserva, $this->hora_reserva, $this->num_pessoas);
+        if (!empty($mesas_disponiveis)) {
+            $mesa_associada = $mesas_disponiveis[0];
+            $this->mesa_id = $mesa_associada['id'];
         }
 
-        // 3. Inserir reserva
+        // Inserir reserva
         $query = "INSERT INTO " . $this->table_name . "
                 SET
                     nome = :nome,
-                    email = :email,
-                    telefone = :telefone,
-                    data_reserva = :data_reserva,
-                    hora_reserva = :hora_reserva,
-                    num_pessoas = :num_pessoas,
-                    observacoes = :observacoes,
-                    status = 'pendente',
-                    mesa_id = :mesa_id,
-                    turno_id = :turno_id,
-                    duracao_minutos = :duracao_minutos";
+                        email = :email,
+                        telefone = :telefone,
+                        data_reserva = :data_reserva,
+                        hora_reserva = :hora_reserva,
+                        num_pessoas = :num_pessoas,
+                        observacoes = :observacoes,
+                        status = 'pendente',
+                        mesa_id = :mesa_id,
+                                            duracao_minutos = :duracao_minutos";
 
         $stmt = $this->conn->prepare($query);
 
@@ -87,7 +65,6 @@ class Reserva {
         $this->num_pessoas = (int)$this->num_pessoas;
         $this->observacoes = htmlspecialchars(strip_tags($this->observacoes));
         $this->mesa_id = $this->mesa_id ? (int)$this->mesa_id : null;
-        $this->turno_id = $this->turno_id ? (int)$this->turno_id : null;
         $this->duracao_minutos = (int)$this->duracao_minutos;
 
         // Bind parameters
@@ -99,8 +76,7 @@ class Reserva {
         $stmt->bindParam(':num_pessoas', $this->num_pessoas, PDO::PARAM_INT);
         $stmt->bindParam(':observacoes', $this->observacoes);
         $stmt->bindParam(':mesa_id', $this->mesa_id, PDO::PARAM_INT);
-        $stmt->bindParam(':turno_id', $this->turno_id, PDO::PARAM_INT);
-        $stmt->bindParam(':duracao_minutos', $this->duracao_minutos, PDO::PARAM_INT);
+                $stmt->bindParam(':duracao_minutos', $this->duracao_minutos, PDO::PARAM_INT);
 
         if($stmt->execute()) {
             $this->id = $this->conn->lastInsertId();
@@ -116,16 +92,17 @@ class Reserva {
     }
 
     /**
-     * Obter todas as reservas (com info de mesa/turno)
+     * Obter todas as reservas (com info de mesa)
      */
     public function obterTodas($limite = 50, $filtros = []) {
         $query = "SELECT r.*,
-                         m.numero as mesa_numero,
-                         m.capacidade as mesa_capacidade,
-                         t.nome as turno_nome
-                FROM " . $this->table_name . " r
-                LEFT JOIN mesas m ON r.mesa_id = m.id
-                LEFT JOIN turnos t ON r.turno_id = t.id";
+                              m.numero as mesa_numero,
+                              m.capacidade as mesa_capacidade,
+                              m.localizacao as mesa_localizacao
+
+                 FROM " . $this->table_name . " r
+                 LEFT JOIN mesas m ON r.mesa_id = m.id
+                 ";
 
         $where = [];
         $params = [];
@@ -165,19 +142,19 @@ class Reserva {
     }
 
     /**
-     * Obter reservas por data (com info de mesa e turno)
+     * Obter reservas por data (com info de mesa)
      */
     public function obterPorData($data) {
         $query = "SELECT r.*,
-                         m.numero as mesa_numero,
-                         m.capacidade as mesa_capacidade,
-                         m.localizacao as mesa_localizacao,
-                         t.nome as turno_nome
-                FROM " . $this->table_name . " r
-                LEFT JOIN mesas m ON r.mesa_id = m.id
-                LEFT JOIN turnos t ON r.turno_id = t.id
-                WHERE r.data_reserva = :data_reserva
-                ORDER BY r.hora_reserva ASC";
+                              m.numero as mesa_numero,
+                              m.capacidade as mesa_capacidade,
+                              m.localizacao as mesa_localizacao
+
+                 FROM " . $this->table_name . " r
+                 LEFT JOIN mesas m ON r.mesa_id = m.id
+
+                 WHERE r.data_reserva = :data_reserva
+                 ORDER BY r.hora_reserva ASC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':data_reserva', $data);
@@ -187,20 +164,18 @@ class Reserva {
     }
 
     /**
-     * Obter reserva por ID (com informações de mesa e turno)
+     * Obter reserva por ID (com informações de mesa)
      */
     public function obterPorId($id) {
         $query = "SELECT r.*,
-                         m.numero as mesa_numero,
-                         m.capacidade as mesa_capacidade,
-                         m.localizacao as mesa_localizacao,
-                         t.nome as turno_nome,
-                         t.hora_inicio as turno_inicio,
-                         t.hora_fim as turno_fim
-                FROM " . $this->table_name . " r
-                LEFT JOIN mesas m ON r.mesa_id = m.id
-                LEFT JOIN turnos t ON r.turno_id = t.id
-                WHERE r.id = :id LIMIT 1";
+                              m.numero as mesa_numero,
+                              m.capacidade as mesa_capacidade,
+                              m.localizacao as mesa_localizacao
+
+                 FROM " . $this->table_name . " r
+                 LEFT JOIN mesas m ON r.mesa_id = m.id
+
+                 WHERE r.id = :id LIMIT 1";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
@@ -219,7 +194,6 @@ class Reserva {
             $this->observacoes = $row['observacoes'];
             $this->status = $row['status'];
             $this->mesa_id = $row['mesa_id'];
-            $this->turno_id = $row['turno_id'];
             $this->duracao_minutos = $row['duracao_minutos'];
             $this->data_criacao = $row['data_criacao'];
             $this->atualizada_em = $row['atualizada_em'];
@@ -228,7 +202,6 @@ class Reserva {
             $this->mesa_numero = $row['mesa_numero'];
             $this->mesa_capacidade = $row['mesa_capacidade'];
             $this->mesa_localizacao = $row['mesa_localizacao'];
-            $this->turno_nome = $row['turno_nome'];
 
             return true;
         }
@@ -267,16 +240,10 @@ class Reserva {
                 WHERE data_reserva = :data_reserva
                   AND status IN ('pendente', 'confirmada')
                   AND (
-                    -- Sobreposição: a reserva existente começa antes da nova terminar
-                    (TIME(hora_reserva) < ADDTIME(:hora_nova, SEC_TO_TIME(:duracao_nova * 60))
-                     AND ADDTIME(hora_reserva, SEC_TO_TIME(duracao_minutos * 60)) > :hora_nova)
-                    OR
-                    -- Sobreposição: a nova começa antes da existente terminar
-                    (TIME(:hora_nova) < ADDTIME(hora_reserva, SEC_TO_TIME(duracao_minutos * 60))
-                     AND ADDTIME(:hora_nova, SEC_TO_TIME(:duracao_nova * 60)) > hora_reserva)
+                    (TIME(hora_reserva) < ADDTIME(:hora_nova, SEC_TO_TIME(:duracao * 60)))
+                    AND (ADDTIME(hora_reserva, SEC_TO_TIME(duracao_minutos * 60)) > :hora_nova)
                   )";
 
-        // Se for atualização (edição), excluir a própria reserva
         if (isset($this->id) && $this->id > 0) {
             $query .= " AND id != :reserva_id";
         }
@@ -284,8 +251,7 @@ class Reserva {
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':data_reserva', $data);
         $stmt->bindParam(':hora_nova', $hora);
-        $stmt->bindParam(':duracao_nova', $duracao_minutos, PDO::PARAM_INT);
-        $stmt->bindParam(':duracao_minutos', $duracao_minutos, PDO::PARAM_INT); // usamos mesma duração padrão
+        $stmt->bindParam(':duracao', $duracao_minutos, PDO::PARAM_INT);
 
         if (isset($this->id) && $this->id > 0) {
             $stmt->bindParam(':reserva_id', $this->id, PDO::PARAM_INT);
@@ -348,6 +314,23 @@ class Reserva {
             $erros[] = "Número de pessoas deve estar entre 1 e 12";
         }
 
+        $reserva_dt = new DateTime($this->data_reserva . ' ' . $this->hora_reserva);
+        $agora = new DateTime();
+
+        if ($reserva_dt <= $agora) {
+            $erros[] = "Data e hora da reserva não podem ser no passado";
+        }
+
+        $diff_segundos = $reserva_dt->getTimestamp() - $agora->getTimestamp();
+        if ($diff_segundos < (Config::HORAS_ANTECEDENCIA_MINIMA * 3600)) {
+            $erros[] = "Reserva deve ser feita com pelo menos " . Config::HORAS_ANTECEDENCIA_MINIMA . " horas de antecedência";
+        }
+
+        $h = (int)substr($this->hora_reserva, 0, 2);
+        if (!(($h >= 12 && $h < 15) || ($h >= 19 && $h < 23))) {
+            $erros[] = "Horário fora do horário de funcionamento";
+        }
+
         return $erros;
     }
     // ============================================
@@ -378,7 +361,7 @@ class Reserva {
         // Registrar mudança (opcional: criar tabela historico_status)
         $query = "UPDATE " . $this->table_name . "
                 SET status = :status,
-                    atualizada_em = CURRENT_TIMESTAMP
+                        atualizada_em = CURRENT_TIMESTAMP
                 WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
@@ -411,29 +394,6 @@ class Reserva {
         if ($this->mesa_id) {
             $this->registrarHistorico($this->mesa_id, 'remanejamento', 'Mesa liberada por cancelamento');
         }
-    }
-
-    /**
-     * Obter reservas por turno
-     */
-    public function obterPorTurno($turno_id, $data = null) {
-        $query = "SELECT * FROM " . $this->table_name . "
-                WHERE turno_id = :turno_id";
-
-        if ($data) {
-            $query .= " AND data_reserva = :data_reserva";
-        }
-
-        $query .= " ORDER BY hora_reserva ASC";
-
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':turno_id', $turno_id);
-        if ($data) {
-            $stmt->bindParam(':data_reserva', $data);
-        }
-        $stmt->execute();
-
-        return $stmt->fetchAll();
     }
 
     /**
@@ -481,7 +441,7 @@ class Reserva {
 
         $query = "UPDATE " . $this->table_name . "
                 SET mesa_id = :mesa_id,
-                    atualizada_em = CURRENT_TIMESTAMP
+                        atualizada_em = CURRENT_TIMESTAMP
                 WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
@@ -546,8 +506,8 @@ class ReservaStats {
     public function obterOcupacaoPorHora($data) {
         $query = "SELECT
                     hora_reserva,
-                    SUM(num_pessoas) as total_pessoas,
-                    COUNT(*) as total_reservas
+                        SUM(num_pessoas) as total_pessoas,
+                        COUNT(*) as total_reservas
                 FROM reservas
                 WHERE data_reserva = :data
                   AND status IN ('pendente', 'confirmada')
@@ -575,10 +535,10 @@ class ReservaStats {
         // Query para agrupar por dia da semana
         $query = "SELECT
                     DAYNAME(data_reserva) as dia,
-                    DATE(data_reserva) as data,
-                    SUM(num_pessoas) as total_pessoas,
-                    COUNT(*) as total_reservas,
-                    ROUND((SUM(num_pessoas) / :capacidade_total) * 100, 0) as ocupacao_percentual
+                        DATE(data_reserva) as data,
+                        SUM(num_pessoas) as total_pessoas,
+                        COUNT(*) as total_reservas,
+                        ROUND((SUM(num_pessoas) / :capacidade_total) * 100, 0) as ocupacao_percentual
                 FROM reservas
                 WHERE data_reserva BETWEEN :data_inicio AND :data_fim
                   AND status IN ('confirmada', 'pendente')
@@ -602,11 +562,11 @@ class ReservaStats {
 
         $query = "SELECT
                     m.id,
-                    m.numero,
-                    m.capacidade,
-                    m.localizacao,
-                    COUNT(r.id) as total_reservas,
-                    SUM(r.num_pessoas) as total_pessoas_atendidas
+                        m.numero,
+                        m.capacidade,
+                        m.localizacao,
+                        COUNT(r.id) as total_reservas,
+                        SUM(r.num_pessoas) as total_pessoas_atendidas
                 FROM mesas m
                 LEFT JOIN reservas r ON m.id = r.mesa_id
                     AND r.data_reserva >= :data_limite

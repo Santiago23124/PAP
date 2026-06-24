@@ -42,7 +42,6 @@ require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../classes/Reserva.php';
 require_once __DIR__ . '/../classes/EmailSender.php';
 require_once __DIR__ . '/../classes/Mesa.php';
-require_once __DIR__ . '/../classes/Turno.php';
 
 // ============================================
 // INSTALAÇÃO/ATUALIZAÇÃO DO BANCO
@@ -56,7 +55,8 @@ function executarMigration() {
     global $db;
     try {
         // Ler arquivo SQL
-        $sql = file_get_contents(__DIR__ . '/../sql/migration_mesas_turnos.sql');
+        $sql = file_get_contents(__DIR__ . '/../sql/database_completo.sql');
+        $sql = preg_replace('/^(#|--).*$/m', '', $sql);
 
         // Dividir em statements (separa por ;)
         $statements = array_filter(array_map('trim', explode(';', $sql)));
@@ -119,8 +119,6 @@ switch($method) {
     case 'GET':
         if ($action === 'mesas') {
             listarMesas();
-        } elseif ($action === 'turnos') {
-            listarTurnos();
         } elseif ($action === 'horarios') {
             listarHorariosDisponiveis();
         } elseif ($action === 'estatisticas') {
@@ -143,13 +141,12 @@ switch($method) {
 
 // Carregar classes adicionais
 require_once __DIR__ . '/../classes/Mesa.php';
-require_once __DIR__ . '/../classes/Turno.php';
 
 // Incluir classe de estatísticas (opcional)
 require_once __DIR__ . '/../classes/Reserva.php';
 
 /**
- * Criar nova reserva com associação automática de mesa e turno
+ * Criar nova reserva com associação automática de mesa
  */
 function criarReserva() {
     global $db;
@@ -218,7 +215,6 @@ function criarReserva() {
         $email_enviado = $emailSender->enviarConfirmacaoReserva($reserva);
         $notificacao_enviada = $emailSender->enviarNotificacaoRestaurante($reserva);
 
-        // Retornar sucesso com detalhes
         http_response_code(201);
         json_response([
             'sucesso' => true,
@@ -229,10 +225,6 @@ function criarReserva() {
                 'numero' => $mesa_associada['numero'],
                 'capacidade' => $mesa_associada['capacidade'],
                 'localizacao' => $mesa_associada['localizacao']
-            ] : null,
-            'turno' => $reserva->turno_id ? [
-                'id' => $reserva->turno_id,
-                'nome' => $reserva->turno_nome
             ] : null,
             'email_enviado' => $email_enviado,
             'notificacao_enviada' => $notificacao_enviada
@@ -462,49 +454,30 @@ function listarMesas() {
 }
 
 /**
- * Listar todos os turnos ativos
- */
-function listarTurnos() {
-    global $db;
-    try {
-        $turno = new Turno($db);
-        $turnos = $turno->listarTodos();
-        echo json_encode(['sucesso' => true, 'turnos' => $turnos, 'total' => count($turnos)]);
-    } catch(Exception $e) {
-        http_response_code(500);
-        echo json_encode(['sucesso' => false, 'erro' => $e->getMessage()]);
-    }
-}
-
-/**
  * Obter horários disponíveis para uma data
  */
 function listarHorariosDisponiveis() {
     global $db;
     try {
         $data = $_GET['data'] ?? date('Y-m-d');
-        $turno = new Turno($db);
-        $turnos = $turno->listarTodos();
-
+        $horarios_base = ['12:00', '12:30', '13:00', '13:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'];
         $horarios_disponiveis = [];
-        foreach ($turnos as $t) {
-            $turno_obj = new Turno($db);
-            $turno_obj->obterPorId($t['id']);
-            $slots = $turno_obj->obterHorariosDisponiveis($data, $db);
-            foreach ($slots as $slot) {
-                $horarios_disponiveis[] = [
-                    'hora' => $slot['hora'],
-                    'vagas' => $slot['vagas'],
-                    'ocupacao' => $slot['ocupacao'],
-                    'turno_id' => $t['id'],
-                    'turno_nome' => $t['nome']
-                ];
+        foreach ($horarios_base as $hora) {
+            $query = "SELECT SUM(num_pessoas) as total FROM reservas WHERE data_reserva = :data AND status IN ('pendente', 'confirmada') AND (TIME(hora_reserva) < ADDTIME(:hora, SEC_TO_TIME(120 * 60)) AND ADDTIME(hora_reserva, SEC_TO_TIME(duracao_minutos * 60)) > :hora)";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':data', $data);
+            $stmt->bindParam(':hora', $hora);
+            $stmt->execute();
+            $result = $stmt->fetch();
+            $ocupacao = $result['total'] ?? 0;
+            $vagas = max(0, Config::CAPACIDADE_MAXIMA - $ocupacao);
+            if ($vagas > 0) {
+                $horarios_disponiveis[] = ['hora' => $hora, 'vagas' => $vagas, 'ocupacao' => $ocupacao];
             }
         }
-        echo json_encode(['sucesso' => true, 'data' => $data, 'horarios' => $horarios_disponiveis]);
+        json_response(['sucesso' => true, 'data' => $data, 'horarios' => $horarios_disponiveis]);
     } catch(Exception $e) {
-        http_response_code(500);
-        echo json_encode(['sucesso' => false, 'erro' => $e->getMessage()]);
+        json_response(['sucesso' => false, 'erro' => $e->getMessage()], 500);
     }
 }
 

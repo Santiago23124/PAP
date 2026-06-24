@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Área de Funcionários - Restaurante 100 Sabores</title>
+    <link rel="stylesheet" type="text/css" href="../css/pages/login/login.css">
+    <link rel="shortcut icon" href="./imagens/logo/logotipo.transparente.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="auth-page">
+
+    <!-- ============================================
+         LADO ESQUERDO — HERO / BOAS-VINDAS
+         ============================================ -->
+    <div class="auth-branding">
+        <div class="branding-content">
+            <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="branding-logo-img">
+            <h1 class="branding-title">100 Sabores</h1>
+            <p class="branding-subtitle">
+                Bem-vindo à área reservada aos colaboradores do restaurante.
+                Faça a gestão das reservas, da ementa e do dia-a-dia num só lugar.
+            </p>
+
+            <div class="branding-features">
+                <div class="branding-feature">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    Acesso seguro e restrito à equipa
+                </div>
+                <div class="branding-feature">
+                    <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
+                    Gestão de reservas em tempo real
+                </div>
+                <div class="branding-feature">
+                    <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+                    Controlo da ementa e do serviço de sala
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         LADO DIREITO — FORMULÁRIO DE LOGIN
+         ============================================ -->
+    <div class="auth-form-container">
+        <div class="auth-form-wrapper">
+            <div class="form-header">
+                <div class="form-icon"><i class="fas fa-user-circle"></i></div>
+                <h1>Acesso Funcionários</h1>
+                <p>Identifique-se para aceder à área restrita</p>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="username" class="form-label">Nome de Utilizador</label>
+                    <div class="form-input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="username" name="username" class="form-input" required placeholder="Nome de utilizador">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Palavra-passe</label>
+                    <div class="form-input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="password" name="password" class="form-input" required placeholder="Palavra-passe">
+                        <button type="button" class="password-toggle" aria-label="Mostrar palavra-passe" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label class="checkbox-wrapper">
+                        <input type="checkbox" id="remember">
+                        <span class="checkbox-box">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3D2F20" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </span>
+                        <span class="checkbox-label">Lembrar-me</span>
+                    </label>
+                    <a href="esqueci_senha.html" class="forgot-link">Esqueceu a senha?</a>
+                </div>
+
+                <button type="submit" id="loginBtn" class="submit-btn">
+                    <span class="btn-text">ENTRAR</span>
+                    <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                </button>
+            </form>
+
+            <!-- Mensagem de erro -->
+            <div id="errorMessage" class="error-message" style="display: none;">
+                <i class="fas fa-times-circle"></i>
+                <p>Credenciais inválidas. Tente novamente.</p>
+            </div>
+
+            <div class="login-footer">
+                <p class="security-notice">
+                    <i class="fas fa-shield-alt"></i>
+                    Área segura de acesso restrito
+                </p>
+            </div>
+
+            <div class="back-home">
+                <a href="index.html"><i class="fas fa-arrow-left"></i> Voltar ao site</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mostrar / ocultar palavra-passe
+        function togglePassword() {
+            const input = document.getElementById('password');
+            const icon = document.getElementById('togglePasswordIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('loginBtn');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Mostrar loading no botão
+            submitBtn.classList.add('loading');
+            submitBtn.querySelector('.btn-text').textContent = 'A entrar...';
+            submitBtn.disabled = true;
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Fazer requisição para a API de login
+            fetch('../api/login.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nome_utilizador: username,
+                    senha: password
+                })
+            })
+            .then(response => {
+                console.log('Status:', response.status);
+                console.log('Headers:', response.headers);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Resposta completa:', data);
+                if (data.sucesso) {
+                    // Login bem-sucedido - armazenar na sessionStorage
+                    sessionStorage.setItem('loggedInUser', JSON.stringify({
+                        id: data.dados.id,
+                        nome_utilizador: data.dados.nome_utilizador,
+                        nome_completo: data.dados.nome_completo,
+                        cargo: data.dados.cargo,
+                        email: data.dados.email
+                    }));
+                    // Redirecionar para o dashboard de funcionários
+                    console.log('Redirecionando para dashboard.html');
+                    window.location.href = 'dashboard.html';
+                } else {
+                    // Login falhou
+                    errorMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i><p>' + data.erro + '</p>';
+                    errorMessage.style.display = 'flex';
+                    submitBtn.classList.remove('loading');
+                    submitBtn.querySelector('.btn-text').textContent = 'ENTRAR';
+                    submitBtn.disabled = false;
+
+                    // Shake animation
+                    submitBtn.classList.add('shake');
+                    setTimeout(() => {
+                        submitBtn.classList.remove('shake');
+                    }, 500);
+                }
+            })
+            .catch(error => {
+                console.error('Erro completo:', error);
+                errorMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i><p>Erro de conexão: ' + error.message + '</p>';
+                errorMessage.style.display = 'flex';
+                submitBtn.classList.remove('loading');
+                submitBtn.querySelector('.btn-text').textContent = 'ENTRAR';
+                submitBtn.disabled = false;
+            });
+        });
+    </script>
+
+</body>
+</html>

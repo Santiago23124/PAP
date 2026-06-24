@@ -27,7 +27,10 @@ function renderMenuFromData(items) {
         }
         const img = document.createElement('div');
         img.className = 'menu-item-image';
-        img.innerHTML = '<!-- Placeholder -->';
+        const imgPath = item.imagem 
+            ? (item.imagem.startsWith('http') || item.imagem.startsWith('imagens/') ? item.imagem : 'imagens/' + item.imagem)
+            : 'imagens/pratos/placeholder.jpg';
+        img.innerHTML = `<img src="${imgPath}" alt="${escapeHtml(item.nome)}" onerror="this.style.display='none'; this.parentElement.style.background='#f0f0f0'; this.parentElement.innerHTML='<span style=color:#999>Sem imagem</span>';">`;
         div.appendChild(img);
         const content = document.createElement('div');
         content.className = 'menu-item-content';

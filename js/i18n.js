@@ -12,7 +12,7 @@ const i18n = {
         "nav-menu": "EMENTA",
         "nav-vinhos": "VINHOS",
         "nav-galeria": "GALERIA",
-        "nav-bar": "Bar",
+        "nav-bar": "EVENTOS",
         "nav-contacto": "CONTACTO",
         "nav-reservas": "RESERVAS",
 
@@ -132,7 +132,7 @@ const i18n = {
         "nav-menu": "MENU",
         "nav-vinhos": "WINES",
         "nav-galeria": "GALLERY",
-        "nav-bar": "Bar",
+        "nav-bar": "EVENTS",
         "nav-contacto": "CONTACT",
         "nav-reservas": "RESERVATIONS",
 

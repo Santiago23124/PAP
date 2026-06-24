@@ -1,10 +1,13 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/database.php'; //inclui o ficheiro database.php
+
+// stmt é uma variavel que vai receber a query que vai ser executada na base de dados (e é uma variavel global em todas as classes que precisam de aceder a base de dados)
 
 /**
  * Classe para gestão de mesas do restaurante
  */
 // private-so pode ser acessado pela classe que a declarou
+
 class Mesa {
     private $conn;
     private $table_name = "mesas";
@@ -24,69 +27,74 @@ class Mesa {
      /**
      * Obter todas as mesas ativas
      */
-     public function listarTodas($apenas_ativas = true) {
-        $query = "SELECT * FROM " . $this->table_name;
+     public function listarTodas($apenas_ativas = true) { // funcao para listar todas as reservas existentes
+        $query = "SELECT * FROM " . $this->table_name; // vai selecionar todas as mesas da base de dados
 
-        if ($apenas_ativas) {
+        if ($apenas_ativas) { // vai selecionar apenas as mesas que estão ativas
             $query .= " WHERE ativa = 1"; //$query- variavel busca por ativa ou não 
         }
 
-        $query .= " ORDER BY CAST(numero AS UNSIGNED), numero ASC";
+        $query .= " ORDER BY CAST(numero AS UNSIGNED), numero ASC"; // ordena as mesas por numero
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
+        $stmt = $this->conn->prepare($query); // prepara a query
+        $stmt->execute(); // executa a query
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(); // retorna todas as mesas que foram encontradas
+        // retorna os dados da consulta em um array, o uso do fetchALL evita loops
     }
 
     /**
      * Obter mesas por capacidade
      */
-    public function obterPorCapacidade($capacidade_minima, $capacidade_maxima = null) {
+    public function obterPorCapacidade($capacidade_minima, $capacidade_maxima = null) { // parametros da função: capacidade_minima e capacidade_maxima
         $query = "SELECT * FROM " . $this->table_name . "
-                WHERE capacidade >= :capacidade_min
-                  AND ativa = 1";
-
-        if ($capacidade_maxima !== null) {
+                WHERE capacidade >= :capacidade_min //tem de ser maior ou igual ao marcador :capacidade_min
+                  AND ativa = 1"; // seleciona todas as mesas que estão ativas e que tem capacidade >= capacidade_minima           
+        // parametro opcional
+        if ($capacidade_maxima !== null) { // verifica se a capacidade_maxima não é nula
             $query .= " AND capacidade <= :capacidade_max";
         }
 
-        $query .= " ORDER BYcapacidade ASC, numero ASC";
+        $query .= " ORDER BYcapacidade ASC, numero ASC"; // organiza as messas da menor para a maior capacidade
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':capacidade_min', $capacidade_minima, PDO::PARAM_INT);
+        //o preprare() envia a consulta para a basse de dados sem valores reais isso impede atques de SQL injection
+        $stmt = $this->conn->prepare($query);// prepara o statement
+        //os marcadores :capacidade_min e :capacidade_max sao substituuidos pelos valores reais
+        $stmt->bindParam(':capacidade_min', $capacidade_minima, PDO::PARAM_INT); // metodo PDO que liga uma variavel a um parametro de consulta ao contrario,
+        // do bindValue que nao atualiza o valor o bindParam atualiza o mesmo, PDO::PARAM_INT vai tratar o dado como valor inteiro
 
-        if ($capacidade_maxima !== null) {
-            $stmt->bindParam(':capacidade_max', $capacidade_maxima, PDO::PARAM_INT);
+        if ($capacidade_maxima !== null) { // se for diferente de nulo, executa a query
+            $stmt->bindParam(':capacidade_max', $capacidade_maxima, PDO::PARAM_INT); // PDO::PARAM_INT vai tratar o dado como valor inteiro
         }
 
-        $stmt->execute();
-        return $stmt->fetchAll();
+        $stmt->execute(); // executa a query
+        return $stmt->fetchAll(); // retorna todas as mesas que foram encontradas
     }
 
     /**
      * Obter mesa por ID
      */
+    //Procura na tabela uma linha onde a coluna id seja igual ao marcador
     public function obterPorId($id) {
         $query = "SELECT * FROM " . $this->table_name . "
-                WHERE id = :id LIMIT 1";
+                WHERE id = :id LIMIT 1"; // o LIMIT 1 indica que o id é unico em cada mesa
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
+        $stmt = $this->conn->prepare($query); // prepara a query
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT); // substitui o marcador :id pelo valor real
+        $stmt->execute(); // executa a query
 
-        $row = $stmt->fetch();
+        $row = $stmt->fetch(); // busca apenas uma linha de resultado
 
-        if ($row) {
-            $this->id = $row['id'];
+        if ($row) { // Verifica se a mesa realmente foi encontrada, se o id nao existir o $row sera false
+            $this->id = $row['id'];//copia os valores do resultado para a variavel $this
             $this->numero = $row['numero'];
             $this->capacidade = $row['capacidade'];
             $this->localizacao = $row['localizacao'];
             $this->ativa = $row['ativa'];
             $this->observacoes = $row['observacoes'];
-            return true;
+            return true; // Devolve true se a mesa for encontrada
         }
-        return false;
+        return false; // Devolve false se a mesa nao for encontrada
     }
 
     /**

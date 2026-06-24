@@ -4,7 +4,7 @@ ini_set('display_errors', 0);
 error_reporting(E_ALL);
 
 // 2. Proteção para capturar erros críticos e devolver JSON
-register_shutdown_function(function() {
+register_shutdown_function(function() { // rede de seguranca, se o PHP sofrer um errro fatal esta funcao cpatura o erro antes do script
     $error = error_get_last();
     if ($error !== null && ($error['type'] === E_ERROR || $error['type'] === E_PARSE)) {
         http_response_code(500);
@@ -15,13 +15,13 @@ register_shutdown_function(function() {
 
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../classes/EmailSender.php';
-
-header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
+// cabecalhos HTTP: definem como a pagina deve ser exibida
+header('Content-Type: application/json; charset=utf-8');// ficheiro json em formato UFT-8(portugues)
+header('Access-Control-Allow-Origin: *');// permite que aplicacoes noutro dominio consultem esta api
+header('Access-Control-Allow-Methods: POST, OPTIONS');// pedido de teste antes do POST real sito verifica se o servidor autoriza o envio de dados 
 header('Access-Control-Allow-Headers: Content-Type');
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit(0);
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit(0);// se o metodo for options, sai do script
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);

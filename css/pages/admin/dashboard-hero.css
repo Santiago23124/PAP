@@ -1,0 +1,145 @@
+@import "../../estilos.css";
+
+/* ============================================
+   DASHBOARD HERO SECTION
+   Estilos específicos para a hero section do dashboard
+   ============================================ */
+
+/* ============================================
+   ANIMAÇÕES
+   ============================================ */
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroTextReveal {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+    0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+    50% { transform: translate(-50%, -50%) rotate(180deg); }
+}
+
+.dashboard-hero {
+    min-height: 100vh;
+    margin-top: 0;
+    background: var(--luxury-gold-gradient);
+    background-image: url(../../../pages/imagens/gallery/ambientes_salotto_pic1.webp);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 100px;
+}
+
+.dashboard-hero::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    animation: shimmer 6s infinite linear;
+    pointer-events: none;
+}
+
+.dashboard-hero .parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('') no-repeat center center;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    z-index: -1;
+    opacity: 1;
+}
+
+.dashboard-hero .parallax-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+    z-index: 1;
+}
+
+.dashboard-hero-content {
+    text-align: center;
+    color: var(--luxury-text-light);
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+    animation: heroTextReveal 1.2s ease-out;
+}
+
+.dashboard-hero-content > * {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.dashboard-hero-content > *:nth-child(1) { animation-delay: 0.2s; }
+.dashboard-hero-content > *:nth-child(2) { animation-delay: 0.4s; }
+.dashboard-hero-content > *:nth-child(3) { animation-delay: 0.6s; }
+
+.dashboard-hero-label {
+    font-size: 0.7em;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    opacity: 0.9;
+    color: var(--luxury-gold-light);
+}
+
+.dashboard-hero-title {
+    font-size: 4.5em;
+    font-weight: 300;
+    letter-spacing: 8px;
+    margin-bottom: 15px;
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-hero-subtitle {
+    font-size: 1.2em;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--luxury-gold-light);
+    margin-bottom: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard-hero {
+        background-attachment: scroll !important;
+        padding: 60px 0;
+    }
+
+    .dashboard-hero-title {
+        font-size: 2.8em;
+        letter-spacing: 4px;
+    }
+
+    .dashboard-hero-content {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-hero-title {
+        font-size: 2.2em;
+        letter-spacing: 2px;
+    }
+}

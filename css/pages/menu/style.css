@@ -1,6 +1,16 @@
 @import "../../components/footer.css";
 @import "../../components/menu-login.css";
 
+/* ============================================
+   HERO OVERRIDE — EMENTA
+   ============================================ */
+.menu-hero {
+    background-image: url(../../../pages/imagens/gallery/imagem_1.jpg);
+    background-position: center 40%;
+}
+
+
+
 /* Estilos especificos da pagina menu. */
 
 /* Usado em: menu.html (versão antiga), Reservas.html (tabela de preços) */
