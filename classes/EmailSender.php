@@ -288,7 +288,7 @@ class EmailSender {
             <style>
                 body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
                 .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                .header { background: #e74c3c; color: white; padding: 20px; text-align: center; }
+                .header { background: #722831; color: white; padding: 20px; text-align: center; }
                 .content { padding: 20px; background: #f9f9f9; }
                 .reserva-details { background: white; padding: 20px; border-radius: 5px; margin: 20px 0; }
                 .detail-row { display: flex; justify-content: space-between; margin: 10px 0; padding: 10px; background: #f0f0f0; border-radius: 3px; }

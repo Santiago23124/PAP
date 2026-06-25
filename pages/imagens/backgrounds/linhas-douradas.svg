@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="none">
+  <!-- Curvas livres douradas, traco fino, a varrer e a cruzarem-se.
+       Desenhadas dentro de y[70..830] para repetir na vertical sem cortes. -->
+  <g fill="none" stroke="#c2a878" stroke-linecap="round">
+    <path d="M-60 260 C 360 170, 760 540, 1120 380 S 1520 300, 1500 520" stroke-width="1.5" stroke-opacity="0.5"/>
+    <path d="M-60 720 C 420 790, 820 560, 1170 720 S 1520 780, 1500 600" stroke-width="1.3" stroke-opacity="0.45"/>
+    <path d="M270 90 C 190 360, 660 510, 490 760 S 320 830, 820 830" stroke-width="1.5" stroke-opacity="0.45"/>
+    <path d="M1190 90 C 1110 380, 810 520, 1050 760 S 1280 830, 840 830" stroke-width="1.3" stroke-opacity="0.42"/>
+    <path d="M-60 480 C 430 450, 720 720, 1090 630 S 1520 500, 1500 770" stroke-width="1.2" stroke-opacity="0.4"/>
+    <path d="M640 90 C 770 320, 500 500, 720 720 S 1000 830, 780 830" stroke-width="1.2" stroke-opacity="0.38"/>
+  </g>
+</svg>

@@ -11,7 +11,42 @@
     width: 100%;
     height: 100%;
     margin-top: 0;
-    min-height: 80vh;
+    min-height: 75vh;
+}
+
+/* ============================================
+   FUNDO DECORATIVO — LINHAS LIVRES DOURADAS
+   Curvas soltas desenhadas (SVG) numa camada própria atrás
+   de todo o conteúdo, repetidas na vertical ao longo da
+   página inteira (mostram-se nas margens e espaços vazios).
+   ============================================ */
+body {
+    background-color: #fafafa;
+}
+
+/* Duas faixas de curvas encostadas às laterais — o centro (coluna
+   dos cards) fica sempre livre. Repetem na vertical ao longo da lista. */
+.menu-main {
+    background-color: #fafafa;
+    background-image:
+        url(../../../pages/imagens/backgrounds/linhas-douradas-lado.svg),
+        url(../../../pages/imagens/backgrounds/linhas-douradas-lado.svg);
+    background-repeat: repeat-y, repeat-y;
+    background-position: left top, right top;
+    background-size: 300px auto, 300px auto;
+}
+
+/* Em ecrãs estreitos não há margem lateral suficiente: esconder. */
+@media (max-width: 1300px) {
+    .menu-main {
+        background-image: none;
+    }
+}
+
+/* O rodapé escuro mantém o seu próprio fundo, por cima do padrão */
+.rodape {
+    position: relative;
+    z-index: 1;
 }
 
 

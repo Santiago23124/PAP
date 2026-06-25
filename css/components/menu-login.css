@@ -58,7 +58,8 @@
 }
 
 .menu-hero-title {
-    font-size: 4em;
+    /* fluido: encolhe em ecrãs pequenos (evita overflow) e limita a 4em no desktop */
+    font-size: clamp(2rem, 8vw, 4em);
     font-weight: 700;
     letter-spacing: 4px;
     margin-bottom: 40px;
@@ -99,7 +100,8 @@
 }
 
 .menu-section-title {
-    font-size: 3.2em;
+    /* fluido: evita que títulos longos (ex.: "SOBREMESAS") transbordem em ecrãs pequenos */
+    font-size: clamp(1.8rem, 6vw, 3.2em);
     font-weight: 700;
     letter-spacing: 3px;
     text-align: center;
@@ -139,7 +141,8 @@
 /* Grid de pratos */
 .menu-items-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    /* min(400px, 100%) evita que a coluna force 400px e cause scroll horizontal em ecrãs estreitos */
+    grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
     gap: 30px;
     margin-top: 40px;
 }

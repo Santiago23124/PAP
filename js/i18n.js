@@ -60,6 +60,19 @@ const i18n = {
         "menu-item-4-text": "O inevitável final feliz — bem doce!",
         "menu-link": "Ver Ementa Completa",
 
+        // Awards / Distinções
+        "awards-label": "RECONHECIMENTO",
+        "awards-title": "Distinções & Prémios",
+        "awards-intro": "Cada distinção é o reflexo de uma busca constante pela excelência — à mesa, na adega e em cada detalhe da experiência 100 Sabores.",
+        "award-1-name": "Recomendado",
+        "award-1-org": "Guia Michelin",
+        "award-2-name": "Mesa de Ouro",
+        "award-2-org": "Boa Cama Boa Mesa",
+        "award-3-name": "Melhor Carta de Vinhos",
+        "award-3-org": "Revista de Vinhos",
+        "award-4-name": "Certificado de Excelência",
+        "award-4-org": "TripAdvisor",
+
         // Info Section
         "info-title-1": "Horário",
         "info-text-1a": "Segunda a Quinta: 12h - 22h",
@@ -179,6 +192,19 @@ const i18n = {
         "menu-item-4": "Desserts",
         "menu-item-4-text": "The inevitable happy ending — delightfully sweet!",
         "menu-link": "View Full Menu",
+
+        // Awards / Distinctions
+        "awards-label": "RECOGNITION",
+        "awards-title": "Awards & Distinctions",
+        "awards-intro": "Every distinction reflects a constant pursuit of excellence — at the table, in the cellar and in every detail of the 100 Flavours experience.",
+        "award-1-name": "Recommended",
+        "award-1-org": "Michelin Guide",
+        "award-2-name": "Golden Table",
+        "award-2-org": "Boa Cama Boa Mesa",
+        "award-3-name": "Best Wine List",
+        "award-3-org": "Revista de Vinhos",
+        "award-4-name": "Certificate of Excellence",
+        "award-4-org": "TripAdvisor",
 
         // Info Section
         "info-title-1": "Opening Hours",
