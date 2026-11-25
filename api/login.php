@@ -17,7 +17,7 @@
   session_set_cookie_params([
     'lifetime' => 0,
     'path' => '/',
-    'domain' => '100sabores.pt', // O seu domínio
+    'domain' => '', // vazio = usa o domínio atual (funciona em localhost e em 100sabores.pt)
     'secure' => false,      // Apenas HTTPS
     'httponly' => true,    // Protege contra XSS
     'samesite' => 'Strict' // Protege contra CSRF

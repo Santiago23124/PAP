@@ -2,7 +2,12 @@
 
 ## Visão Geral
 
-O sistema usa **4 tabelas principais** com relações entre si. Tabelas em `database_simplificado.sql`.
+O esquema completo está em `sql/database_completo.sql` e contém **11 tabelas**:
+`reservas`, `mesas`, `mesas_historico`, `funcionarios`, `menu_itens`, `menu_categorias`,
+`contactos`, `vouchers`, `configuracoes`, `logs_acesso`, `password_reset_tokens`.
+
+As tabelas centrais do negócio (com relações entre si) são `reservas` → `mesas` → `mesas_historico`.
+As restantes estão descritas mais abaixo.
 
 ---
 
@@ -18,7 +23,8 @@ data_reserva, hora_reserva
 num_pessoas, observacoes
 status → 'pendente' | 'confirmada' | 'cancelada'
 mesa_id → FK para mesas.id (pode ser NULL)
-duracao_minutos → padrão 120
+duracao_minutos → coluna com DEFAULT 120 no SQL, mas a classe Reserva
+                  insere sempre Config::DURACAO_PADRAO_RESERVA = 210 (3h30)
 data_criacao, atualizada_em
 ```
 
@@ -106,8 +112,8 @@ data_registro
 
 ---
 
-### 6. `menu_items` (não presente no SQL principal, criada via migration do dashboard)
-Pratos do menu geridos no dashboard.
+### 6. `menu_itens`
+Pratos do menu geridos no dashboard (já incluída em `sql/database_completo.sql`).
 
 ```
 id (PK)
@@ -118,6 +124,40 @@ disponivel → 0 ou 1
 imagem_path (opcional)
 data_criacao, data_atualizacao
 ```
+
+Existe também a tabela auxiliar `menu_categorias` (categorias de pratos).
+
+---
+
+### 7. `vouchers`
+Vouchers-presente comprados pelos clientes (funcionalidade já ligada à base de dados
+através da classe `Voucher.php`).
+
+```
+id (PK)
+codigo → código único gerado (ex: "VC-A1B2C3D4")
+valor → 25 | 50 | 100 (euros)
+nome_oferece, email_oferece
+nome_recebe, email_recebe
+mensagem, data_evento
+status → 'pendente' | 'pago' | 'usado' | 'expirado'
+data_criacao, data_validade
+```
+
+**Regras:**
+- Valores permitidos e validade (6 meses) vêm de `Config` (`VOUCHER_VALORES`, `VOUCHER_VALIDADE_MESES`).
+- Ativado após confirmação manual do pagamento por IBAN.
+
+---
+
+### 8. `configuracoes`
+Configurações do sistema guardadas em BD (chave/valor).
+
+### 9. `logs_acesso`
+Regista logins e tentativas de acesso dos funcionários (com IP e resultado).
+
+### 10. `password_reset_tokens`
+Tokens temporários para recuperação de senha.
 
 ---
 
@@ -140,7 +180,7 @@ data_criacao, data_atualizacao
                         └──────────────────┘
 
 ┌─────────────────┐                     ┌──────────────────┐
-│   contactos     │                     │   menu_items     │
+│   contactos     │                     │   menu_itens     │
 │                 │                     │                  │
 │  id (PK)        │                     │  id (PK)         │
 │  nome, email... │                     │  nome, preco...  │

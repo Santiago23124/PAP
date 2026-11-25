@@ -48,14 +48,14 @@ class Mesa {
      */
     public function obterPorCapacidade($capacidade_minima, $capacidade_maxima = null) { // parametros da função: capacidade_minima e capacidade_maxima
         $query = "SELECT * FROM " . $this->table_name . "
-                WHERE capacidade >= :capacidade_min //tem de ser maior ou igual ao marcador :capacidade_min
-                  AND ativa = 1"; // seleciona todas as mesas que estão ativas e que tem capacidade >= capacidade_minima           
+                WHERE capacidade >= :capacidade_min
+                  AND ativa = 1"; // tem de ser maior ou igual ao marcador :capacidade_min e estar ativa
         // parametro opcional
         if ($capacidade_maxima !== null) { // verifica se a capacidade_maxima não é nula
             $query .= " AND capacidade <= :capacidade_max";
         }
 
-        $query .= " ORDER BYcapacidade ASC, numero ASC"; // organiza as messas da menor para a maior capacidade
+        $query .= " ORDER BY capacidade ASC, numero ASC"; // organiza as mesas da menor para a maior capacidade
 
         //o preprare() envia a consulta para a basse de dados sem valores reais isso impede atques de SQL injection
         $stmt = $this->conn->prepare($query);// prepara o statement
@@ -98,18 +98,24 @@ class Mesa {
     }
 
     /**
-     * Verificar disponibilidade da mesa em data/hora específica
+     * Verificar disponibilidade desta mesa numa data/hora específica
+     * -------------------------------------------------------------
+     * Vê se a mesa já tem alguma reserva que se sobreponha ao horário pedido.
+     * Devolve true se estiver LIVRE (sem conflitos).
      */
-    public function verificarDisponibilidade($data, $hora, $duracao_minutos = 120) {
-        // Calcular horário de término
+    public function verificarDisponibilidade($data, $hora, $duracao_minutos = Config::DURACAO_PADRAO_RESERVA) {
+        // DateTime = objeto que representa uma data/hora e permite fazer cálculos com ela
         $hora_inicio = new DateTime($data . ' ' . $hora);
-        $hora_fim = clone $hora_inicio;
+        $hora_fim = clone $hora_inicio;   // clone = copia o objeto (para não alterar o original)
+        // add + DateInterval('PT..M') = somar minutos de duração para saber a hora de fim
         $hora_fim->add(new DateInterval('PT' . $duracao_minutos . 'M'));
 
+        // format = transforma a data/hora num texto no formato indicado
         $data_inicio = $hora_inicio->format('Y-m-d H:i:s');
         $data_fim = $hora_fim->format('Y-m-d H:i:s');
 
-        // Verificar se há conflito de horário
+        // Conta as reservas ativas desta mesa que colidem com o horário pedido.
+        // COUNT(*) = conta linhas; se o resultado for 0, não há conflito.
         $query = "SELECT COUNT(*) as count FROM reservas
                 WHERE mesa_id = :mesa_id
                   AND status IN ('pendente', 'confirmada')
@@ -130,15 +136,21 @@ class Mesa {
         $stmt->execute();
 
         $result = $stmt->fetch();
-        return $result['count'] == 0;
+        return $result['count'] == 0;   // 0 conflitos = mesa livre
     }
 
     /**
-     * Obter mesas disponíveis para uma data/hora e número de pessoas
-     * Algoritmo: primeiro tenta mesas exatas, depois mesas maiores
+     * Obter as mesas disponíveis para uma data/hora e número de pessoas
+     * -------------------------------------------------------------
+     * É o CORAÇÃO da atribuição automática de mesa.
+     * `static` = pode ser chamado com Mesa::obterMesasDisponiveis(...) sem criar objeto,
+     * por isso recebe a ligação $db como primeiro parâmetro.
+     * Algoritmo: procura as mesas que servem e devolve só as que estão realmente livres.
      */
-    public static function obterMesasDisponiveis($db, $data, $hora, $num_pessoas, $duracao_minutos = 120) {
-        // 1. Obter todas as mesas ativas que comportam pelo menos o número de pessoas
+    public static function obterMesasDisponiveis($db, $data, $hora, $num_pessoas, $duracao_minutos = Config::DURACAO_PADRAO_RESERVA) {
+        // 1. Buscar todas as mesas ativas com capacidade suficiente,
+        //    da menor para a maior (assim usa-se a mesa mais pequena que chega).
+        //    RAND() desempata aleatoriamente entre mesas da mesma capacidade.
         $capacidade_min = $num_pessoas;
 
         $query = "SELECT * FROM mesas
@@ -152,17 +164,19 @@ class Mesa {
 
         $todas_mesas = $stmt->fetchAll();
 
-        // 2. Filtrar mesas realmente disponíveis
-        $mesas_disponiveis = [];
+        // 2. Percorrer cada mesa e ficar só com as que não têm conflito de horário.
+        $mesas_disponiveis = [];   // array vazio que vai sendo preenchido
 
+        // foreach = repete o bloco uma vez para cada mesa da lista
         foreach ($todas_mesas as $mesa) {
-            $obj_mesa = new Mesa($db);
+            $obj_mesa = new Mesa($db);          // cria um objeto Mesa para poder testar
             $obj_mesa->id = $mesa['id'];
             $obj_mesa->numero = $mesa['numero'];
             $obj_mesa->capacidade = $mesa['capacidade'];
 
+            // Se a mesa estiver livre nesse horário, adiciona-a à lista de disponíveis
             if ($obj_mesa->verificarDisponibilidade($data, $hora, $duracao_minutos)) {
-                $mesas_disponiveis[] = $mesa;
+                $mesas_disponiveis[] = $mesa;   // [] no fim = acrescenta ao array
             }
         }
 
@@ -170,10 +184,13 @@ class Mesa {
     }
 
     /**
-     * Associar mesa a uma reserva (algoritmo automático)
+     * Associar automaticamente uma mesa a uma reserva
+     * -------------------------------------------------------------
+     * Usado ao EDITAR uma reserva. Escolhe a melhor mesa livre e grava-a.
+     * (Ao CRIAR, a classe Reserva faz este trabalho por conta própria.)
      */
     public static function associarMesaAutomatica($db, $reserva_id, $num_pessoas, $data, $hora) {
-        // Obter mesas disponíveis ordenadas por capacidade (menor primeiro - economia de espaço)
+        // self:: = chama outro método static desta mesma classe
         $mesas_disponiveis = self::obterMesasDisponiveis($db, $data, $hora, $num_pessoas);
 
         if (empty($mesas_disponiveis)) {
@@ -199,13 +216,15 @@ class Mesa {
     }
 
     /**
-     * Obter reservas de uma mesa
+     * Obter as reservas ativas desta mesa (opcionalmente entre duas datas)
      */
     public function obterReservas($data_inicio = null, $data_fim = null) {
+        // status IN ('pendente','confirmada') = só reservas que ainda contam (não canceladas)
         $query = "SELECT * FROM reservas
                 WHERE mesa_id = :mesa_id
                   AND status IN ('pendente', 'confirmada')";
 
+        // Filtros de data opcionais: só se juntam à query se forem passados
         if ($data_inicio) {
             $query .= " AND data_reserva >= :data_inicio";
         }
@@ -230,9 +249,10 @@ class Mesa {
     }
 
     /**
-     * Criar nova mesa
+     * Criar uma nova mesa na base de dados
      */
     public function criar() {
+        // INSERT INTO ... VALUES ... = inserir uma nova linha na tabela
         $query = "INSERT INTO " . $this->table_name . "
                 (numero, capacidade, localizacao, observacoes)
                 VALUES
@@ -240,6 +260,7 @@ class Mesa {
 
         $stmt = $this->conn->prepare($query);
 
+        // Limpar os dados (htmlspecialchars + strip_tags) antes de gravar
         $this->numero = htmlspecialchars(strip_tags($this->numero));
         $this->capacidade = htmlspecialchars(strip_tags($this->capacidade));
         $this->localizacao = htmlspecialchars(strip_tags($this->localizacao));
@@ -254,9 +275,10 @@ class Mesa {
     }
 
     /**
-     * Atualizar mesa
+     * Atualizar os dados de uma mesa existente
      */
     public function atualizar() {
+        // UPDATE ... SET ... WHERE id = ... = altera a linha com aquele id
         $query = "UPDATE " . $this->table_name . "
                 SET numero = :numero,
                     capacidade = :capacidade,
@@ -284,7 +306,10 @@ class Mesa {
     }
 
     /**
-     * Remover mesa (desativar)
+     * Remover uma mesa — na prática, DESATIVAR (ativa = 0)
+     * -------------------------------------------------------------
+     * Não apaga a linha; apenas marca como inativa. Assim o histórico
+     * de reservas antigas ligadas a essa mesa não se perde.
      */
     public function remover($id) {
         $query = "UPDATE " . $this->table_name . "
@@ -298,11 +323,12 @@ class Mesa {
     }
 
     /**
-     * Contar mesas disponíveis
+     * Contar quantas mesas estão disponíveis numa data/hora
+     * (reutiliza obterMesasDisponiveis com 1 pessoa e conta o resultado)
      */
     public static function contarDisponiveis($db, $data, $hora) {
         $mesas = self::obterMesasDisponiveis($db, $data, $hora, 1);
-        return count($mesas);
+        return count($mesas);   // count = número de elementos do array
     }
 }
 ?>

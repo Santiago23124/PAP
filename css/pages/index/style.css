@@ -349,7 +349,7 @@
 }
 
 .intro-text {
-    font-size: 1,3em;
+    font-size: 1.3em;
     line-height: 1.9;
     color: var(--luxury-text-gray);
     font-weight: 300;
@@ -405,6 +405,7 @@
     flex: 1;
     position: relative;
     height: 600px;
+    min-width: 0; /* permite encolher dentro do flex sem estourar */
 }
 
 /* imagem principal - ocupa todo o container */
@@ -416,8 +417,9 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* sem sombra nem cantos arredondados: os cantos transparentes da montagem
+       fundem-se no fundo branco da secção e as fotos parecem flutuar */
     z-index: 1;
-
 }
 
 /* Features Section */
@@ -647,6 +649,7 @@
     padding: 110px 40px;
     position: relative;
     overflow: hidden;
+    margin-top: 60px;
 }
 
 .awards-section::before {
@@ -764,7 +767,64 @@
    RESPONSIVO
    ============================================ */
 
+/* Imagens de conteúdo nunca ultrapassam o container */
+.intro-images img {
+    max-width: 100%;
+}
+
+.menu-item-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Tablets e ecrãs médios - empilhar texto + imagem */
+@media (max-width: 992px) {
+    .intro-content {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .intro-features {
+        justify-content: center;
+    }
+
+    /* a imagem deixa de ser absoluta e passa a fluir normalmente */
+    .intro-images {
+        width: 100%;
+        height: auto;
+    }
+
+    .img-main {
+        position: static;
+        transform: none;
+        width: 100%;
+        height: 480px; /* altura fixa para o cover cortar os cantos transparentes do PNG */
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+    }
+
+    .menu-preview-grid,
+    .awards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .info-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+}
+
 @media (max-width: 768px) {
+    .img-main {
+        height: 320px;
+    }
+
     .hero-title {
         font-size: 2.8em;
         letter-spacing: 4px;

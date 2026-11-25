@@ -233,7 +233,7 @@
 
 .reserva-layout {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
+    grid-template-columns: 1fr 1.6fr;
     gap: 60px;
     align-items: start;
 }
@@ -643,7 +643,7 @@
 
 .space-image {
     position: relative;
-    height: 340px;
+    height: 420px;
     overflow: hidden;
 }
 
@@ -703,7 +703,7 @@
 
 .space-desc {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.95em;
+    font-size: 1.3em;
     color: var(--luxury-text-muted);
     line-height: 1.6;
     margin-bottom: 16px;

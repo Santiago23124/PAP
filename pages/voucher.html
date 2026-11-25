@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Área de Funcionários - Restaurante 100 Sabores</title>
+    <title>Voucher - 100 Sabores</title>
     <link rel="stylesheet" type="text/css" href="../css/pages/shared/global-pages.css">
     <link rel="stylesheet" type="text/css" href="../css/pages/login/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/pages/voucher/style.css">
     <link rel="shortcut icon" href="./imagens/logo/logotipo.transparente.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -57,6 +58,55 @@
         </div>
     </section>
 
+    <!-- Secção do Voucher: imagem + formulário -->
+    <section class="voucher-section">
+        <div class="voucher-preview">
+            <img src="./imagens/logo/100 sabores.png" alt="Voucher presente 100 Sabores">
+        </div>
+
+        <div>
+            <div class="voucher-form-card" id="voucherFormCard">
+                <h2>Oferecer um Voucher</h2>
+                <p class="subtitulo">Preencha os dados e enviamos o voucher por email, com as instruções de pagamento.</p>
+
+                <form id="voucherForm">
+                    <div class="voucher-form-group">
+                        <label for="nome_recebe">Em nome de (quem recebe) *</label>
+                        <input type="text" id="nome_recebe" name="nome_recebe" required minlength="2" placeholder="Nome de quem recebe o presente">
+                    </div>
+
+                    <div class="voucher-form-group">
+                        <label for="nome_oferece">Um presente de (quem oferece) *</label>
+                        <input type="text" id="nome_oferece" name="nome_oferece" required minlength="2" placeholder="O seu nome">
+                    </div>
+
+                    <div class="voucher-form-group">
+                        <label for="valor">Valor do voucher *</label>
+                        <select id="valor" name="valor" required>
+                            <option value="25">25 €</option>
+                            <option value="50" selected>50 €</option>
+                            <option value="100">100 €</option>
+                        </select>
+                    </div>
+
+                    <div class="voucher-form-group">
+                        <label for="email">Email para envio do voucher *</label>
+                        <input type="email" id="email" name="email" required placeholder="exemplo@email.com">
+                    </div>
+
+                    <div class="voucher-form-group">
+                        <label for="mensagem">Mensagem pessoal (opcional)</label>
+                        <textarea id="mensagem" name="mensagem" placeholder="Uma mensagem para quem recebe..."></textarea>
+                    </div>
+
+                    <button type="submit" id="voucherSubmit">Oferecer voucher</button>
+                </form>
+            </div>
+
+            <div class="voucher-sucesso" id="voucherSucesso"></div>
+        </div>
+    </section>
+
 
     <footer class="rodape">
         <div class="footer-content">
@@ -65,32 +115,32 @@
                     <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="footer-logo-img">
                     <span class="footer-logo-text">100 SABORES</span>
                 </div>
-                <p class="footer-description">
+                <p class="footer-description" data-i18n="foot-desc">
                     Experiência culinária única com pratos tradicionais portugueses
                     preparados com ingredientes frescos e técnicas modernas.
                 </p>
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">Contactos</h3>
+                <h3 class="footer-title" data-i18n="foot-contactos">Contactos</h3>
                 <div class="footer-contact">
-                    <p><i class="fas fa-map-marker-alt"></i> Rua dos Sabores, 123<br>Porto, Portugal</p>
+                    <p><i class="fas fa-map-marker-alt"></i> <span data-i18n="foot-morada">Largo da Trindade 9, 1200-466 Lisboa</span></p>
                     <p><i class="fas fa-phone"></i> +351 222 123 456</p>
                     <p><i class="fas fa-envelope"></i> info@100sabores.pt</p>
                 </div>
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">Horário</h3>
+                <h3 class="footer-title" data-i18n="foot-horario">Horário</h3>
                 <div class="footer-hours">
-                    <p>Segunda - Quinta: 12h - 22h</p>
-                    <p>Sexta - Sábado: 12h - 23h</p>
-                    <p>Domingo: 12h - 21h</p>
+                    <p data-i18n="foot-hours-1">Segunda - Quinta: 12h - 22h</p>
+                    <p data-i18n="foot-hours-2">Sexta - Sábado: 12h - 23h</p>
+                    <p data-i18n="foot-hours-3">Domingo: 12h - 21h</p>
                 </div>
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">Siga-nos</h3>
+                <h3 class="footer-title" data-i18n="foot-siga">Siga-nos</h3>
                 <div class="footer-social">
                     <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -102,18 +152,19 @@
 
         <div class="footer-bottom">
             <div class="footer-bottom-content">
-                <p>&copy; 2025 Restaurante 100 Sabores. Todos os direitos reservados.</p>
+                <p data-i18n="foot-copyright">&copy; 2025 Restaurante 100 Sabores. Todos os direitos reservados.</p>
                 <div class="footer-links">
                     <a href="#">Política de Privacidade</a>
                     <span class="separator">|</span>
-                    <a href="#">Termos de Uso</a>
+                    <a href="#" data-i18n="foot-termos">Termos de Uso</a>
                     <span class="separator">|</span>
-                    <a href="#">Mapa do Site</a>
+                    <a href="#" data-i18n="foot-mapa">Mapa do Site</a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <script src="../js/voucher-form.js"></script>
 
 </body>
 

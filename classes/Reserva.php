@@ -25,7 +25,7 @@ class Reserva {
 
     public function __construct($db) {
         $this->conn = $db;
-        $this->duracao_minutos = 120;
+        $this->duracao_minutos = Config::DURACAO_PADRAO_RESERVA;
     }
 
     /**
@@ -228,7 +228,7 @@ class Reserva {
      */
     public function verificarDisponibilidade($data, $hora, $num_pessoas, $duracao_minutos = null) {
         if ($duracao_minutos === null) {
-            $duracao_minutos = $this->duracao_minutos ?? 120;
+            $duracao_minutos = $this->duracao_minutos ?? Config::DURACAO_PADRAO_RESERVA;
         }
 
         // Verificar capacidade total do restaurante
@@ -326,9 +326,12 @@ class Reserva {
             $erros[] = "Reserva deve ser feita com pelo menos " . Config::HORAS_ANTECEDENCIA_MINIMA . " horas de antecedência";
         }
 
-        $h = (int)substr($this->hora_reserva, 0, 2);
-        if (!(($h >= 12 && $h < 15) || ($h >= 19 && $h < 23))) {
-            $erros[] = "Horário fora do horário de funcionamento";
+        // Valida contra a mesma fonte de horários usada pelo formulário
+        // (assim a hora aceite coincide sempre com os slots oferecidos, incl. fim de semana)
+        if (!empty($this->data_reserva) && !empty($this->hora_reserva)) {
+            if (!Config::horarioValido($this->data_reserva, $this->hora_reserva)) {
+                $erros[] = "Horário fora do horário de funcionamento";
+            }
         }
 
         return $erros;

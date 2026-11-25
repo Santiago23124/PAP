@@ -35,30 +35,30 @@
         </nav>
         <div class="nav-container">
             <div class="nav-left">
-                <a href="index.html" class="nav-link">HOME</a>
-                <a href="index.html#sobre" class="nav-link">SOBRE NÓS</a>
-                <a href="menu.html" class="nav-link">EMENTA</a>
-                <a href="carta_vinhos.html" class="nav-link">VINHOS</a>
+                <a href="index.html" class="nav-link" data-i18n="nav-home">HOME</a>
+                <a href="index.html#sobre" class="nav-link" data-i18n="nav-sobre">SOBRE NÓS</a>
+                <a href="menu.html" class="nav-link" data-i18n="nav-menu">EMENTA</a>
+                <a href="carta_vinhos.html" class="nav-link" data-i18n="nav-vinhos">VINHOS</a>
             </div>
             <a href="index.html" class="nav-logo-center">
                 <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="logo-img">
             </a>
             <div class="nav-right">
-                <a href="Galeria.html" class="nav-link">GALERIA</a>
-                <a href="Eventos.html" class="nav-link">EVENTOS</a> 
-                <a href="contacto.html" class="nav-link">CONTACTO</a>
-                <a href="Reservas.html" class="nav-link nav-reservas active">RESERVAS</a>
+                <a href="Galeria.html" class="nav-link" data-i18n="nav-galeria">GALERIA</a>
+                <a href="Eventos.php" class="nav-link" data-i18n="nav-bar">EVENTOS</a>
+                <a href="contacto.html" class="nav-link" data-i18n="nav-contacto">CONTACTO</a>
+                <a href="Reservas.html" class="nav-link nav-reservas active" data-i18n="nav-reservas">RESERVAS</a>
             </div>
         </div>
         <div class="nav-menu nav-menu-mobile">
-            <a href="index.html" class="nav-link">HOME</a>
-            <a href="index.html#sobre" class="nav-link">SOBRE NÓS</a>
-            <a href="menu.html" class="nav-link">EMENTA</a>
-            <a href="carta_vinhos.html" class="nav-link">VINHOS</a>
-            <a href="Galeria.html" class="nav-link">GALERIA</a>
-            <a href="Eventos.html" class="nav-link">EVENTOS</a>
-            <a href="contacto.html" class="nav-link">CONTACTO</a>
-            <a href="Reservas.html" class="nav-link active">RESERVAS</a>
+            <a href="index.html" class="nav-link" data-i18n="nav-home">HOME</a>
+            <a href="index.html#sobre" class="nav-link" data-i18n="nav-sobre">SOBRE NÓS</a>
+            <a href="menu.html" class="nav-link" data-i18n="nav-menu">EMENTA</a>
+            <a href="carta_vinhos.html" class="nav-link" data-i18n="nav-vinhos">VINHOS</a>
+            <a href="Galeria.html" class="nav-link" data-i18n="nav-galeria">GALERIA</a>
+            <a href="Eventos.php" class="nav-link" data-i18n="nav-bar">EVENTOS</a>
+            <a href="contacto.html" class="nav-link" data-i18n="nav-contacto">CONTACTO</a>
+            <a href="Reservas.html" class="nav-link active" data-i18n="nav-reservas">RESERVAS</a>
         </div>
     </nav>
 
@@ -67,14 +67,14 @@
         <div class="parallax-bg"></div>
         <div class="parallax-overlay"></div>
         <div class="reservas-hero-content">
-            <span class="reservas-label">RESERVE A SUA EXPERIÊNCIA</span>
-            <h1 class="reservas-title">Reservas</h1>
-            <p class="reservas-tagline">Garanta o seu lugar no 100 Sabores</p>
-            <p class="reservas-address">Largo da Trindade, Príncipe Real</p>
-        
+            <span class="reservas-label" data-i18n="res-label">RESERVE A SUA EXPERIÊNCIA</span>
+            <h1 class="reservas-title" data-i18n="res-title">Reservas</h1>
+            <p class="reservas-tagline" data-i18n="res-tagline">Garanta o seu lugar no 100 Sabores</p>
+            <p class="reservas-address" data-i18n="res-address">Largo da Trindade, Príncipe Real</p>
+
             <div class="reservas-hours">
-                <span>Seg-Sáb: 12h-00h</span>
-                <span>Dom: 12h-16h</span>
+                <span data-i18n="res-hours-1">Seg-Sáb: 12h-00h</span>
+                <span data-i18n="res-hours-2">Dom: 12h-16h</span>
             </div>
         </div>
     </div>
@@ -83,8 +83,8 @@
     <section class="reserva-combined-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Faça a sua Reserva</h2>
-                <p class="section-subtitle">Escolha o seu espaço e garanta a sua experiência gastronómica</p>
+                <h2 class="section-title" data-i18n="res-sec-title">Faça a sua Reserva</h2>
+                <p class="section-subtitle" data-i18n="res-sec-sub">Escolha o seu espaço e garanta a sua experiência gastronómica</p>
             </div>
 
             <div class="reserva-layout">
@@ -95,14 +95,14 @@
                             <div class="form-icon">
                                 <i class="fas fa-calendar-check"></i>
                             </div>
-                            <h3>Dados da Reserva</h3>
-                            <p class="form-subtitle">Preencha os detalhes da sua visita</p>
+                            <h3 data-i18n="res-form-title">Dados da Reserva</h3>
+                            <p class="form-subtitle" data-i18n="res-form-sub">Preencha os detalhes da sua visita</p>
                         </div>
 
                         <form id="reservaForm" class="reserva-form-modern">
                             <div class="form-group">
                                 <label for="nome">
-                                    <i class="fas fa-user"></i> Nome Completo *
+                                    <i class="fas fa-user"></i> <span data-i18n="res-label-nome">Nome Completo *</span>
                                 </label>
                                 <div class="input-wrapper">
                                     <input type="text" id="nome" name="nome" required placeholder="João Silva">
@@ -112,7 +112,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="email">
-                                        <i class="fas fa-envelope"></i> E-mail *
+                                        <i class="fas fa-envelope"></i> <span data-i18n="res-label-email">E-mail *</span>
                                     </label>
                                     <div class="input-wrapper">
                                         <input type="email" id="email" name="email" required placeholder="joao@email.com">
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="telefone">
-                                        <i class="fas fa-phone"></i> Telefone *
+                                        <i class="fas fa-phone"></i> <span data-i18n="res-label-tel">Telefone *</span>
                                     </label>
                                     <div class="input-wrapper">
                                         <input type="tel" id="telefone" name="telefone" required placeholder="+351 912 345 678">
@@ -131,7 +131,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="data">
-                                        <i class="far fa-calendar"></i> Data *
+                                        <i class="far fa-calendar"></i> <span data-i18n="res-label-data">Data *</span>
                                     </label>
                                     <div class="input-wrapper">
                                         <input type="date" id="data" name="data" required>
@@ -139,30 +139,30 @@
                                 </div>
 <div class="form-group">
                                         <label for="hora">
-                                            <i class="far fa-clock"></i> Hora *
+                                            <i class="far fa-clock"></i> <span data-i18n="res-label-hora">Hora *</span>
                                         </label>
                                         <div class="input-wrapper">
                                             <select id="hora" name="hora" required>
-                                                <option value="">Carregando horários...</option>
+                                                <option value="" data-i18n="res-hora-loading">Carregando horários...</option>
                                             </select>
                                         </div>
                                     </div>
                                 <div class="form-group">
                                     <label for="num_pessoas">
-                                        <i class="fas fa-users"></i> Pessoas *
+                                        <i class="fas fa-users"></i> <span data-i18n="res-label-pessoas">Pessoas *</span>
                                     </label>
                                     <div class="input-wrapper">
                                         <select id="num_pessoas" name="num_pessoas" required>
-                                            <option value="">Selecione</option>
-                                            <option value="1">1 Pessoa</option>
-                                            <option value="2">2 Pessoas</option>
-                                            <option value="3">3 Pessoas</option>
-                                            <option value="4">4 Pessoas</option>
-                                            <option value="5">5 Pessoas</option>
-                                            <option value="6">6 Pessoas</option>
-                                            <option value="8">8 Pessoas</option>
-                                            <option value="10">10 Pessoas</option>
-                                            <option value="12">12 Pessoas</option>
+                                            <option value="" data-i18n="res-pessoas-select">Selecione</option>
+                                            <option value="1" data-i18n="res-pessoas-1">1 Pessoa</option>
+                                            <option value="2" data-i18n="res-pessoas-2">2 Pessoas</option>
+                                            <option value="3" data-i18n="res-pessoas-3">3 Pessoas</option>
+                                            <option value="4" data-i18n="res-pessoas-4">4 Pessoas</option>
+                                            <option value="5" data-i18n="res-pessoas-5">5 Pessoas</option>
+                                            <option value="6" data-i18n="res-pessoas-6">6 Pessoas</option>
+                                            <option value="8" data-i18n="res-pessoas-8">8 Pessoas</option>
+                                            <option value="10" data-i18n="res-pessoas-10">10 Pessoas</option>
+                                            <option value="12" data-i18n="res-pessoas-12">12 Pessoas</option>
                                         </select>
                                     </div>
                                 </div>
@@ -170,15 +170,15 @@
 
                             <div class="form-group full-width">
                                 <label for="observacoes">
-                                    <i class="fas fa-pen"></i> Observações Especiais
+                                    <i class="fas fa-pen"></i> <span data-i18n="res-label-obs">Observações Especiais</span>
                                 </label>
                                 <div class="input-wrapper">
-                                    <textarea id="observacoes" name="observacoes" rows="3" placeholder="Alergias, preferências especiais, ocasião especial..."></textarea>
+                                    <textarea id="observacoes" name="observacoes" rows="3" placeholder="Alergias, preferências especiais, ocasião especial..." data-i18n-placeholder="res-ph-obs"></textarea>
                                 </div>
                             </div>
 
                             <button type="submit" id="submitBtn" class="submit-btn-modern">
-                                <span class="btn-text">Confirmar Reserva</span>
+                                <span class="btn-text" data-i18n="res-btn">Confirmar Reserva</span>
                                 <i class="fas fa-arrow-right btn-icon"></i>
                             </button>
                         </form>
@@ -188,13 +188,13 @@
                             <div class="success-icon">
                                 <i class="fas fa-check-circle"></i>
                             </div>
-                            <h3>Reserva Confirmada!</h3>
-                            <p>Recebemos a sua reserva. Enviámos uma confirmação para o seu email.</p>
+                            <h3 data-i18n="res-success-title">Reserva Confirmada!</h3>
+                            <p data-i18n="res-success-text">Recebemos a sua reserva. Enviámos uma confirmação para o seu email.</p>
                         </div>
 
                         <!-- Debug -->
                         <details class="debug-panel">
-                            <summary>Ver reservas guardadas (debug)</summary>
+                            <summary data-i18n="res-debug">Ver reservas guardadas (debug)</summary>
                             <pre id="reservasDebug"></pre>
                         </details>
                     </div>
@@ -204,9 +204,9 @@
                 <div class="spaces-side">
                     <h3 class="spaces-title">
                         <i class="fas fa-door-open"></i>
-                        Os Nossos Espaços
+                        <span data-i18n="res-spaces-title">Os Nossos Espaços</span>
                     </h3>
-                    <p class="spaces-subtitle">Ambientes elegantes para momentos inesquecíveis</p>
+                    <p class="spaces-subtitle" data-i18n="res-spaces-sub">Ambientes elegantes para momentos inesquecíveis</p>
 
                     <div class="spaces-gallery">
                         <!-- Espaço Sala Principal -->
@@ -214,15 +214,15 @@
                             <div class="space-image">
                                 <img src="../pages/imagens/gallery/3-7.png" alt="Sala Principal">
                                 <div class="space-overlay">
-                                    <span class="space-tag">Premium</span>
+                                    <span class="space-tag" data-i18n="res-tag-premium">Premium</span>
                                 </div>
                             </div>
                             <div class="space-content">
-                                <h4>Sala Principal</h4>
-                                <p class="space-desc">O coração do restaurante com capacidade para 60 lugares, ideal para jantares e celebrações.</p>
+                                <h4 data-i18n="res-space1-title">Sala Principal</h4>
+                                <p class="space-desc" data-i18n="res-space1-desc">O coração do restaurante com capacidade para 60 lugares, ideal para jantares e celebrações.</p>
                                 <div class="space-meta">
-                                    <span><i class="fas fa-users"></i> 1-12 pessoas</span>
-                                    <span><i class="fas fa-door-open"></i> Clássico</span>
+                                    <span><i class="fas fa-users"></i> <span data-i18n="res-space1-cap">1-12 pessoas</span></span>
+                                    <span><i class="fas fa-door-open"></i> <span data-i18n="res-space1-type">Clássico</span></span>
                                 </div>
                             </div>
                         </div>
@@ -230,17 +230,17 @@
                         <!-- Espaço Sala Private -->
                         <div class="space-card">
                             <div class="space-image">
-                                <img src="../pages/imagens/gallery/29.jpg" alt="Sala Privada">
+                                <img src="../pages/imagens/gallery/50.jpg" alt="Sala Privada">
                                 <div class="space-overlay">
-                                    <span class="space-tag">Exclusivo</span>
+                                    <span class="space-tag" data-i18n="res-tag-exclusivo">Exclusivo</span>
                                 </div>
                             </div>
                             <div class="space-content">
-                                <h4>Sala Privada</h4>
-                                <p class="space-desc">Ambiente reservado e intimista, perfeito para jantares empresariais ou ocasiões especiais.</p>
+                                <h4 data-i18n="res-space2-title">Sala Privada</h4>
+                                <p class="space-desc" data-i18n="res-space2-desc">Ambiente reservado e intimista, perfeito para jantares empresariais ou ocasiões especiais.</p>
                                 <div class="space-meta">
-                                    <span><i class="fas fa-users"></i> 2-20 pessoas</span>
-                                    <span><i class="fas fa-door-open"></i> Privado</span>
+                                    <span><i class="fas fa-users"></i> <span data-i18n="res-space2-cap">2-20 pessoas</span></span>
+                                    <span><i class="fas fa-door-open"></i> <span data-i18n="res-space2-type">Privado</span></span>
                                 </div>
                             </div>
                         </div>
@@ -250,15 +250,15 @@
                             <div class="space-image">
                                 <img src="../pages/imagens/gallery/sallotodivino.jpg" alt="Esplanada">
                                 <div class="space-overlay">
-                                    <span class="space-tag">Exterior</span>
+                                    <span class="space-tag" data-i18n="res-tag-exterior">Interior</span>
                                 </div>
                             </div>
                             <div class="space-content">
-                                <h4>Esplanada Gourmet</h4>
-                                <p class="space-desc">Espaço exterior com jardim, ideal para almoços descontraídos e eventos ao ar livre.</p>
+                                <h4 data-i18n="res-space3-title">Sala Secundária</h4>
+                                <p class="space-desc" data-i18n="res-space3-desc">Espaço interior com ambiente acolhedor, ideal para reuniões e eventos privados.</p>
                                 <div class="space-meta">
-                                    <span><i class="fas fa-users"></i> 1-30 pessoas</span>
-                                    <span><i class="fas fa-door-open"></i> Aberto</span>
+                                    <span><i class="fas fa-users"></i> <span data-i18n="res-space3-cap">1-30 pessoas</span></span>
+                                    <span><i class="fas fa-door-open"></i> <span data-i18n="res-space3-type">Aberto</span></span>
                                 </div>
                             </div>
                         </div>
@@ -268,15 +268,15 @@
                             <div class="space-image">
                                 <img src="../pages/imagens/gallery/30.jpg" alt="Wine Bar">
                                 <div class="space-overlay">
-                                    <span class="space-tag">Trendy</span>
+                                    <span class="space-tag" data-i18n="res-tag-trendy">Trendy</span>
                                 </div>
                             </div>
                             <div class="space-content">
-                                <h4>Wine Bar</h4>
-                                <p class="space-desc">Bar de vinhos sofisticado com mais de 200 referências, ideal para degustações e petiscos.</p>
+                                <h4 data-i18n="res-space4-title">Wine Bar</h4>
+                                <p class="space-desc" data-i18n="res-space4-desc">Bar de vinhos sofisticado com mais de 200 referências, ideal para degustações e petiscos.</p>
                                 <div class="space-meta">
-                                    <span><i class="fas fa-users"></i> 1-16 pessoas</span>
-                                    <span><i class="fas fa-door-open"></i> Casual</span>
+                                    <span><i class="fas fa-users"></i> <span data-i18n="res-space4-cap">1-16 pessoas</span></span>
+                                    <span><i class="fas fa-door-open"></i> <span data-i18n="res-space4-type">Casual</span></span>
                                 </div>
                             </div>
                         </div>
@@ -286,48 +286,62 @@
         </div>
     </section>
 
-    <footer class="rodape">
+     <footer class="rodape">
         <div class="footer-content">
             <div class="footer-section">
                 <div class="footer-logo">
                     <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="footer-logo-img">
                     <span class="footer-logo-text">100 SABORES</span>
                 </div>
-                <p class="footer-description">
-                    Cozinha portuguesa contemporânea no coração de Lisboa.
+                <p class="footer-description" data-i18n="foot-desc">
+                    Experiência culinária única com pratos tradicionais portugueses
+                    preparados com ingredientes frescos e técnicas modernas.
                 </p>
             </div>
+
             <div class="footer-section">
-                <h3 class="footer-title">Contactos</h3>
+                <h3 class="footer-title" data-i18n="foot-contactos">Contactos</h3>
                 <div class="footer-contact">
-                    <p><i class="fas fa-map-marker-alt"></i> Largo da Trindade, Príncipe Real</p>
+                    <p><i class="fas fa-map-marker-alt"></i> <span data-i18n="foot-morada">Largo da Trindade 9, 1200-466 Lisboa</span></p>
                     <p><i class="fas fa-phone"></i> +351 222 123 456</p>
                     <p><i class="fas fa-envelope"></i> info@100sabores.pt</p>
                 </div>
             </div>
+
             <div class="footer-section">
-                <h3 class="footer-title">Horário</h3>
+                <h3 class="footer-title" data-i18n="foot-horario">Horário</h3>
                 <div class="footer-hours">
-                    <p>Segunda - Quinta: 12h - 22h</p>
-                    <p>Sexta - Sábado: 12h - 00h</p>
-                    <p>Domingo: 12h - 16h</p>
+                    <p data-i18n="res-foot-hours-1">Segunda - Sábado: 12h - 00h</p>
+                    <p data-i18n="res-foot-hours-2">Domingo: 18h - 21h</p>
                 </div>
             </div>
+
             <div class="footer-section">
-                <h3 class="footer-title">Siga-nos</h3>
+                <h3 class="footer-title" data-i18n="foot-siga">Siga-nos</h3>
                 <div class="footer-social">
-                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-tripadvisor"></i></a>
+                    <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/100_sabores.pt?utm_source=qr" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
                 </div>
             </div>
         </div>
+
         <div class="footer-bottom">
-            <p>&copy; 2025 100 Sabores. Todos os direitos reservados.</p>
+            <div class="footer-bottom-content">
+                <p data-i18n="foot-copyright">&copy; 2025 Restaurante 100 Sabores. Todos os direitos reservados.</p>
+                <div class="footer-links">
+                    <a href="politica_privacidade.html" data-i18n="foot-priv">Política de Privacidade</a>
+                    <span class="separator">|</span>
+                    <a href="#" data-i18n="foot-termos">Termos de Uso</a>
+                    <span class="separator">|</span>
+                    <a href="#" data-i18n="foot-mapa">Mapa do Site</a>
+                </div>
+            </div>
         </div>
     </footer>
-
     <script src="../js/script.js"></script>
+    <script src="../js/i18n.js"></script>
     <script src="../js/reservas-form.js"></script>
 </body>
 </html>

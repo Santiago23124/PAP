@@ -1,3 +1,17 @@
+// Preenche o <select id="hora"> a partir de uma lista de { valor, texto }
+function preencherHoras(opcoes) {
+    const horaSelect = document.getElementById('hora');
+    if (!horaSelect) return;
+
+    horaSelect.innerHTML = '<option value="">Selecione um horário</option>';
+    opcoes.forEach(function(o) {
+        const opt = document.createElement('option');
+        opt.value = o.valor;
+        opt.textContent = o.texto;
+        horaSelect.appendChild(opt);
+    });
+}
+
 function carregarHorariosDisponiveis(data) {
     const horaSelect = document.getElementById('hora');
     if (!horaSelect) return;
@@ -12,58 +26,63 @@ function carregarHorariosDisponiveis(data) {
         })
         .then(response => {
             if (response.sucesso && response.horarios.length > 0) {
-                horaSelect.innerHTML = '<option value="">Selecione um horário</option>';
-                response.horarios.forEach(h => {
-                    const opt = document.createElement('option');
-                    opt.value = h.hora;
-                    opt.textContent = h.hora + ' (' + h.vagas + ' vagas)';
-                    horaSelect.appendChild(opt);
-                });
+                preencherHoras(response.horarios.map(h => ({
+                    valor: h.hora,
+                    texto: h.hora + ' (' + h.vagas + ' vagas)'
+                })));
             } else {
-                carregarHorariosFallback();
+                carregarHorariosFallback(data);
             }
             horaSelect.disabled = false;
         })
         .catch(err => {
             console.error('Erro carregar horários:', err);
-            carregarHorariosFallback();
+            carregarHorariosFallback(data);
             horaSelect.disabled = false;
         });
 }
 
-function carregarHorariosFallback() {
-    const horaSelect = document.getElementById('hora');
-    if (!horaSelect) return;
+// Gera os mesmos slots que o servidor: dia de semana (almoço + jantar)
+// ou fim de semana (apenas jantar 18:00–22:00), de 30 em 30 minutos.
+function gerarHorarios(data) {
+    const d = new Date(data + 'T00:00:00');
+    const dia = d.getDay(); // 0=domingo, 6=sábado
+    const fimDeSemana = (dia === 0 || dia === 6);
+    const faixas = fimDeSemana
+        ? [['18:00', '22:00']]
+        : [['12:00', '13:30'], ['19:00', '21:30']];
 
-    const horarios = ['12:00', '12:30', '13:00', '13:30', '14:00', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'];
-    horaSelect.innerHTML = '<option value="">Selecione um horário</option>';
-    horarios.forEach(h => {
-        const opt = document.createElement('option');
-        opt.value = h;
-        opt.textContent = h;
-        horaSelect.appendChild(opt);
+    const slots = [];
+    faixas.forEach(function(faixa) {
+        let [h, m] = faixa[0].split(':').map(Number);
+        const [hf, mf] = faixa[1].split(':').map(Number);
+        while (h < hf || (h === hf && m <= mf)) {
+            slots.push(String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0'));
+            m += 30;
+            if (m >= 60) { m -= 60; h++; }
+        }
     });
+    return slots;
+}
+
+function carregarHorariosFallback(data) {
+    const dia = data || new Date().toISOString().split('T')[0];
+    preencherHoras(gerarHorarios(dia).map(h => ({ valor: h, texto: h })));
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('reservaForm');
-    const debugEl = document.getElementById('reservasDebug');
+    const submitBtn = document.getElementById('submitBtn');
 
-    let reservas = JSON.parse(localStorage.getItem('reservas_publico')) || [];
-
-    function atualizarDebug() {
-        if (debugEl) {
-            debugEl.textContent = JSON.stringify(reservas, null, 2);
-        }
+    function resetarBotao() {
+        submitBtn.innerHTML = 'Confirmar Reserva';
+        submitBtn.disabled = false;
     }
-    atualizarDebug();
 
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        const submitBtn = document.getElementById('submitBtn');
         const formData = new FormData(form);
-
         submitBtn.innerHTML = 'A enviar...';
         submitBtn.disabled = true;
 
@@ -100,14 +119,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
             } else {
                 alert('Erro: ' + (result.erro || result.erros?.join(', ') || 'Falha na reserva'));
-                submitBtn.innerHTML = 'Confirmar Reserva';
-                submitBtn.disabled = false;
+                resetarBotao();
             }
         } catch (error) {
             console.error('Erro:', error);
             alert('Erro ao processar a reserva. Por favor, tente novamente mais tarde.');
-            submitBtn.innerHTML = 'Confirmar Reserva';
-            submitBtn.disabled = false;
+            resetarBotao();
         }
     });
 

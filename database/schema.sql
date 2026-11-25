@@ -1,4 +1,4 @@
--- Base de dados para o Restaurante 100 Sabores
+ -- Base de dados para o Restaurante 100 Sabores
 -- Criar esta base de dados no phpMyAdmin do XAMPP
 -- Cria a tabela se a mesma não existir
 CREATE DATABASE IF NOT EXISTS restaurante_100_sabores;

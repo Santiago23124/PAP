@@ -144,7 +144,20 @@
                 <h2 class="eventos-title" data-i18n="eventos-form-title">Solicitar Orçamento</h2>
                 <p data-i18n="eventos-form-desc">Preencha o formulário abaixo com os detalhes do seu evento. A nossa equipa entrará em contacto num prazo de 24 horas.</p>
             </div>
-            <form class="eventos-contacto-form" action="" method="POST" id="eventosForm">
+
+            <?php if (isset($_GET['enviado'])): ?>
+                <div class="form-alert form-alert-sucesso" style="background:#e8f6ec;border:1px solid #37a862;color:#1e6b3a;padding:16px 20px;border-radius:10px;margin-bottom:22px;font-weight:600;display:flex;align-items:center;gap:10px;">
+                    <i class="fas fa-check-circle" style="font-size:1.3em;"></i>
+                    <span data-i18n="eventos-msg-sucesso">A sua mensagem foi enviada com sucesso! A nossa equipa entrará em contacto dentro de 24 horas.</span>
+                </div>
+            <?php elseif (isset($_GET['erro'])): ?>
+                <div class="form-alert form-alert-erro" style="background:#fdecea;border:1px solid #d64541;color:#a02622;padding:16px 20px;border-radius:10px;margin-bottom:22px;font-weight:600;display:flex;align-items:center;gap:10px;">
+                    <i class="fas fa-exclamation-circle" style="font-size:1.3em;"></i>
+                    <span data-i18n="eventos-msg-erro">Ocorreu um erro ao enviar o pedido. Por favor, verifique os dados e tente novamente.</span>
+                </div>
+            <?php endif; ?>
+
+            <form class="eventos-contacto-form" action="../api/eventos.php" method="POST" id="eventosForm">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="nome" data-i18n="form-nome-label">Nome Completo *</label>
@@ -220,39 +233,38 @@
     </section>
 
     <!-- Rodapé Padrão Unificado -->
-      <footer class="rodape">
+   <footer class="rodape">
         <div class="footer-content">
             <div class="footer-section">
                 <div class="footer-logo">
                     <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="footer-logo-img">
                     <span class="footer-logo-text">100 SABORES</span>
                 </div>
-                <p class="footer-description">
+                <p class="footer-description" data-i18n="foot-desc">
                     Experiência culinária única com pratos tradicionais portugueses
                     preparados com ingredientes frescos e técnicas modernas.
                 </p>
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">Contactos</h3>
+                <h3 class="footer-title" data-i18n="foot-contactos">Contactos</h3>
                 <div class="footer-contact">
-                    <p><i class="fas fa-map-marker-alt"></i> Rua dos Sabores, 123<br>Porto, Portugal</p>
+                    <p><i class="fas fa-map-marker-alt"></i> <span data-i18n="foot-morada">Largo da Trindade 9, 1200-466 Lisboa</span></p>
                     <p><i class="fas fa-phone"></i> +351 222 123 456</p>
                     <p><i class="fas fa-envelope"></i> info@100sabores.pt</p>
                 </div>
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">Horário</h3>
+                <h3 class="footer-title" data-i18n="foot-horario">Horário</h3>
                 <div class="footer-hours">
-                    <p>Segunda - Quinta: 12h - 22h</p>
-                    <p>Sexta - Sábado: 12h - 23h</p>
-                    <p>Domingo: 12h - 21h</p>
+                    <p data-i18n="res-foot-hours-1">Segunda - Sábado: 12h - 00h</p>
+                    <p data-i18n="res-foot-hours-2">Domingo: 18h - 21h</p>
                 </div>
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">Siga-nos</h3>
+                <h3 class="footer-title" data-i18n="foot-siga">Siga-nos</h3>
                 <div class="footer-social">
                     <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://www.instagram.com/100_sabores.pt?utm_source=qr" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -264,16 +276,18 @@
 
         <div class="footer-bottom">
             <div class="footer-bottom-content">
-                <p>&copy; 2025 Restaurante 100 Sabores. Todos os direitos reservados.</p>
+                <p data-i18n="foot-copyright">&copy; 2025 Restaurante 100 Sabores. Todos os direitos reservados.</p>
                 <div class="footer-links">
-                    <a href="politica_privacidade.html">Política de Privacidade</a>
+                    <a href="politica_privacidade.html" data-i18n="foot-priv">Política de Privacidade</a>
                     <span class="separator">|</span>
-                    <a href="#">Termos de Uso</a>
+                    <a href="#" data-i18n="foot-termos">Termos de Uso</a>
                     <span class="separator">|</span>
-                    <a href="#">Mapa do Site</a>
+                    <a href="#" data-i18n="foot-mapa">Mapa do Site</a>
                 </div>
             </div>
         </div>
+    </footer>
+
 
     <!-- Scripts Globais -->
     <script src="../js/script.js"></script>

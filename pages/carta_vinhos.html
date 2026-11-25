@@ -35,41 +35,45 @@
         </nav>
         <div class="nav-container">
             <div class="nav-left">
-                <a href="index.html" class="nav-link">HOME</a>
-                <a href="index.html#sobre" class="nav-link">SOBRE NÓS</a>
-                <a href="menu.html" class="nav-link">EMENTA</a>
-                <a href="carta_vinhos.html" class="nav-link active">VINHOS</a>
+                <a href="index.html" class="nav-link" data-i18n="nav-home">HOME</a>
+                <a href="index.html#sobre" class="nav-link" data-i18n="nav-sobre">SOBRE NÓS</a>
+                <a href="menu.html" class="nav-link" data-i18n="nav-menu">EMENTA</a>
+                <a href="carta_vinhos.html" class="nav-link active" data-i18n="nav-vinhos">VINHOS</a>
             </div>
             <a href="index.html" class="nav-logo-center">
                 <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="logo-img">
             </a>
             <div class="nav-right">
-                <a href="Galeria.html" class="nav-link">GALERIA</a>
-                <a href="Eventos.html" class="nav-link">EVENTOS</a>
-                <a href="contacto.html" class="nav-link">CONTACTO</a>
-                <a href="Reservas.html" class="nav-link nav-reservas">RESERVAS</a>
+                <a href="Galeria.html" class="nav-link" data-i18n="nav-galeria">GALERIA</a>
+                <a href="Eventos.php" class="nav-link" data-i18n="nav-bar">EVENTOS</a>
+                <a href="contacto.html" class="nav-link" data-i18n="nav-contacto">CONTACTO</a>
+                <a href="Reservas.html" class="nav-link nav-reservas" data-i18n="nav-reservas">RESERVAS</a>
             </div>
         </div>
             <div class="nav-menu nav-menu-mobile">
-                <a href="index.html" class="nav-link">HOME</a>
-                <a href="index.html#sobre" class="nav-link">SOBRE NÓS</a>
-                <a href="menu.html" class="nav-link">EMENTA</a>
-                <a href="carta_vinhos.html" class="nav-link active">VINHOS</a>
-                <a href="Galeria.html" class="nav-link">GALERIA</a>
-                <a href="Eventos.html" class="nav-link">EVENTOS</a>
-                <a href="contacto.html" class="nav-link">CONTACTO</a>
-                <a href="Reservas.html" class="nav-link">RESERVAS</a>
+                <a href="index.html" class="nav-link" data-i18n="nav-home">HOME</a>
+                <a href="index.html#sobre" class="nav-link" data-i18n="nav-sobre">SOBRE NÓS</a>
+                <a href="menu.html" class="nav-link" data-i18n="nav-menu">EMENTA</a>
+                <a href="carta_vinhos.html" class="nav-link active" data-i18n="nav-vinhos">VINHOS</a>
+                <a href="Galeria.html" class="nav-link" data-i18n="nav-galeria">GALERIA</a>
+                <a href="Eventos.php" class="nav-link" data-i18n="nav-bar">EVENTOS</a>
+                <a href="contacto.html" class="nav-link" data-i18n="nav-contacto">CONTACTO</a>
+                <a href="Reservas.html" class="nav-link" data-i18n="nav-reservas">RESERVAS</a>
             </div>
     </nav>
 
     <!-- Hero Section da Carta de Vinhos -->
     <section class="menu-hero">
         <div class="menu-hero-content">
-            <h1 class="menu-hero-title">CARTA DE VINHOS</h1>
+            <h1 class="menu-hero-title" data-i18n="vinhos-hero-title">CARTA DE VINHOS</h1>
             <div class="menu-hero-subtitle">
-                <p class="menu-intro-text">Uma seleção cuidadosa de vinhos nacionais e internacionais</p>
-                <p class="menu-intro-text">para acompanhar as nossas criações culinárias.</p>
+                <p class="menu-intro-text" data-i18n="vinhos-hero-p1">Uma seleção cuidadosa de vinhos nacionais e internacionais</p>
+                <p class="menu-intro-text" data-i18n="vinhos-hero-p2">para acompanhar as nossas criações culinárias.</p>
             </div>
+            <!-- Botão para abrir a carta de vinhos em PDF (abre em separador novo) -->
+            <a href="./pdf/carta_de_vinhos_100_Sabores.pdf" target="_blank" class="btn-pdf">
+                <i class="fas fa-file-pdf"></i> <span data-i18n="vinhos-ver-pdf">Ver carta em PDF</span>
+            </a>
         </div>
     </section>
 
@@ -79,16 +83,16 @@
 
             <!-- Vinhos Brancos -->
             <div class="menu-section">
-                <h2 class="menu-section-title">VINHOS BRANCOS</h2>
+                <h2 class="menu-section-title" data-i18n="vinhos-cat-brancos">VINHOS BRANCOS</h2>
                 <div class="menu-section-subtitle">
-                    <p>Vinhos frescos e elegantes, perfeitos para acompanhar peixes e mariscos</p>
+                    <p data-i18n="vinhos-cat-brancos-sub">Vinhos frescos e elegantes, perfeitos para acompanhar peixes e mariscos</p>
                 </div>
 
                 <div class="menu-items-grid">
                     <div class="menu-item">
                         <div class="menu-item-content">
                             <h3 class="menu-item-title">Alvarinho - Quinta da Aveleda</h3>
-                            <p class="menu-item-description">Vinho branco português da região dos Vinhos Verdes. Aromas cítricos e florais, com boa acidez e mineralidade.</p>
+                            <p class="menu-item-description" data-i18n="vinho-alvarinho-desc">Vinho branco português da região dos Vinhos Verdes. Aromas cítricos e florais, com boa acidez e mineralidade.</p>
                             <div class="menu-item-price">€18,00</div>
                         </div>
                     </div>
@@ -96,7 +100,7 @@
                     <div class="menu-item">
                         <div class="menu-item-content">
                             <h3 class="menu-item-title">Verdelho - Madeira</h3>
-                            <p class="menu-item-description">Vinho branco da Madeira com notas de frutas tropicais, mel e uma elegante acidez. Excelente com queijos curados.</p>
+                            <p class="menu-item-description" data-i18n="vinho-verdelho-desc">Vinho branco da Madeira com notas de frutas tropicais, mel e uma elegante acidez. Excelente com queijos curados.</p>
                             <div class="menu-item-price">€22,00</div>
                         </div>
                     </div>
@@ -104,7 +108,7 @@
                     <div class="menu-item">
                         <div class="menu-item-content">
                             <h3 class="menu-item-title">Sauvignon Blanc - Nova Zelândia</h3>
-                            <p class="menu-item-description">Vinho branco neozelandês com aromas herbáceos, frutas tropicais e uma refrescante acidez. Ideal para entradas leves.</p>
+                            <p class="menu-item-description" data-i18n="vinho-sauvignon-desc">Vinho branco neozelandês com aromas herbáceos, frutas tropicais e uma refrescante acidez. Ideal para entradas leves.</p>
                             <div class="menu-item-price">€16,50</div>
                         </div>
                     </div>
@@ -112,10 +116,10 @@
                      <div class="menu-item">
                          <div class="menu-item-content">
                              <h3 class="menu-item-title">Chardonnay - Borgonha</h3>
-                             <p class="menu-item-description">Elegante Chardonnay francês com notas de maçã, baunilha e carvalho. Estrutura perfeita para acompanhar carnes brancas.</p>
+                             <p class="menu-item-description" data-i18n="vinho-chardonnay-desc">Elegante Chardonnay francês com notas de maçã, baunilha e carvalho. Estrutura perfeita para acompanhar carnes brancas.</p>
                              <div class="menu-item-price">€28,00</div>
                               <button type="button" class="btn-ver-mais" onclick="abrirVinho('chardonnay')">
-                                  <i class="fas fa-info-circle"></i> Ver Mais
+                                  <i class="fas fa-info-circle"></i> <span data-i18n="vinhos-vermais">Ver Mais</span>
                               </button>
                          </div>
                      </div>
@@ -124,20 +128,20 @@
 
             <!-- Vinhos Tintos -->
             <div class="menu-section">
-                <h2 class="menu-section-title">VINHOS TINTOS</h2>
+                <h2 class="menu-section-title" data-i18n="vinhos-cat-tintos">VINHOS TINTOS</h2>
                 <div class="menu-section-subtitle">
-                    <p>Uma seleção de vinhos tintos robustos e elegantes para acompanhar carnes e queijos</p>
+                    <p data-i18n="vinhos-cat-tintos-sub">Uma seleção de vinhos tintos robustos e elegantes para acompanhar carnes e queijos</p>
                 </div>
 
                 <div class="menu-items-grid">
                     <div class="menu-item featured">
-                        <div class="menu-item-badge">Especialidade da Casa</div>
+                        <div class="menu-item-badge" data-i18n="vinhos-badge-casa">Especialidade da Casa</div>
                         <div class="menu-item-content">
                             <h3 class="menu-item-title">Touriga Nacional - Douro</h3>
-                            <p class="menu-item-description">Vinho tinto português com aromas de frutas vermelhas, especiarias e taninos elegantes. Acompanha perfeitamente pratos tradicionais.</p>
+                            <p class="menu-item-description" data-i18n="vinho-touriga-desc">Vinho tinto português com aromas de frutas vermelhas, especiarias e taninos elegantes. Acompanha perfeitamente pratos tradicionais.</p>
                             <div class="menu-item-price">€20,00</div>
                             <button type="button" class="btn-ver-mais" onclick="abrirVinho('touriga')">
-                                <i class="fas fa-info-circle"></i> Ver Mais
+                                <i class="fas fa-info-circle"></i> <span data-i18n="vinhos-vermais">Ver Mais</span>
                             </button>
                         </div>
                     </div>
@@ -145,7 +149,7 @@
                     <div class="menu-item">
                         <div class="menu-item-content">
                             <h3 class="menu-item-title">Alentejo Tinto - Herdade do Esporão</h3>
-                            <p class="menu-item-description">Blend alentejano com predominância de Aragonez e Alicante Bouschet. Frutado, macio e com boa estrutura.</p>
+                            <p class="menu-item-description" data-i18n="vinho-alentejo-desc">Blend alentejano com predominância de Aragonez e Alicante Bouschet. Frutado, macio e com boa estrutura.</p>
                             <div class="menu-item-price">€15,50</div>
                         </div>
                     </div>
@@ -153,7 +157,7 @@
                     <div class="menu-item">
                         <div class="menu-item-content">
                             <h3 class="menu-item-title">Rioja - Espanha</h3>
-                            <p class="menu-item-description">Vinho espanhol com aromas de frutas maduras, tabaco e carvalho. Excelente com carnes vermelhas e queijos curados.</p>
+                            <p class="menu-item-description" data-i18n="vinho-rioja-desc">Vinho espanhol com aromas de frutas maduras, tabaco e carvalho. Excelente com carnes vermelhas e queijos curados.</p>
                             <div class="menu-item-price">€24,00</div>
                         </div>
                     </div>
@@ -161,7 +165,7 @@
                     <div class="menu-item">
                         <div class="menu-item-content">
                             <h3 class="menu-item-title">Barolo - Piemonte</h3>
-                            <p class="menu-item-description">Prestigioso vinho italiano feito com Nebbiolo. Complexo, com taninos firmes e aromas de rosas e frutas secas.</p>
+                            <p class="menu-item-description" data-i18n="vinho-barolo-desc">Prestigioso vinho italiano feito com Nebbiolo. Complexo, com taninos firmes e aromas de rosas e frutas secas.</p>
                             <div class="menu-item-price">€45,00</div>
                         </div>
                     </div>
@@ -170,16 +174,16 @@
 
             <!-- Vinhos Rosé -->
             <div class="menu-section">
-                <h2 class="menu-section-title">VINHOS ROSÉ</h2>
+                <h2 class="menu-section-title" data-i18n="vinhos-cat-rose">VINHOS ROSÉ</h2>
                 <div class="menu-section-subtitle">
-                    <p>Vinhos rosé refrescantes e versáteis para momentos descontraídos</p>
+                    <p data-i18n="vinhos-cat-rose-sub">Vinhos rosé refrescantes e versáteis para momentos descontraídos</p>
                 </div>
 
                 <div class="menu-items-grid">
                     <div class="menu-item">
                         <div class="menu-item-content">
                             <h3 class="menu-item-title">Rosé de Provence - França</h3>
-                            <p class="menu-item-description">Clássico rosé francês com aromas de frutas vermelhas frescas e flores. Leve, elegante e refrescante.</p>
+                            <p class="menu-item-description" data-i18n="vinho-provence-desc">Clássico rosé francês com aromas de frutas vermelhas frescas e flores. Leve, elegante e refrescante.</p>
                             <div class="menu-item-price">€14,00</div>
                         </div>
                     </div>
@@ -187,7 +191,7 @@
                     <div class="menu-item">
                         <div class="menu-item-content">
                             <h3 class="menu-item-title">Rosé Português - Palmela</h3>
-                            <p class="menu-item-description">Vinho rosé português da região de Palmela. Frutado, com boa acidez e aromas de frutas vermelhas.</p>
+                            <p class="menu-item-description" data-i18n="vinho-palmela-desc">Vinho rosé português da região de Palmela. Frutado, com boa acidez e aromas de frutas vermelhas.</p>
                             <div class="menu-item-price">€12,50</div>
                         </div>
                     </div>
@@ -196,16 +200,16 @@
 
             <!-- Espumantes -->
             <div class="menu-section">
-                <h2 class="menu-section-title">ESPUMANTES</h2>
+                <h2 class="menu-section-title" data-i18n="vinhos-cat-espumantes">ESPUMANTES</h2>
                 <div class="menu-section-subtitle">
-                    <p>Para celebrar momentos especiais ou simplesmente brindar à vida</p>
+                    <p data-i18n="vinhos-cat-espumantes-sub">Para celebrar momentos especiais ou simplesmente brindar à vida</p>
                 </div>
 
                 <div class="menu-items-grid">
                     <div class="menu-item">
                         <div class="menu-item-content">
                             <h3 class="menu-item-title">Cava Brut - Espanha</h3>
-                            <p class="menu-item-description">Espumante espanhol fresco e elegante, com bolhas finas e aromas cítricos. Perfeito como aperitivo.</p>
+                            <p class="menu-item-description" data-i18n="vinho-cava-desc">Espumante espanhol fresco e elegante, com bolhas finas e aromas cítricos. Perfeito como aperitivo.</p>
                             <div class="menu-item-price">€25,00</div>
                         </div>
                     </div>
@@ -213,10 +217,10 @@
                     <div class="menu-item">
                         <div class="menu-item-content">
                             <h3 class="menu-item-title">Champagne Brut - França</h3>
-                            <p class="menu-item-description">Champagne francês clássico com complexidade aromática, toques de brioche e elegantes bolhas.</p>
+                            <p class="menu-item-description" data-i18n="vinho-champagne-desc">Champagne francês clássico com complexidade aromática, toques de brioche e elegantes bolhas.</p>
                             <div class="menu-item-price">€55,00</div>
                                 <button type="button" class="btn-ver-mais" onclick="abrirVinho('champagne'); return false">
-                                <i class="fas fa-info-circle"></i> Ver Mais
+                                <i class="fas fa-info-circle"></i> <span data-i18n="vinhos-vermais">Ver Mais</span>
                             </button>
                         </div>
                     </div>
@@ -224,7 +228,7 @@
                     <div class="menu-item">
                         <div class="menu-item-content">
                             <h3 class="menu-item-title">Espumante Português - Bairrada</h3>
-                            <p class="menu-item-description">Espumante português da Bairrada, com aromas frutados e boa cremosidade. Excelente relação qualidade-preço.</p>
+                            <p class="menu-item-description" data-i18n="vinho-bairrada-desc">Espumante português da Bairrada, com aromas frutados e boa cremosidade. Excelente relação qualidade-preço.</p>
                             <div class="menu-item-price">€18,00</div>
                         </div>
                     </div>
@@ -233,7 +237,7 @@
 
             <!-- Nota sobre a Carta de Vinhos -->
             <div class="menu-note">
-                <p><em>Nota: A nossa carta de vinhos é cuidadosamente selecionada pelo nosso sommelier. Alguns vinhos podem variar consoante a disponibilidade. Para recomendações personalizadas ou harmonizações específicas, consulte a nossa equipa.</em></p>
+                <p><em data-i18n="vinhos-nota">Nota: A nossa carta de vinhos é cuidadosamente selecionada pelo nosso sommelier. Alguns vinhos podem variar consoante a disponibilidade. Para recomendações personalizadas ou harmonizações específicas, consulte a nossa equipa.</em></p>
             </div>
         </div>
     </section>
@@ -245,32 +249,31 @@
                     <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="footer-logo-img">
                     <span class="footer-logo-text">100 SABORES</span>
                 </div>
-                <p class="footer-description">
+                <p class="footer-description" data-i18n="foot-desc">
                     Experiência culinária única com pratos tradicionais portugueses
                     preparados com ingredientes frescos e técnicas modernas.
                 </p>
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">Contactos</h3>
+                <h3 class="footer-title" data-i18n="foot-contactos">Contactos</h3>
                 <div class="footer-contact">
-                    <p><i class="fas fa-map-marker-alt"></i> Rua dos Sabores, 123<br>Porto, Portugal</p>
+                    <p><i class="fas fa-map-marker-alt"></i> <span data-i18n="foot-morada">Largo da Trindade 9, 1200-466 Lisboa</span></p>
                     <p><i class="fas fa-phone"></i> +351 222 123 456</p>
                     <p><i class="fas fa-envelope"></i> info@100sabores.pt</p>
                 </div>
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">Horário</h3>
+                <h3 class="footer-title" data-i18n="foot-horario">Horário</h3>
                 <div class="footer-hours">
-                    <p>Segunda - Quinta: 12h - 22h</p>
-                    <p>Sexta - Sábado: 12h - 23h</p>
-                    <p>Domingo: 12h - 21h</p>
+                    <p data-i18n="res-foot-hours-1">Segunda - Sábado: 12h - 00h</p>
+                    <p data-i18n="res-foot-hours-2">Domingo: 18h - 21h</p>
                 </div>
             </div>
 
             <div class="footer-section">
-                <h3 class="footer-title">Siga-nos</h3>
+                <h3 class="footer-title" data-i18n="foot-siga">Siga-nos</h3>
                 <div class="footer-social">
                     <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://www.instagram.com/100_sabores.pt?utm_source=qr" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -282,28 +285,29 @@
 
         <div class="footer-bottom">
             <div class="footer-bottom-content">
-                <p>&copy; 2025 Restaurante 100 Sabores. Todos os direitos reservados.</p>
+                <p data-i18n="foot-copyright">&copy; 2025 Restaurante 100 Sabores. Todos os direitos reservados.</p>
                 <div class="footer-links">
-                    <a href="#">Política de Privacidade</a>
+                    <a href="politica_privacidade.html" data-i18n="foot-priv">Política de Privacidade</a>
                     <span class="separator">|</span>
-                    <a href="#">Termos de Uso</a>
+                    <a href="#" data-i18n="foot-termos">Termos de Uso</a>
                     <span class="separator">|</span>
-                    <a href="#">Mapa do Site</a>
+                    <a href="#" data-i18n="foot-mapa">Mapa do Site</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="./js/script.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/i18n.js"></script>
   <script>
     window.abrirVinho = function(key) {
         event.preventDefault();
         event.stopPropagation();
         
         const vinhos = {
-            'touriga': { nome: 'Touriga Nacional - Douro', ano: '2019', casta: 'Touriga Nacional (100%)', regiao: 'Douro, Portugal', alcool: '14,5%', temp: '16-18°C', harm: 'Cordeiro, queijos', preco: '€20,00', notas: 'Tinto, frutas vermelhas, taninos elegantes.', imagem: './imagens/vinhos/touriga.jpg' },
+            'touriga': { nome: 'Touriga Nacional - Douro', ano: '2019', casta: 'Touriga Nacional (100%)', regiao: 'Douro, Portugal', alcool: '14,5%', temp: '16-18°C', harm: 'Cordeiro, queijos', preco: '€20,00', notas: 'Tinto, frutas vermelhas, taninos elegantes.', imagem: './imagens/vinhos/100-hectares-grande-reserva-touriga-nacional-com-caixa.webp' },
             'chardonnay': { nome: 'Chardonnay - Borgonha', ano: '2020', casta: 'Chardonnay', regiao: 'Borgonha, França', alcool: '13%', temp: '10-12°C', harm: 'Carnes brancas', preco: '€28,00', notas: 'Dourado, maçã, baunilha.', imagem: './imagens/vinhos/Chardonnay.jpg' },
-            'champagne': { nome: 'Champagne Brut', ano: '2018', casta: 'Chardonnay, Pinot Noir', regiao: 'Champagne, França', alcool: '12%', temp: '6-8°C', harm: 'Aperitivo, mariscos', preco: '€55,00', notas: 'Bolhas finas, brioche.', imagem: './imagens/vinhos/champagne.jpg' }
+            'champagne': { nome: 'Champagne Brut', ano: '2018', casta: 'Chardonnay, Pinot Noir', regiao: 'Champagne, França', alcool: '12%', temp: '6-8°C', harm: 'Aperitivo, mariscos', preco: '€55,00', notas: 'Bolhas finas, brioche.', imagem: './imagens/vinhos/brut-2018.webp' }
         };
         
         const v = vinhos[key];
@@ -335,7 +339,7 @@
             const imageContainer = document.getElementById('wineModalImage');
             if (v.imagem) {
                 imageContainer.className = 'wine-image-container';
-                imageContainer.innerHTML = `<img src="${v.imagem}" alt="${v.nome}" style="max-width: 100%; height: auto; max-height: 480px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">`;
+                imageContainer.innerHTML = `<img src="${v.imagem}" alt="${v.nome}" style="max-width: 100%; height: auto; max-height: 480px; object-fit: contain; mix-blend-mode: multiply;">`;
             } else {
                 imageContainer.className = 'wine-bottle-placeholder';
                 imageContainer.innerHTML = '<i class="fas fa-wine-glass-alt"></i>';
@@ -369,31 +373,31 @@
                 </div>
                 <div class="wine-modal-info">
                     <div class="wine-info-row">
-                        <span class="wine-info-label"><i class="fas fa-calendar-alt"></i> Ano</span>
+                        <span class="wine-info-label"><i class="fas fa-calendar-alt"></i> <span data-i18n="vinhos-modal-ano">Ano</span></span>
                         <span class="wine-info-value" id="wineAno"></span>
                     </div>
                     <div class="wine-info-row">
-                        <span class="wine-info-label"><i class="fas fa-seedling"></i> Casta</span>
+                        <span class="wine-info-label"><i class="fas fa-seedling"></i> <span data-i18n="vinhos-modal-casta">Casta</span></span>
                         <span class="wine-info-value" id="wineCasta"></span>
                     </div>
                     <div class="wine-info-row">
-                        <span class="wine-info-label"><i class="fas fa-map-marker-alt"></i> Região</span>
+                        <span class="wine-info-label"><i class="fas fa-map-marker-alt"></i> <span data-i18n="vinhos-modal-regiao">Região</span></span>
                         <span class="wine-info-value" id="wineRegiao"></span>
                     </div>
                     <div class="wine-info-row">
-                        <span class="wine-info-label"><i class="fas fa-tint"></i> Teor Alcoólico</span>
+                        <span class="wine-info-label"><i class="fas fa-tint"></i> <span data-i18n="vinhos-modal-alcool">Teor Alcoólico</span></span>
                         <span class="wine-info-value" id="wineAlcool"></span>
                     </div>
                     <div class="wine-info-row">
-                        <span class="wine-info-label"><i class="fas fa-temperature-high"></i> Temperatura</span>
+                        <span class="wine-info-label"><i class="fas fa-temperature-high"></i> <span data-i18n="vinhos-modal-temp">Temperatura</span></span>
                         <span class="wine-info-value" id="wineTemp"></span>
                     </div>
                     <div class="wine-info-row">
-                        <span class="wine-info-label"><i class="fas fa-utensils"></i> Harmonização</span>
+                        <span class="wine-info-label"><i class="fas fa-utensils"></i> <span data-i18n="vinhos-modal-harm">Harmonização</span></span>
                         <span class="wine-info-value" id="wineHarmonizacao"></span>
                     </div>
                     <div class="wine-info-row">
-                        <span class="wine-info-label"><i class="fas fa-tag"></i> Preço</span>
+                        <span class="wine-info-label"><i class="fas fa-tag"></i> <span data-i18n="vinhos-modal-preco">Preço</span></span>
                         <span class="wine-info-value wine-price" id="winePreco"></span>
                     </div>
                 </div>
@@ -403,7 +407,7 @@
             </div>
             <div class="wine-modal-actions">
                 <button onclick="fecharVinho()" class="btn-wine-close">
-                    <i class="fas fa-times"></i> Fechar
+                    <i class="fas fa-times"></i> <span data-i18n="vinhos-modal-fechar">Fechar</span>
                 </button>
             </div>
         </div>

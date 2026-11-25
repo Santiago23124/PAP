@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
 // CARREGAR ITENS DO MENU
 // ============================================
 //ansync- Diz ao html para nao travar o site
+// esta função vai buscar os pratos à API e guarda no localStorage para caso a API falhe
+//faz um pedido ao ficheiro menu.php, e recebe os dados
 async function carregarItensMenu() {
     const loadingEl = document.getElementById('menuLoadingIndicator');
     if (loadingEl) loadingEl.style.display = 'inline';
@@ -65,12 +67,13 @@ async function carregarItensMenu() {
 // ============================================
 // RENDERIZAR LISTA DE PRATOS
 // ============================================
-
+// Esta função recebe uma lista de pratos e cria os elementos HTML correspondentes
+//Percorre a lista de pratos e cria um elemento div para cada prato, com as informações do prato e os botões de ação (editar, ativar/desativar, eliminar)
 function renderizarItensMenu(itens) {
     const container = document.getElementById('menuItemsList');
     if (!container) return;
 
-    if (!itens || itens.length === 0) {
+    if (!itens || itens.length === 0) {//
         container.innerHTML = `
             <div style="text-align:center; padding:50px; color:#888;">
                 <i class="fas fa-utensils" style="font-size:2.5em; margin-bottom:15px; display:block; opacity:0.4;"></i>
@@ -384,9 +387,6 @@ window.alternarDisponibilidadeMenu = async function (id) {
     if (!item) return;
 
     const novaDisp = item.disponivel == 0 ? 1 : 0;
-    const acao = novaDisp === 1 ? 'ativar' : 'desativar';
-
-    if (!confirm(`Tens a certeza que queres ${acao} o prato "${item.nome}"?`)) return;
 
     try {
         const payload = {
@@ -536,23 +536,23 @@ if (typeof mostrarToast === 'undefined') {
 // PREVIEW DA IMAGEM
 // ============================================
 
-window.previewImageMenu = function(input) {
-    const fileLabel = document.getElementById('menuItemFileName');
-    const previewContainer = document.getElementById('menuItemImagePreview');
-    const previewImg = document.getElementById('previewMenuImg');
+window.previewImageMenu = function(input) { //procura o id do input de ficheiro
+    const fileLabel = document.getElementById('menuItemFileName'); // procura o nome do ficheiro
+    const previewContainer = document.getElementById('menuItemImagePreview');//procura o container da imagem
+    const previewImg = document.getElementById('previewMenuImg');//procura a imagem de preview
     
-    if (input.files && input.files[0]) {
-        const file = input.files[0];
-        if (fileLabel) fileLabel.textContent = file.name;
+    if (input.files && input.files[0]) { //verifica se existe ficheiro selecionado
+        const file = input.files[0]; // guarda o ficheiro selecionado numa variavel chamada files
+        if (fileLabel) fileLabel.textContent = file.name; //existir o elemento fileLabel, atualiza o texto para o nome do ficheiro
         
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            if (previewImg) previewImg.src = e.target.result;
-            if (previewContainer) previewContainer.style.display = 'block';
+        const reader = new FileReader(); //cria um objeto chamado fileReader para ler o ficheiro selecionado
+        reader.onload = function(e) {//quando o ficheiro for lido, executa a função
+            if (previewImg) previewImg.src = e.target.result;//coloca o atributo src da imagem de preview para o resultado da leitura do ficheiro
+            if (previewContainer) previewContainer.style.display = 'block'; //mostra o container da imagem de preview
         }
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file); //lê o ficheiro selecionado e converte para uma URL de dados (base64)
     } else {
-        if (fileLabel) fileLabel.textContent = 'Nenhuma imagem selecionada';
-        if (previewContainer) previewContainer.style.display = 'none';
+        if (fileLabel) fileLabel.textContent = 'Nenhuma imagem selecionada';//se nao existir ficheiro selecionado, atualiza o texto para "Nenhuma imagem selecionada"
+        if (previewContainer) previewContainer.style.display = 'none'; //esconde o container da imagem de preview
     }
 };

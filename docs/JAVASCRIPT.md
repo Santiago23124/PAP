@@ -6,10 +6,11 @@ js/
 ├── script.js                 # Efeitos visuais e animações gerais do site
 ├── i18n.js                   # Sistema de tradução PT/EN
 ├── menu-public.js            # Carregamento dinâmico da ementa pública (menu.html)
+├── reservas-form.js          # Formulário de reservas na página pública
 ├── reservas-dashboard.js     # Dashboard de reservas (admin)
+├── menu-dashboard.js         # CRUD de pratos no dashboard
 ├── dashboard-tabs.js         # Navegação por abas e modais do dashboard
-├── dashboard.js              # Dashboard legado/alternativo (não usado)
-└── reservas-form.js          # Formulário de reservas na página pública
+└── voucher-form.js           # Formulário de compra de voucher-presente
 ```
 
 ---
@@ -111,30 +112,22 @@ js/
 
 ---
 
-## 7. `dashboard.js` — Dashboard Legado
+## 7. `voucher-form.js` — Formulário de Voucher-Presente (Página Pública)
 
-**Função principal:** Implementação alternativa/antiga do dashboard.
-
-**Responsabilidades:**
-- Verificação de autenticação via `sessionStorage`
-- Funções `loadMenuItems()`, `deleteMenuItem()`, `toggleMenuItemAvailability()`
-- Usa `API_BASE.menu` para endpoints
-- Inclui modal de edição de menu
-
-**Nota:** Este ficheiro coexiste com `reservas-dashboard.js` + `menu-dashboard.js` + `dashboard-tabs.js` que compõem a versão atual do dashboard. Pode haver sobreposição de funcionalidades.
-
----
-
-## 8. `firebase-config.js` — Configuração Firebase (Não Utilizada)
-
-**Função principal:** Configuraçãoplaceholder para integração com Firebase.
+**Função principal:** Handler do formulário de compra de voucher na página `voucher.html`.
 
 **Responsabilidades:**
-- Template com credenciais fictícias (`SUA_API_KEY_AQUI`)
-- Funções exemplo: `salvarReserva()`, `obterReservas()`, `atualizarStatusReserva()`
-- **Não está integrado no projeto atual** — usa-se a API PHP própria
+- Recolher dados (`nome_recebe`, `nome_oferece`, `email`, `valor`, `mensagem`)
+- Submissão via POST (JSON) para `../api/voucher.php`
+- Desabilitar botão durante o envio (prevenção de duplo clique)
+- Mostrar ecrã de sucesso com o **código do voucher** gerado e instruções de pagamento por IBAN
+- Tratamento de erros devolvidos pela API (`result.erro` / `result.erros`)
 
-**Nota:** Pode ser removido se não houver planos de migrar para Firebase.
+**Dependência:** `api/voucher.php` + `classes/Voucher.php`
+
+> **Nota:** os antigos ficheiros `dashboard.js` (dashboard legado) e `firebase-config.js`
+> (template Firebase nunca integrado) foram **removidos** do projeto. O dashboard atual é
+> composto por `reservas-dashboard.js` + `menu-dashboard.js` + `dashboard-tabs.js`.
 
 ---
 

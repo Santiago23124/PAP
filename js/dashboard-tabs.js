@@ -5,52 +5,51 @@
 // de edição/detalhes de reservas
 // ============================================
 
-// Código Single page Application (SPA),sem recarregamento de página, ele manipula o DOM(estrutura HTML)
-// E faz pedidos AJAX/Fetch para a API PHP
+// Código Single page Application (SPA), sem recarregamento de página.
+// Manipula o DOM e faz pedidos AJAX/Fetch para a API PHP.
 
+// Exemplo explicado: indexOf verifica se um item existe num array.
+// Se devolver -1, o item não existe; se devolver >= 0, o item existe.
+// DOM é a página HTML vista como uma árvore, e o JS manipula cada parte.
 
-//indexOf: Método que verifica se existe um intem dentro de um array se o resultado for -1 não existe, se for 0 ou mais existe
-//exemplo
-//const frutas = ['banana', 'maçã', 'laranja'];
-//console.log(frutas.indexOf('maçã')); // retorna 1 (pois está na posição 1)
-//console.log(frutas.indexOf('uva')); // retorna -1 (pois não existe)
-//DOM é a página HTML vista como se fosse uma arvore o js consegue manipular cada parte do código
-
-
-document.addEventListener('DOMContentLoaded', function () { // garante que o DOM está carregado antes de executar o código
-    aplicarPermissoes(); // esconde tabs conforme cargo
-    configurarTabs(); // configura as tabs
-    configurarModalReserva(); // configura o modal de reservas
-    configurarFechoModalEsc(); // configura o fecho do modal com a tecla ESC
-}); // assim que a página executa as funções
+document.addEventListener('DOMContentLoaded', function () {
+    // Quando a página termina de carregar, executa estas funções.
+    aplicarPermissoes(); // Ajusta visibilidade das tabs segundo o cargo do utilizador.
+    configurarTabs(); // Prepara o comportamento de navegação entre tabs.
+    configurarModalReserva(); // Configura os modais relacionados às reservas.
+    configurarFechoModalEsc(); // Fecha modais quando o utilizador pressiona ESC.
+});
 
 // ============================================
 // PERMISSÕES POR CARGO
 // ============================================
 
-// JSON.parse(...) — converte aquele texto num objeto JavaScript de verdade, com o qual já se pode trabalhar (ler .cargo, etc.)
-function aplicarPermissoes() {// so corre quando for chamada
-    const userData = JSON.parse(sessionStorage.getItem('loggedInUser') || '{}');// guarda os dados em local storage, e vai buscar o cargo guardado, e devolve um string
-    const cargo = userData.cargo; // vai buscar o cargo dentro do objeto userData
+function aplicarPermissoes() {
+    // Lê os dados de utilizador guardados na sessionStorage.
+    const userData = JSON.parse(sessionStorage.getItem('loggedInUser') || '{}');
+    const cargo = userData.cargo; // Cargo pode ser 'admin', 'chef' ou 'garcom'.
 
-    if (!cargo) return; // se não tiver cargo não faz nada
+    if (!cargo) return; // Se não existir cargo, não altera nada.
 
-    const permissoes = { // dicionario cada cargo tem acesso a interfaces com conteudo diferente
+    const permissoes = {
         'admin': ['reservas', 'menu'],
         'chef': ['menu'],
         'garcom': ['reservas']
     };
 
-    const tabsPermitidas = permissoes[cargo] || []; // vai buscar a const de permissoes
+    // Lista de tabs permitidas para o cargo atual.
+    const tabsPermitidas = permissoes[cargo] || [];
 
-    document.querySelectorAll('.tab-btn').forEach(btn => { // seleciona todos os botões
+    // Esconde os botões de tab que não estão permitidos.
+    document.querySelectorAll('.tab-btn').forEach(btn => {
         const tab = btn.dataset.tab;
         if (tabsPermitidas.indexOf(tab) === -1) {
-            btn.style.display = 'none'; // esconde os tabs consoante o cargo
+            btn.style.display = 'none';
         }
     });
 
-    document.querySelectorAll('.tab-content').forEach(content => {// seleciona tdos painéis
+    // Esconde o conteúdo dos tabs que não estão permitidos.
+    document.querySelectorAll('.tab-content').forEach(content => {
         const tabId = content.id.replace('tab-', '');
         if (tabsPermitidas.indexOf(tabId) === -1) {
             content.style.display = 'none';
@@ -58,7 +57,9 @@ function aplicarPermissoes() {// so corre quando for chamada
     });
 
     if (tabsPermitidas.length > 0) {
+        // Seleciona o primeiro tab permitido e mostra-o como ativo.
         const primeiroTab = tabsPermitidas[0];
+
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         const btnAlvo = document.querySelector('.tab-btn[data-tab="' + primeiroTab + '"]');
         if (btnAlvo) btnAlvo.classList.add('active');
@@ -87,11 +88,11 @@ function configurarTabs() {
         btn.addEventListener('click', function () {
             const tabAlvo = this.dataset.tab;
 
-            // Atualizar botões
+            // Atualiza o estado visual dos botões.
             tabBtns.forEach(b => b.classList.remove('active'));
             this.classList.add('active');
 
-            // Mostrar/esconder conteúdo
+            // Esconde todos os conteúdos de tab e ativa só o tab clicado.
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.style.display = 'none';
                 tab.classList.remove('active');
@@ -103,17 +104,17 @@ function configurarTabs() {
                 tabEl.classList.add('active');
             }
 
-            // Mostrar gráfico apenas no tab de reservas
+            // Mostra o gráfico apenas quando o tab de reservas estiver ativo.
             if (chartSection) {
                 chartSection.style.display = tabAlvo === 'reservas' ? 'block' : 'none';
             }
 
-            // Carregar dados do menu quando o tab é aberto
+            // Carrega dados do menu quando abre o tab do menu.
             if (tabAlvo === 'menu' && typeof carregarItensMenu === 'function') {
                 carregarItensMenu();
             }
 
-            // Re-desenhar gráfico quando voltar ao tab de reservas
+            // Re-desenha o gráfico de ocupação ao voltar ao tab de reservas.
             if (tabAlvo === 'reservas' && typeof desenharGraficoOcupacao === 'function') {
                 setTimeout(desenharGraficoOcupacao, 100);
             }
@@ -129,6 +130,7 @@ function configurarModalReserva() {
     const overlayReserva = document.getElementById('modalReserva');
     if (overlayReserva) {
         overlayReserva.addEventListener('click', function (e) {
+            // Fechar modal se clicar no fundo transparente do overlay.
             if (e.target === overlayReserva) {
                 fecharModalReserva();
             }
@@ -138,21 +140,17 @@ function configurarModalReserva() {
     const overlayDetalhes = document.getElementById('modalDetalhes');
     if (overlayDetalhes) {
         overlayDetalhes.addEventListener('click', function (e) {
-            // Só fecha quando o clique foi no PRÓPRIO fundo (overlay), não no
-            // conteúdo. e.currentTarget é o overlay; e.target é o que foi clicado.
+            // Fecha o modal de detalhes apenas se o clique for no overlay, não no conteúdo.
             if (e.target === e.currentTarget) {
                 fecharModalDetalhes();
             }
         });
     }
 
-    // Botões dentro do modal de detalhes são gerados dinamicamente via innerHTML.
-    // Usamos event delegation num contentor fixo (#modalDetalhesBody) em vez de
-    // onclick inline: um único listener trata de todos os botões, presentes e futuros.
     const detalhesBody = document.getElementById('modalDetalhesBody');
     if (detalhesBody) {
         detalhesBody.addEventListener('click', function (e) {
-            // .closest() apanha também cliques no <i> dentro do botão.
+            // Captura o botão clicado dentro do modal de detalhes.
             const btn = e.target.closest('button[data-acao]');
             if (!btn) return;
 
@@ -178,11 +176,12 @@ function configurarModalReserva() {
     if (!form) return;
 
     form.addEventListener('submit', async function (e) {
-         e.preventDefault();
+        e.preventDefault(); // Evita o envio normal do formulário.
 
         const id = document.getElementById('editReservaId').value;
         if (!id) return;
 
+        // Cria o objeto de dados que vai ser enviado para a API.
         const payload = {
             id: parseInt(id),
             nome: document.getElementById('editNome').value.trim(),
@@ -237,48 +236,17 @@ function configurarModalReserva() {
 
 window.abrirModalEditarReserva = function (id) {
     try {
-        const idNum = Number(id);
-
-        if (typeof todasReservas === 'undefined' || !Array.isArray(todasReservas) || todasReservas.length === 0) {
-            mostrarToast('A carregar dados das reservas...', 'info');
-            fetch('../api/reservas.php')
-                .then(r => r.json())
-                .then(data => {
-                    if (data.sucesso && Array.isArray(data.reservas)) {
-                        carregarReservas();
-                        setTimeout(() => abrirModalEditarReserva(idNum), 500);
-                    } else {
-                        mostrarToast('Erro ao carregar reservas da API.', 'error');
-                    }
-                })
-                .catch(err => {
-                    console.error('Erro fetch reservas:', err);
-                    mostrarToast('Erro de ligacao ao servidor.', 'error');
-                });
-            return;
-        }
-
-        const reserva = todasReservas.find(r => Number(r.id) === idNum);
-        if (!reserva) {
-            mostrarToast('Reserva nao encontrada. A recarregar lista...', 'warning');
-            carregarReservas().then(() => {
-                const r2 = (Array.isArray(todasReservas))
-                    ? todasReservas.find(x => Number(x.id) === idNum)
-                    : null;
-                if (r2) {
-                    abrirModalEditarReserva(idNum);
-                } else {
-                    mostrarToast('Reserva nao encontrada apos recarregar.', 'error');
-                }
-            });
-            return;
-        }
+        // Obtém a reserva a editar. Se a lista ainda não estiver carregada,
+        // devolve null e volta a chamar esta função quando os dados chegarem.
+        const reserva = obterReservaOuCarregar(id, abrirModalEditarReserva);
+        if (!reserva) return;
 
         const setField = (fieldId, val) => {
             const el = document.getElementById(fieldId);
             if (el) el.value = val;
         };
 
+        // Preenche os campos do formulário com os valores da reserva.
         setField('editReservaId', reserva.id);
         setField('editNome', reserva.nome || '');
         setField('editEmail', reserva.email || '');
@@ -292,7 +260,7 @@ window.abrirModalEditarReserva = function (id) {
         const modal = document.getElementById('modalReserva');
         if (modal) {
             modal.style.display = 'flex';
-            modal.classList.add('show'); // .show ativa opacity:1 (sem isto o modal fica invisível)
+            modal.classList.add('show');
             document.body.style.overflow = 'hidden';
         }
     } catch (error) {
@@ -302,16 +270,7 @@ window.abrirModalEditarReserva = function (id) {
 };
 
 window.fecharModalReserva = function () {
-    const modal = document.getElementById('modalReserva');
-    if (modal) {
-        modal.classList.remove('show');
-        modal.style.display = 'none';
-    }
-    // Só restaurar o overflow se nenhum outro modal estiver aberto
-    const modalDetalhes = document.getElementById('modalDetalhes');
-    if (!modalDetalhes || modalDetalhes.style.display === 'none' || modalDetalhes.style.display === '') {
-        document.body.style.overflow = '';
-    }
+    fecharModalPorId('modalReserva', 'modalDetalhes');
 };
 
 // ============================================
@@ -320,43 +279,9 @@ window.fecharModalReserva = function () {
 
 window.abrirModalDetalhesReserva = function (id) {
     try {
-        const idNum = Number(id);
-
-        if (typeof todasReservas === 'undefined' || !Array.isArray(todasReservas) || todasReservas.length === 0) {
-            mostrarToast('A carregar dados das reservas...', 'info');
-            fetch('../api/reservas.php')
-                .then(r => r.json())
-                .then(data => {
-                    if (data.sucesso && Array.isArray(data.reservas)) {
-                        carregarReservas();
-                        setTimeout(() => abrirModalDetalhesReserva(idNum), 500);
-                    } else {
-                        mostrarToast('Erro ao carregar reservas da API.', 'error');
-                    }
-                })
-                .catch(err => {
-                    console.error('Erro fetch reservas:', err);
-                    mostrarToast('Erro de ligação ao servidor.', 'error');
-                });
-            return;
-        }
-
-        const reserva = todasReservas.find(r => Number(r.id) === idNum);
-
-        if (!reserva) {
-            mostrarToast('Reserva nao encontrada. A recarregar lista...', 'warning');
-            carregarReservas().then(() => {
-                const r2 = (Array.isArray(todasReservas))
-                    ? todasReservas.find(x => Number(x.id) === idNum)
-                    : null;
-                if (r2) {
-                    abrirModalDetalhesReserva(idNum);
-                } else {
-                    mostrarToast('Reserva nao encontrada apos recarregar.', 'error');
-                }
-            });
-            return;
-        }
+        // Obtém a reserva a mostrar (carrega a lista primeiro, se preciso).
+        const reserva = obterReservaOuCarregar(id, abrirModalDetalhesReserva);
+        if (!reserva) return;
 
         const statusLabels = {
             pendente: '<span class="status-badge status-pendente">Pendente</span>',
@@ -426,7 +351,7 @@ window.abrirModalDetalhesReserva = function (id) {
         const modal = document.getElementById('modalDetalhes');
         if (modal) {
             modal.style.display = 'flex';
-            modal.classList.add('show'); // .show ativa opacity:1 (sem isto o modal fica invisível)
+            modal.classList.add('show');
             document.body.style.overflow = 'hidden';
         }
     } catch (error) {
@@ -436,16 +361,7 @@ window.abrirModalDetalhesReserva = function (id) {
 };
 
 window.fecharModalDetalhes = function () {
-    const modal = document.getElementById('modalDetalhes');
-    if (modal) {
-        modal.classList.remove('show');
-        modal.style.display = 'none';
-    }
-    // Só restaurar o overflow se nenhum outro modal estiver aberto
-    const modalReserva = document.getElementById('modalReserva');
-    if (!modalReserva || modalReserva.style.display === 'none' || modalReserva.style.display === '') {
-        document.body.style.overflow = '';
-    }
+    fecharModalPorId('modalDetalhes', 'modalReserva');
 };
 
 // ============================================
@@ -457,7 +373,6 @@ function configurarFechoModalEsc() {
         if (e.key === 'Escape') {
             fecharModalReserva();
             fecharModalDetalhes();
-            // Garantir que o overflow é sempre restaurado ao pressionar ESC
             document.body.style.overflow = '';
         }
     });
@@ -471,7 +386,6 @@ function configurarFechoModalEsc() {
 window.alterarStatusReserva = async function (id, novoStatus) {
     const idNum = Number(id);
 
-    // Se ainda nao ha reservas carregadas, carregar e voltar a tentar
     if (typeof todasReservas === 'undefined' || !Array.isArray(todasReservas) || todasReservas.length === 0) {
         mostrarToast('A carregar dados das reservas...', 'info');
         await carregarReservas();
@@ -492,11 +406,11 @@ window.alterarStatusReserva = async function (id, novoStatus) {
     if (!confirm(`Tens a certeza que queres ${labelStatus[novoStatus] || 'alterar'} a reserva de ${nome}?`)) return;
 
     try {
-            const response = await fetch('../api/reservas.php', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, status: novoStatus })
-            });
+        const response = await fetch('../api/reservas.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, status: novoStatus })
+        });
 
         const result = await response.json();
 
@@ -554,6 +468,76 @@ window.mostrarToast = function (msg, tipo = 'success') {
 // ============================================
 // UTILITÁRIOS
 // ============================================
+
+// Devolve a reserva com o id indicado, garantindo que a lista está carregada.
+// - Se a lista ainda estiver vazia: vai buscá-la à API e, quando chegar,
+//   volta a chamar `callback(id)` (a função que pediu a reserva). Devolve null.
+// - Se a reserva não aparecer na lista: recarrega e tenta outra vez. Devolve null.
+// - Se encontrar a reserva: devolve-a logo.
+// Ou seja: se devolver null, quem chamou deve simplesmente parar (return).
+function obterReservaOuCarregar(id, callback) {
+    const idNum = Number(id);
+    const listaVazia = typeof todasReservas === 'undefined' ||
+                       !Array.isArray(todasReservas) ||
+                       todasReservas.length === 0;
+
+    // Caso 1: ainda não há reservas carregadas -> ir buscá-las à API.
+    if (listaVazia) {
+        mostrarToast('A carregar dados das reservas...', 'info');
+        fetch('../api/reservas.php')
+            .then(r => r.json())
+            .then(data => {
+                if (data.sucesso && Array.isArray(data.reservas)) {
+                    carregarReservas();
+                    setTimeout(() => callback(idNum), 500); // Tenta de novo após carregar.
+                } else {
+                    mostrarToast('Erro ao carregar reservas da API.', 'error');
+                }
+            })
+            .catch(err => {
+                console.error('Erro fetch reservas:', err);
+                mostrarToast('Erro de ligação ao servidor.', 'error');
+            });
+        return null;
+    }
+
+    // Caso 2: há lista, mas a reserva não está lá -> recarregar e tentar de novo.
+    const reserva = todasReservas.find(r => Number(r.id) === idNum);
+    if (!reserva) {
+        mostrarToast('Reserva não encontrada. A recarregar lista...', 'warning');
+        carregarReservas().then(() => {
+            const r2 = Array.isArray(todasReservas)
+                ? todasReservas.find(x => Number(x.id) === idNum)
+                : null;
+            if (r2) {
+                callback(idNum);
+            } else {
+                mostrarToast('Reserva não encontrada após recarregar.', 'error');
+            }
+        });
+        return null;
+    }
+
+    // Caso 3: encontrada -> devolve a reserva.
+    return reserva;
+}
+
+// Fecha o modal `idFechar` e, se o outro modal (`idOutro`) também estiver
+// fechado, volta a permitir o scroll da página.
+function fecharModalPorId(idFechar, idOutro) {
+    const modal = document.getElementById(idFechar);
+    if (modal) {
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+    }
+    const outro = document.getElementById(idOutro);
+    const outroFechado = !outro ||
+                         outro.style.display === 'none' ||
+                         outro.style.display === '';
+    if (outroFechado) {
+        document.body.style.overflow = '';
+    }
+}
 
 function escapeHtmlTabs(text) {
     const div = document.createElement('div');

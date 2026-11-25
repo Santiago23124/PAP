@@ -25,6 +25,7 @@
                 <a href="index.html" class="nav-link">HOME</a>
                 <a href="menu.html" class="nav-link">EMENTA</a>
                 <span class="nav-link" style="color:var(--luxury-gold);">DASHBOARD</span>
+                <a href="funcionarios.php" class="nav-link">FUNCIONÁRIOS</a>
             </div>
             <a href="index.html" class="nav-logo-center">
                 <img src="./imagens/logo/logotipo.transparente.png" alt="100 Sabores" class="logo-img">
@@ -309,15 +310,9 @@
                         <p style="font-size: 0.8em; color: #888; margin: 0;" id="menuItemFileName">Nenhuma imagem selecionada</p>
                     </div>
                     
-                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                        <span style="flex: 1; height: 1px; background: #eee;"></span>
-                        <span style="padding: 0 10px; font-size: 0.85em; color: #888;">OU</span>
-                        <span style="flex: 1; height: 1px; background: #eee;"></span>
-                    </div>
+                    <!-- Campo escondido: guarda o URL da imagem carregada do PC (preenchido pelo JS após o upload) -->
+                    <input type="hidden" id="menuItemImage">
 
-                    <label for="menuItemImage" style="font-size: 0.85em;">URL da Imagem Existente</label>
-                    <input type="text" id="menuItemImage" placeholder="https://exemplo.com/imagem.jpg">
-                    
                     <div id="menuItemImagePreview" style="margin-top: 15px; text-align: center; display: none;">
                         <img id="previewMenuImg" src="" alt="Preview" style="max-width: 100%; max-height: 150px; border-radius: 8px; box-shadow: var(--luxury-shadow-sm);">
                     </div>

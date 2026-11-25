@@ -42,6 +42,8 @@ require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../classes/Reserva.php';
 require_once __DIR__ . '/../classes/EmailSender.php';
 require_once __DIR__ . '/../classes/Mesa.php';
+// Nota: a classe ReservaStats está definida dentro de Reserva.php (já carregado acima),
+// por isso não é preciso (nem existe) um ficheiro ReservaStats.php separado.
 
 // ============================================
 // INSTALAÇÃO/ATUALIZAÇÃO DO BANCO
@@ -139,11 +141,7 @@ switch($method) {
         break;
 }
 
-// Carregar classes adicionais
-require_once __DIR__ . '/../classes/Mesa.php';
 
-// Incluir classe de estatísticas (opcional)
-require_once __DIR__ . '/../classes/Reserva.php';
 
 /**
  * Criar nova reserva com associação automática de mesa
@@ -460,10 +458,11 @@ function listarHorariosDisponiveis() {
     global $db;
     try {
         $data = $_GET['data'] ?? date('Y-m-d');
-        $horarios_base = ['12:00', '12:30', '13:00', '13:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'];
+        $horarios_base = Config::horariosDisponiveis($data); // fonte única (semana vs fim de semana)
         $horarios_disponiveis = [];
+        $dur = (int)Config::DURACAO_PADRAO_RESERVA; // duração da nova reserva (minutos)
         foreach ($horarios_base as $hora) {
-            $query = "SELECT SUM(num_pessoas) as total FROM reservas WHERE data_reserva = :data AND status IN ('pendente', 'confirmada') AND (TIME(hora_reserva) < ADDTIME(:hora, SEC_TO_TIME(120 * 60)) AND ADDTIME(hora_reserva, SEC_TO_TIME(duracao_minutos * 60)) > :hora)";
+            $query = "SELECT SUM(num_pessoas) as total FROM reservas WHERE data_reserva = :data AND status IN ('pendente', 'confirmada') AND (TIME(hora_reserva) < ADDTIME(:hora, SEC_TO_TIME($dur * 60)) AND ADDTIME(hora_reserva, SEC_TO_TIME(duracao_minutos * 60)) > :hora)";
             $stmt = $db->prepare($query);
             $stmt->bindParam(':data', $data);
             $stmt->bindParam(':hora', $hora);
@@ -495,10 +494,11 @@ function verificarDisponibilidade() {
         $reserva = new Reserva($db);
         $disponivel = $reserva->verificarDisponibilidade($data, $hora, $pessoas);
 
+        $dur = (int)Config::DURACAO_PADRAO_RESERVA; // duração da nova reserva (minutos)
         $query = "SELECT SUM(num_pessoas) as total FROM reservas
                 WHERE data_reserva = :data
                   AND status IN ('pendente', 'confirmada')
-                  AND (TIME(hora_reserva) < ADDTIME(:hora, INTERVAL 2 HOUR)
+                  AND (TIME(hora_reserva) < ADDTIME(:hora, INTERVAL $dur MINUTE)
                        AND ADDTIME(hora_reserva, INTERVAL duracao_minutos MINUTE) > :hora)";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':data', $data);
@@ -530,13 +530,22 @@ function obterEstatisticas() {
         $ini_sem = date('Y-m-d', strtotime('monday this week'));
         $fim_sem = date('Y-m-d', strtotime('sunday this week'));
 
-        $hoje_res = $db->query("SELECT COUNT(*) FROM reservas WHERE data_reserva = '$hoje'")->fetchColumn();
-        $sem_res = $db->query("SELECT COUNT(*) FROM reservas WHERE data_reserva BETWEEN '$ini_sem' AND '$fim_sem'")->fetchColumn();
+        $stmt_hoje = $db->prepare("SELECT COUNT(*) FROM reservas WHERE data_reserva = ?");
+        $stmt_hoje->execute([$hoje]);
+        $hoje_res = $stmt_hoje->fetchColumn();
+        
+        $stmt_sem = $db->prepare("SELECT COUNT(*) FROM reservas WHERE data_reserva BETWEEN ? AND ?");
+        $stmt_sem->execute([$ini_sem, $fim_sem]);
+        $sem_res = $stmt_sem->fetchColumn();
 
+        $stmt_total = $db->prepare("SELECT COUNT(*) FROM reservas");
+        $stmt_total->execute();
+        $total_reservas = $stmt_total->fetchColumn();
+        
         echo json_encode([
             'sucesso' => true,
             'estatisticas' => [
-                'total_reservas' => (int)$db->query("SELECT COUNT(*) FROM reservas")->fetchColumn(),
+                'total_reservas' => (int)$total_reservas,
                 'reservas_hoje' => (int)$hoje_res,
                 'reservas_semana' => (int)$sem_res,
                 'ocupacao_semanal' => $stats->obterOcupacaoSemanal(),
@@ -549,35 +558,6 @@ function obterEstatisticas() {
     }
 }
 
-/**
- * Atribuir mesa manualmente
- */
-function atribuirMesa() {
-    global $db;
-    try {
-        $input = json_decode(file_get_contents('php://input'), true);
-        $reserva_id = $input['reserva_id'] ?? null;
-        $mesa_id = $input['mesa_id'] ?? null;
 
-        if (!$reserva_id || !$mesa_id) {
-            http_response_code(400);
-            echo json_encode(['sucesso' => false, 'erro' => 'Reserva ID e Mesa ID obrigatórios']);
-            return;
-        }
-
-        $reserva = new Reserva($db);
-        $sucesso = $reserva->atribuirMesa($reserva_id, $mesa_id);
-
-        if ($sucesso) {
-            echo json_encode(['sucesso' => true, 'mensagem' => 'Mesa atribuída com sucesso']);
-        } else {
-            http_response_code(400);
-            echo json_encode(['sucesso' => false, 'erro' => 'Mesa não disponível']);
-        }
-    } catch (Exception $e) {
-        http_response_code(500);
-        echo json_encode(['sucesso' => false, 'erro' => $e->getMessage()]);
-    }
-}
 
 ?>

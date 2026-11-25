@@ -301,3 +301,31 @@ body {
 
 
 
+
+/* ============================================
+   BOTÃO VER CARTA EM PDF (hero)
+   ============================================ */
+.btn-pdf {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 25px;
+    padding: 12px 28px;
+    background: #c5a880;
+    border: 1px solid #c5a880;
+    color: #1a1a1a;
+    border-radius: 25px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95em;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn-pdf:hover {
+    background: transparent;
+    color: #c5a880;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(197, 168, 128, 0.4);
+}

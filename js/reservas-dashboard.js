@@ -596,6 +596,29 @@ function animarNumero(elementId, valorFinal) {
 // HORARIOS DISPONIVEIS
 // ============================================
 
+// Mesmos slots que o formulário principal / servidor:
+// dia de semana (almoço + jantar) ou fim de semana (apenas jantar 18:00–22:00), de 30 em 30 min.
+function gerarSlots(data) {
+    const d = new Date(data + 'T00:00:00');
+    const dia = d.getDay(); // 0=domingo, 6=sábado
+    const fimDeSemana = (dia === 0 || dia === 6);
+    const faixas = fimDeSemana
+        ? [['18:00', '22:00']]
+        : [['12:00', '13:30'], ['19:00', '21:30']];
+
+    const slots = [];
+    faixas.forEach(function(faixa) {
+        let [h, m] = faixa[0].split(':').map(Number);
+        const [hf, mf] = faixa[1].split(':').map(Number);
+        while (h < hf || (h === hf && m <= mf)) {
+            slots.push(String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0'));
+            m += 30;
+            if (m >= 60) { m -= 60; h++; }
+        }
+    });
+    return slots;
+}
+
 function gerarHorariosDisponiveis() {
     const grid = document.getElementById('horariosGrid');
     const dataInput = document.getElementById('data');
@@ -606,15 +629,12 @@ function gerarHorariosDisponiveis() {
 
     grid.innerHTML = '';
 
-    const horarios = [
-        '12:00', '12:30', '13:00', '13:30',
-        '19:00', '19:30', '20:00', '20:30', '21:00', '21:30'
-    ];
-
     const dataSelecionada = dataInput.value || formatDateISO(new Date());
     if (!dataInput.value) {
         dataInput.value = dataSelecionada;
     }
+
+    const horarios = gerarSlots(dataSelecionada);
 
     horarios.forEach(hora => {
         const reservasNesseHorario = todasReservas.filter(r =>

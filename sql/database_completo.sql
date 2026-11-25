@@ -49,6 +49,29 @@ CREATE TABLE IF NOT EXISTS `reservas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ============================================
+-- Vouchers (presente) - pré-pagos, resgatáveis numa reserva
+-- ============================================
+CREATE TABLE IF NOT EXISTS `vouchers` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `codigo` varchar(20) NOT NULL,
+    `nome_oferece` varchar(100) NOT NULL,
+    `nome_recebe` varchar(100) NOT NULL,
+    `email_comprador` varchar(150) NOT NULL,
+    `valor` decimal(6,2) NOT NULL,
+    `mensagem` text,
+    `data_prevista` date NULL DEFAULT NULL,
+    `data_validade` date NULL DEFAULT NULL,
+    `status` enum('pendente_pagamento','pago','resgatado','expirado','cancelado') DEFAULT 'pendente_pagamento',
+    `reserva_id` int(11) NULL DEFAULT NULL,
+    `data_criacao` timestamp DEFAULT CURRENT_TIMESTAMP,
+    `data_resgate` timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uq_codigo` (`codigo`),
+    KEY `idx_status` (`status`),
+    KEY `idx_reserva` (`reserva_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ============================================
 -- Configurações do restaurante
 -- ============================================
 CREATE TABLE IF NOT EXISTS `configuracoes` (

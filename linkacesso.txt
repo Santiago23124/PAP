@@ -1,0 +1,2 @@
+Link de acesso para apresentação: https://cosmetics-virus-country.ngrok-free.dev.
+Comando para ligar o servidor: ngrok http 80.

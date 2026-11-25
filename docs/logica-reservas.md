@@ -45,7 +45,7 @@ Se qualquer regra falhar, a API devolve `erros` e a reserva não é criada.
 Mesmo que haja mesas livres, o sistema impede a reserva se a soma de pessoas já reservadas naquele horário exceder a capacidade máxima do restaurante.
 
 - **Capacidade máxima:** `Config::CAPACIDADE_MAXIMA = 80`
-- A query soma `num_pessoas` de todas as reservas com `status IN ('pendente', 'confirmada')` que tenham sobreposição de horário com a nova reserva, usando `duracao_minutos` (padrão 120 min) para calcular conflitos.
+- A query soma `num_pessoas` de todas as reservas com `status IN ('pendente', 'confirmada')` que tenham sobreposição de horário com a nova reserva, usando `duracao_minutos` (padrão 210 min = 3h30, definido em `Config::DURACAO_PADRAO_RESERVA`) para calcular conflitos.
 - Se `(total_existente + num_pessoas_novas) > 80`, a API devolve erro: *"Não há vagas disponíveis para este horário"*.
 
 ---
@@ -129,7 +129,7 @@ Exemplo:
 | Prioridade | Menor mesa disponível que caiba |
 | Capacidade máxima | 80 pessoas por horário |
 | Antecedência | Mínimo 2h, Máximo 30 dias |
-| Duração padrão | 120 minutos (2h) |
+| Duração padrão | 210 minutos (3h30) — `Config::DURACAO_PADRAO_RESERVA` |
 | Conflito de mesa | Não permite sobreposição de horários |
 | Estado inicial da reserva | `pendente` |
 | Mesa sem disponibilidade | Reserva criada com `mesa_id = NULL` |

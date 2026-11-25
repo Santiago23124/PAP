@@ -2,16 +2,21 @@
 require_once __DIR__ . '/../config/database.php';
 
 /**
- * Classe para envio de emails
+ * Classe EmailSender
+ * -------------------------------------------------------------
+ * Responsável por CONSTRUIR e ENVIAR os emails do site:
+ * confirmação de reserva, notificações ao restaurante, vouchers e contactos.
+ * Usa o PHPMailer para enviar através do Gmail (SMTP).
  */
 class EmailSender {
-    private $smtp_host;
-    private $smtp_port;
-    private $smtp_username;
-    private $smtp_password;
-    private $from_email;
-    private $from_name;
-    private $usar_phpmailer;
+    // Dados do servidor de email (SMTP = protocolo de envio de emails)
+    private $smtp_host;      // servidor (ex.: smtp.gmail.com)
+    private $smtp_port;      // porta de ligação (ex.: 587)
+    private $smtp_username;  // conta de email usada para enviar
+    private $smtp_password;  // password dessa conta (password de aplicação)
+    private $from_email;     // email que aparece como remetente
+    private $from_name;      // nome que aparece como remetente
+    private $usar_phpmailer; // true = usa PHPMailer; false = usa a função mail() simples
 
     public function __construct() {
         // Configurações SMTP (lidas do ficheiro .env com fallbacks padrão)
@@ -28,27 +33,32 @@ class EmailSender {
     }
 
     /**
-     * Enviar email de confirmação de reserva
+     * Enviar email de confirmação de reserva AO CLIENTE
+     * Monta o assunto e o corpo (HTML) e chama o método que envia.
      */
     public function enviarConfirmacaoReserva($reserva) {
-        $subject = "Confirmação de Reserva - " . Config::NOME_RESTAURANTE;
-        $body = $this->gerarTemplateConfirmacao($reserva);
-        
-        return $this->enviarEmail($reserva->email, $subject, $body);
+        $subject = "Confirmação de Reserva - " . Config::NOME_RESTAURANTE;   // assunto do email
+        $body = $this->gerarTemplateConfirmacao($reserva);                   // corpo em HTML
+
+        return $this->enviarEmail($reserva->email, $subject, $body);         // envia para o cliente
     }
 
     /**
-     * Enviar email para o restaurante (nova reserva)
+     * Enviar email AO RESTAURANTE a avisar de uma nova reserva
      */
     public function enviarNotificacaoRestaurante($reserva) {
         $subject = "Nova Reserva - " . $reserva->nome;
         $body = $this->gerarTemplateNotificacao($reserva);
-        
-        return $this->enviarEmail($this->from_email, $subject, $body);
+
+        return $this->enviarEmail($this->from_email, $subject, $body);   // envia para o próprio restaurante
     }
 
     /**
-     * Gerar template de confirmação para o cliente
+     * Gerar o template (HTML) do email de confirmação para o cliente
+     * -------------------------------------------------------------
+     * Este método NÃO envia nada: apenas constrói e devolve um grande texto
+     * em HTML (com estilos CSS) que será o corpo do email. As variáveis
+     * {$reserva->nome}, {$data_formatada}, etc. são substituídas pelos dados reais.
      */
     private function gerarTemplateConfirmacao($reserva) {
         $data_formatada = $this->formatarData($reserva->data_reserva);
@@ -370,9 +380,10 @@ class EmailSender {
     /**
      * Enviar email usando PHPMailer ou PHP mail()
      */
+    // função que atua como controlador
     private function enviarEmail($para, $assunto, $corpo) {
         try {
-            if ($this->usar_phpmailer) {
+            if ($this->usar_phpmailer) { // verifica a variavel para decidir qual método de envio deve ser utilizado
                 return $this->enviarComPHPMailer($para, $assunto, $corpo);
             } else {
                 return $this->enviarComMail($para, $assunto, $corpo);
@@ -387,12 +398,12 @@ class EmailSender {
      * Enviar email usando PHPMailer (para Gmail)
      */
     private function enviarComPHPMailer($para, $assunto, $corpo) {
+
         require_once __DIR__ . '/../vendor/phpmailer/phpmailer/src/PHPMailer.php';
         require_once __DIR__ . '/../vendor/phpmailer/phpmailer/src/SMTP.php';
         require_once __DIR__ . '/../vendor/phpmailer/phpmailer/src/Exception.php';
 
         $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-
         try {
             // Configurações do servidor
             $mail->isSMTP();
@@ -402,14 +413,12 @@ class EmailSender {
             $mail->Password = $this->smtp_password;
             $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = $this->smtp_port;
-
             // Configurações do email
             $mail->setFrom($this->from_email, $this->from_name);
             $mail->addAddress($para);
             $mail->isHTML(true);
             $mail->Subject = $assunto;
             $mail->Body = $corpo;
-
             $mail->send();
             error_log("Email enviado com sucesso via PHPMailer para: $para");
             return true;
@@ -419,11 +428,12 @@ class EmailSender {
         }
     }
 
-    /**
+    /*
      * Enviar email usando PHP mail() (método simples)
      */
     private function enviarComMail($para, $assunto, $corpo) {
         // Headers para email HTML
+
         $headers = [
             'MIME-Version: 1.0',
             'Content-type: text/html; charset=UTF-8',
@@ -449,17 +459,20 @@ class EmailSender {
      */
     private function formatarData($data) {
         $meses = [
+
             '01' => 'Janeiro', '02' => 'Fevereiro', '03' => 'Março',
             '04' => 'Abril', '05' => 'Maio', '06' => 'Junho',
             '07' => 'Julho', '08' => 'Agosto', '09' => 'Setembro',
             '10' => 'Outubro', '11' => 'Novembro', '12' => 'Dezembro'
         ];
-        
+
+    
         $partes = explode('-', $data);
         $dia = $partes[2];
         $mes = $meses[$partes[1]];
         $ano = $partes[0];
-        
+
+    
         return "$dia de $mes de $ano";
     }
 
@@ -479,6 +492,53 @@ class EmailSender {
             <p><strong>Mensagem:</strong><br>{$dados['mensagem']}</p>
         ";
         return $this->enviarEmail(Config::EMAIL_RESTAURANTE, $subject, $corpo);
+    }
+
+    /**
+     * Notificar o restaurante sobre um novo pedido de evento
+     */
+    public function enviarNotificacaoEvento($dados) {
+        // Escapar os valores (htmlspecialchars) evita injeção de HTML no email (XSS)
+        $nome     = htmlspecialchars($dados['nome'] ?? '');
+        $email    = htmlspecialchars($dados['email'] ?? '');
+        $telefone = htmlspecialchars($dados['telefone'] ?? '');
+        $tipo     = htmlspecialchars($dados['tipo_evento'] ?? '');
+        $pessoas  = (int)($dados['pessoas'] ?? 0);
+        $data     = htmlspecialchars($dados['data'] ?? '');
+        $mensagem = nl2br(htmlspecialchars($dados['mensagem'] ?? ''));
+
+        $subject = "Novo pedido de evento: " . ($tipo !== '' ? $tipo : 'Evento');
+        $corpo = "
+            <h2>Novo Pedido de Orçamento — Evento</h2>
+            <p><strong>Nome:</strong> {$nome}</p>
+            <p><strong>Email:</strong> {$email}</p>
+            <p><strong>Telefone:</strong> {$telefone}</p>
+            <p><strong>Tipo de evento:</strong> {$tipo}</p>
+            <p><strong>Nº de pessoas:</strong> {$pessoas}</p>
+            <p><strong>Data pretendida:</strong> {$data}</p>
+            <p><strong>Mensagem:</strong><br>{$mensagem}</p>
+        ";
+        return $this->enviarEmail(Config::EMAIL_RESTAURANTE, $subject, $corpo);
+    }
+
+    /**
+     * Agradecer ao cliente o pedido de evento
+     */
+    public function enviarAgradecimentoEvento($dados) {
+        $nome    = htmlspecialchars($dados['nome'] ?? '');
+        $tipo    = htmlspecialchars($dados['tipo_evento'] ?? '');
+        $pessoas = (int)($dados['pessoas'] ?? 0);
+        $data    = htmlspecialchars($dados['data'] ?? '');
+
+        $subject = "Recebemos o seu pedido de evento - " . Config::NOME_RESTAURANTE;
+        $corpo = "
+            <h2>Obrigado, {$nome}!</h2>
+            <p>Recebemos o seu pedido de orçamento para um evento (<strong>{$tipo}</strong>)
+            para <strong>{$pessoas}</strong> pessoas na data <strong>{$data}</strong>.</p>
+            <p>A nossa equipa entrará em contacto consigo dentro de 24 horas.</p>
+            <p>Com os melhores cumprimentos,<br>" . Config::NOME_RESTAURANTE . "</p>
+        ";
+        return $this->enviarEmail($dados['email'], $subject, $corpo);
     }
 
     /**
@@ -668,12 +728,123 @@ class EmailSender {
             </div>
         </body>
         </html>";
-        
+
         return $html;
     }
+
+    // ============================================
+    // VOUCHERS
+    // ============================================
+
+    /**
+     * Enviar o voucher (presente) ao comprador, com instruções de pagamento por IBAN.
+     * $dados: nome_recebe, nome_oferece, email, valor, codigo, mensagem, url_voucher
+     */
+    public function enviarVoucher($dados) {
+        $subject = "O seu Voucher 100 Sabores - Código " . $dados['codigo'];
+        $body = $this->gerarTemplateVoucher($dados);
+        return $this->enviarEmail($dados['email'], $subject, $body);
+    }
+
+    /**
+     * Notificar o restaurante de um novo voucher comprado (a aguardar pagamento).
+     */
+    public function enviarNotificacaoVoucher($dados) {
+        $subject = "Novo Voucher comprado - " . $dados['codigo'];
+        $corpo = "
+            <h2>Novo Voucher comprado (a aguardar pagamento)</h2>
+            <p><strong>Código:</strong> {$dados['codigo']}</p>
+            <p><strong>Valor:</strong> {$dados['valor']}&euro;</p>
+            <p><strong>Para (recebe):</strong> " . htmlspecialchars($dados['nome_recebe']) . "</p>
+            <p><strong>De (oferece):</strong> " . htmlspecialchars($dados['nome_oferece']) . "</p>
+            <p><strong>Email do comprador:</strong> " . htmlspecialchars($dados['email']) . "</p>
+            <p>Confirme a receção da transferência (referência = código) antes de validar o voucher.</p>
+        ";
+        return $this->enviarEmail($this->from_email, $subject, $corpo);
+    }
+
+    /**
+     * Template HTML do email do voucher.
+     */
+    private function gerarTemplateVoucher($dados) {
+        $nome_recebe  = htmlspecialchars($dados['nome_recebe']);
+        $nome_oferece = htmlspecialchars($dados['nome_oferece']);
+        $valor   = (int)$dados['valor'];
+        $codigo  = htmlspecialchars($dados['codigo']);
+        $data_fmt = '';
+        $linha_data = '';
+        if (!empty($dados['data_reserva'])) {
+            $dt = DateTime::createFromFormat('Y-m-d', $dados['data_reserva']);
+            $data_fmt = ($dt && $dt->format('Y-m-d') === $dados['data_reserva']) ? $dt->format('d/m/Y') : '';
+        }
+        if ($data_fmt !== '') {
+            $linha_data = "<div style='margin:12px 0; font-size:14px;'><strong style='color:#888;'>Data da reserva:</strong> {$data_fmt}</div>";
+        }
+        $iban    = Config::IBAN_PAGAMENTO;
+        $titular = Config::TITULAR_CONTA;
+        $validade = Config::VOUCHER_VALIDADE_MESES;
+        $url_voucher = $dados['url_voucher'] ?? '';
+        $mensagem = !empty($dados['mensagem']) ? nl2br(htmlspecialchars($dados['mensagem'])) : '';
+
+        $bloco_mensagem = $mensagem ? "
+            <div style='margin-top:15px; padding-top:15px; border-top:1px solid #e6dec9; font-style:italic; color:#555;'>
+                \"{$mensagem}\"
+            </div>" : '';
+
+        $bloco_botao = $url_voucher ? "
+            <div style='text-align:center; margin:35px 0 15px 0;'>
+                <a href='{$url_voucher}' style='background-color:#c5a880; color:#1a1a1a; padding:14px 28px; text-decoration:none; border-radius:30px; display:inline-block; font-weight:bold; font-size:15px; letter-spacing:1px;'>VER E IMPRIMIR O VOUCHER</a>
+            </div>" : '';
+
+        return "
+        <!DOCTYPE html>
+        <html>
+        <head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'></head>
+        <body style='font-family: Arial, Helvetica, sans-serif; line-height:1.6; color:#333; background:#f7f7f7; margin:0; padding:0;'>
+            <div style='max-width:600px; margin:40px auto; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.05);'>
+                <div style='background:#1a1a1a; color:#fff; padding:40px 20px; text-align:center; border-bottom:3px solid #c5a880;'>
+                    <h1 style='margin:0; font-size:26px; letter-spacing:2px; color:#c5a880;'>" . Config::NOME_RESTAURANTE . "</h1>
+                    <p style='margin:10px 0 0; color:#b3b3b3; font-size:14px; text-transform:uppercase; letter-spacing:1px;'>Voucher Presente</p>
+                </div>
+
+                <div style='padding:40px 30px;'>
+                    <div style='font-size:20px; color:#1a1a1a; margin-bottom:20px; font-weight:600;'>Olá {$nome_oferece},</div>
+                    <div style='font-size:16px; color:#555; margin-bottom:30px;'>
+                        Obrigado por oferecer uma experiência 100 Sabores! Aqui está o resumo do voucher.
+                    </div>
+
+                    <div style='background:#faf6f0; padding:25px; border-radius:8px; border-left:4px solid #c5a880; margin:30px 0;'>
+                        <div style='font-size:15px; font-weight:bold; color:#1a1a1a; margin-bottom:15px; text-transform:uppercase;'>Detalhes do voucher</div>
+                        <div style='margin:12px 0; font-size:14px;'><strong style='color:#888;'>Para:</strong> {$nome_recebe}</div>
+                        <div style='margin:12px 0; font-size:14px;'><strong style='color:#888;'>De:</strong> {$nome_oferece}</div>
+                        {$linha_data}
+                        <div style='margin:12px 0; font-size:14px;'><strong style='color:#888;'>Valor:</strong> {$valor}&euro;</div>
+                        <div style='margin:12px 0; font-size:14px;'><strong style='color:#888;'>Código (control code):</strong> <strong style='color:#1a1a1a;'>{$codigo}</strong></div>
+                        <div style='margin:12px 0; font-size:14px;'><strong style='color:#888;'>Validade:</strong> {$validade} meses</div>
+                        {$bloco_mensagem}
+                    </div>
+
+                    <div style='background:#fff8e8; padding:25px; border-radius:8px; border-left:4px solid #d9a441; margin:30px 0;'>
+                        <div style='font-size:15px; font-weight:bold; color:#1a1a1a; margin-bottom:15px; text-transform:uppercase;'>Como pagar (transferência / IBAN)</div>
+                        <div style='font-size:14px; color:#555; margin-bottom:12px;'>Para ativar o voucher, faça uma transferência com os seguintes dados:</div>
+                        <div style='margin:8px 0; font-size:14px;'><strong style='color:#888;'>Titular:</strong> {$titular}</div>
+                        <div style='margin:8px 0; font-size:14px;'><strong style='color:#888;'>IBAN:</strong> <strong style='color:#1a1a1a;'>{$iban}</strong></div>
+                        <div style='margin:8px 0; font-size:14px;'><strong style='color:#888;'>Montante:</strong> {$valor}&euro;</div>
+                        <div style='margin:8px 0; font-size:14px;'><strong style='color:#888;'>Referência:</strong> {$codigo} <span style='color:#999;'>(use o código na descrição)</span></div>
+                        <div style='font-size:13px; color:#999; margin-top:12px;'>O voucher fica válido assim que confirmarmos a receção do pagamento.</div>
+                    </div>
+
+                    {$bloco_botao}
+                </div>
+
+                <div style='text-align:center; padding:30px 20px; background:#1a1a1a; color:#888; font-size:12px;'>
+                    <p><strong>" . Config::NOME_RESTAURANTE . "</strong></p>
+                    <p>" . Config::ENDERECO_RESTAURANTE . " | Tel: " . Config::TELEFONE_RESTAURANTE . "</p>
+                    <p>Este é um e-mail automático, por favor não responda a esta mensagem.</p>
+                </div>
+            </div>
+        </body>
+        </html>";
+    }
 }
-
-
-
-
     ?>
